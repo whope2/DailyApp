@@ -1,0 +1,32 @@
+{
+    "photo_count": 5,
+    "file_count": 1,
+    "photos": [
+        {
+            "index": 0,
+            "filepath": "Turkey.PNG"
+        },
+        {
+            "index": 1,
+            "filepath": "sausage.JPG"
+        },
+        {
+            "index": 2,
+            "filepath": "sausage.JPG"
+        },
+        {
+            "index": 3,
+            "filepath": "Turkey.PNG"
+        },
+        {
+            "index": 4,
+            "filepath": "sausage.JPG"
+        }
+    ],
+    "files": [
+        {
+            "index": 0,
+            "filepath": "0.txt"
+        }
+    ]
+}
