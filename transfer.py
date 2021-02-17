@@ -31,19 +31,32 @@ def hello_name(name):
     #return "Hello " + name
 	return render_template('echo.html', text=name)
 
+import requests
 @app.route("/elasticsearch/<args>")
 def route_es_args(args):
 	url = request.full_path
 	es_url = url.replace("/elasticsearch","http://localhost:9200")
 	print(es_url)
-	return(redirect(es_url))
+	#return(redirect(es_url))
+	try: 
+		es_result = requests.get(es_url).json()  #Es throws an exception if not json format
+	except ValueError:
+		es_result = requests.get(es_url).content
+	print(es_result)
+	return(es_result)
 
 @app.route("/elasticsearch/<es_api>/<args>")
 def route_es_api_args(es_api,args):
 	url = request.full_path
 	es_url = url.replace("/elasticsearch","http://localhost:9200")
 	print(es_url)
-	return(redirect(es_url))
+	#return(redirect(es_url))
+	try: 
+		es_result = requests.get(es_url).json()  #Es throws an exception if not json format
+	except ValueError:
+		es_result = requests.get(es_url).content
+	print(es_result)
+	return(es_result)
 
 @app.route("/stat")
 def stat():
@@ -169,5 +182,5 @@ def signup():
 '''
 
 if __name__ == '__main__':
-	app.run(port=5000,debug=False)
-	#app.run(host='0.0.0.0',port=80)
+	#app.run(port=5000,debug=False)
+	app.run(host='0.0.0.0',port=80)
