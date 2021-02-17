@@ -7,7 +7,6 @@ from flask import jsonify
 import json
 
 import file_mgr
-import plot_mgr
 
 import elasticsearch_access
 
@@ -32,10 +31,31 @@ def hello_name(name):
     #return "Hello " + name
 	return render_template('echo.html', text=name)
 
+@app.route("/elasticsearch/<args>")
+def route_es_args(args):
+	url = request.full_path
+	es_url = url.replace("/elasticsearch","http://localhost:9200")
+	print(es_url)
+	return(redirect(es_url))
+
+@app.route("/elasticsearch/<es_api>/<args>")
+def route_es_api_args(es_api,args):
+	url = request.full_path
+	es_url = url.replace("/elasticsearch","http://localhost:9200")
+	print(es_url)
+	return(redirect(es_url))
+
 @app.route("/stat")
 def stat():
-	photo_dict = file_mgr.stat()
-	return jsonify(photo_dict)
+	#stat_json = elasticsearch_access.stat_wordlist()
+	#return stat_json	
+	instruction = "Use the browser and elasticsearch api: \n\
+/elasticsearch/_cat/indices \n\
+/elasticsearch/quotelist/_search?pretty=true \n\
+/elasticsearch/wordlist/_search?pretty=true&size=20"
+	print(instruction)
+	flash(instruction)
+	return redirect('/')
 
 @app.route("/pictureoftheday")
 def pictureoftheday():
@@ -63,7 +83,7 @@ def add_header(response):
 	response.headers["Pragma"] = "no-cache" # HTTP 1.0.
 	response.headers["Expires"] = "0" # Proxies.	
 	return response
-
+'''
 @app.route('/quote', methods=['POST'])
 def upload_quote():
 	quote_text = request.form['QuoteText']
@@ -129,6 +149,7 @@ def upload_image():
 	else:
 		flash('Allowed image types are -> png, jpg, jpeg, gif')
 		return redirect('/')
+'''
 
 @app.route('/display/<filename>')
 def display_image(filename):
@@ -139,11 +160,14 @@ def display_image(filename):
 	flash('Copy & send the above url. Open it with a web browser. The file will be deleted in 24 hours.')
 	return redirect('/')
 
+'''
 @app.route('/signup', methods = ['POST'])
 def signup():
     email = request.form['email']
     print("The email address is '" + email + "'")
     return redirect('/')
+'''
 
 if __name__ == '__main__':
-	app.run(port=5002,debug=False)
+	app.run(port=5000,debug=False)
+	#app.run(host='0.0.0.0',port=80)

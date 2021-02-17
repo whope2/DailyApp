@@ -1,7 +1,25 @@
 import random
 from elasticsearch import Elasticsearch
 client = Elasticsearch()
+'''
+import requests
 
+def stat_indices() :
+    resp_indices = requests.get('http://localhost:9200/_cat/indices')
+    return(resp_indices.content)
+
+def stat_wordlist() :
+    resp_wordlist = requests.get('http://localhost:9200/wordlist/_search?pretty')
+    return(resp_wordlist.json())
+
+def stat_quotelist() :
+    resp_wordlist = requests.get('http://localhost:9200/quotelist/_search?pretty')
+    return(resp_wordlist.json())
+
+def stat_photolist() :
+    resp_wordlist = requests.get('http://localhost:9200/photolist/_search?pretty')
+    return(resp_wordlist.json())
+'''
 def get_a_random_word() :    
     results=client.search(index="wordlist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
