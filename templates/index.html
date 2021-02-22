@@ -8,7 +8,7 @@
     box-sizing: border-box;
   }
 
-	<title>Transfer photos to anywhere, anyone, at anytime. No login required.</title>	
+	<title>Daily App - Where Literature Meets Computing</title>	
 
 	<style type="text/css">    
 
@@ -101,67 +101,49 @@
 <body>
 
   <div class="topnav">
-    <a href="https://www.instagram.com/tothemax2050">Instagram</a>
-    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="https://www.instagram.com/tothemax2050">Instgram</a>
     <a href="/stat">Stat</a>
     <a href="/pictureoftheday">Picture of The Day</a>
     <a href="/quoteoftheday">Quote of The Day</a>
     <a href="/wordoftheday">Word of The Day</a>
+    <a href="/whatloveis">What Love Is?</a>
+    <a href="/liveathousandlives">Live A Thousand Lives</a>   
+    <a href="/monarchbutterfly">Monarch Butterfly</a>
   </div>
 
   <div id="main-div" class="content">
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <label for="filename">Upload a Photo</label>&nbsp;&nbsp;
-      <input type="file" name="file"/>
-      <input type="submit" value="Upload a Photo"/>
-    </form>       
+    <p><b>Photo of The Day</b></p>
+    {% if photo %}
+      <img src="{{ photo }}" alt="Photo">
+    {% else %}
+      Sorry No Photo!
+    {% endif %}
+    
   </div>
   <div class="content2">
-    <form action="/quote" method="post" enctype="multipart/form-data">
-      <label for="quotename">Quote</label>
-      <textarea rows = "3" cols = "40" name = "QuoteText">...
-     </textarea><br>
-      <label for="aname">Author</label>
-      <input type="text" id="fname" name="QuoteAuthor" value="...">&nbsp;
-      <input type="submit" value="Upload a Quote">
-    </form>         
+    <p><b>Quote of The Day</b></p>
+    {% if quote %}
+      {{ quote }}!
+    {% else %}
+      Sorry No Quote!
+    {% endif %}     
   </div>
-  <div class="content3">
-    <form action="/word" method="post" enctype="multipart/form-data">
-      <label>Word</label>
-      <input type="text" name="WordText" value="..."><br><br>
-      <label>Definition</label>
-      <textarea rows = "2" cols = "32" name = "WordDefinition">...
-      </textarea><br>
-      <label>Sample Sentences</label>
-      <textarea rows = "4" cols = "40" name = "WordSentences">...
-      </textarea><br>
-      <input type="submit" value="Upload a Word">
-    </form>         
+  <div class="content">
+    <p><b>Word of The Day</b></p>
+    {% if word %}
+      {{ word }}!
+    {% else %}
+      Sorry No Word!
+    {% endif %}    
   </div>
-  <div class="content3">
-    <form action="/note" method="post" enctype="multipart/form-data">
-      <label>Note Label</label>
-      <input type="text" name="NoteLabel" value="..."><br>
-      </textarea><br>
-      <label>Note Text</label>
-      <textarea rows = "4" cols = "48" name = "NoteText">...
-      </textarea><br>
-      <input type="submit" value="Submit a Note">
-    </form>         
+  <div class="content2">
+    <p><b>What Love Is?</b></p>
   </div>  
-  <div class="content4">
-    <form action="/plot" method="post" enctype="multipart/form-data">
-      <label>x:</label>
-      <textarea rows = "4" cols = "48" name = "xarray">.,.,.
-      </textarea><br>
-      <label>y:</label>
-      <textarea rows = "4" cols = "48" name = "yarray">.,.,.
-      </textarea><br>
-      <input type="checkbox" name="Yaccumulated">
-      <label>y accumulated</label><br>
-      <input type="submit" value="Plot">
-    </form>         
+  <div class="content">
+    <p><b>Live A Thousand Lives</b></p>
+  </div>  
+  <div class="content2">
+    <p><b>Monarch Butterfly</b></p>
   </div>  
 <div class="footer">
   <p>

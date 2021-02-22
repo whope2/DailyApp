@@ -21,15 +21,19 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
         
-
 @app.route('/')
-def hello_world():
-	return render_template('index.html')
+def index():
+	file_name = elasticsearch_access.get_a_random_photo()
+	file_path = "static/uploads/"+file_name
+	random_quote = elasticsearch_access.get_a_random_quote()
+	random_word = elasticsearch_access.get_a_random_word()
+	return render_template('index.html',word=random_word,quote=random_quote,photo=file_path)
 	
 @app.route("/<name>")
 def hello_name(name):
     #return "Hello " + name
-	return render_template('echo.html', text=name)
+	#return render_template('echo.html', text=name)
+	return render_template('index.html', name=name)
 
 import requests
 @app.route("/elasticsearch/<args>")
@@ -89,6 +93,7 @@ def wordoftheday():
 	print(random_word)
 	#return "Word of The Day: " + random_word
 	return render_template('echo.html', text="Word of The Day- " + random_word)
+	#return render_template('index.html', word=random_word)
 
 @app.after_request
 def add_header(response):
