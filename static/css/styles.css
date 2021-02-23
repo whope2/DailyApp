@@ -1,0 +1,57 @@
+  /* Style the top navigation bar */
+  .topnav {
+    overflow: hidden;
+    background-color: #333;
+    font-size: 3vw;
+  }
+
+  /* Style the topnav links */
+  .topnav a {
+    float: left;
+    position: ;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 1vw 2vw;
+    text-decoration: none;
+  }
+
+  /* Change color on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  /* Style the top navigation bar */
+  .botnav {
+    overflow: hidden;
+    background-color: #333;
+    font-size: 3vw;
+  }
+
+  /* Style the topnav links */
+  .botnav a {
+    float: right;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 1vw 2vw;
+    text-decoration: none;
+  }
+
+  /* Change color on hover */
+  .botnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .content {
+    background-color: #ddd;
+    font-size: 4vw;
+    padding:2vw;
+  }
+  .content2 {
+    background-color: rgb(227, 232, 233);
+    font-size: 4vw;
+    padding:2vw;
+  }
