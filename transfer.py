@@ -27,7 +27,8 @@ def index():
 	file_path = "static/uploads/"+file_name
 	random_quote = elasticsearch_access.get_a_random_quote()
 	random_word = elasticsearch_access.get_a_random_word()
-	return render_template('index.html',word=random_word,quote=random_quote,photo=file_path)
+	random_book = elasticsearch_access.get_a_random_book()
+	return render_template('index.html',word=random_word,quote=random_quote,photo=file_path,book=random_book)
 	
 @app.route("/<name>")
 def hello_name(name):
@@ -94,6 +95,21 @@ def wordoftheday():
 	#return "Word of The Day: " + random_word
 	return render_template('echo.html', text="Word of The Day- " + random_word)
 	#return render_template('index.html', word=random_word)
+
+@app.route("/liveathousandlives")
+def liveathousandlives():
+	allbooks, count = elasticsearch_access.get_all_book()
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allbooks):
+		oneitem["Book Title"] = doc["_source"]["Book Title"]
+		oneitem["Author"] = doc["_source"]["Author"]
+		oneitem["Year Published"] = doc["_source"]["Year Published"]
+		oneitem["Date Finished"] = doc["_source"]["Date Finished"]
+		#print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+		columns=["Book Title","Author","Year Published","Date Finished"]
+	return render_template('booklist.html', columns=columns, items=items, count=count)
 
 @app.after_request
 def add_header(response):
@@ -187,5 +203,5 @@ def signup():
 '''
 
 if __name__ == '__main__':
-	#app.run(port=5000,debug=False)
+	#app.run(port=5001,debug=False)
 	app.run(host='0.0.0.0',port=80)

@@ -10,18 +10,18 @@
     box-sizing: border-box;
   }
 
-	<title>Daily App - Where Literature Meets Computing</title>	
+	<title>Live A Thousand Lives / Books</title>	
 
 	<style type="text/css">    
 
-  #image{border: 6px ridge rgb(228, 99, 82);}
-  
-  img {
-    width: 60%;
-    height: auto;
-    max-width: 600;
-    min-width: 400;
+  table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
   }
+  table.center {
+    margin-left: auto; 
+    margin-right: auto;
+  }  
 
   body
   {
@@ -30,19 +30,6 @@
     font-size: 10vw;
   }
 
-
-  /* Style the content */
-
-  .content3 {
-    background-color: #ddd;
-    font-size: 3vw;
-    padding:2vw;
-  }
-  .content4 {
-    background-color: rgb(227, 232, 233);
-    font-size: 3vw;
-    padding:2vw;
-  }
 
   /* Style the footer */
   .footer {
@@ -82,48 +69,25 @@
   </div>
 
   <div id="main-div" class="content2">
-    <p><b>Photo of The Day</b></p>
-    {% if photo %}
-      <img src="{{ photo }}" alt="Photo">
-    {% else %}
-      Sorry No Photo!
-    {% endif %}
+    <p><b>Book List - {{ count }} Books</b></p>
+    <table class="center" border=1>
+      <thead>
+       {%- for column in columns %}
+          <th>{{ column }}</th>
+       {%- endfor %}
+      </thead>
+      <tbody>
+      {%- for row in items %}
+         <tr>
+         {%- for column in columns %}
+            <td>{{ row[column] }}</td>
+         {%- endfor %}
+         </tr>
+      {%- endfor %}
+      </tbody>
+      </table>
     
   </div>
-  <div class="content">
-    <p><b>Quote of The Day</b></p>
-    <p style="color: blue;"><i>
-    {% if quote %}
-      {{ quote }}
-    {% else %}
-      Sorry No Quote!
-    {% endif %}  
-  </i></p>     
-  </div>
-  <div class="content2">
-    <p><b>Word of The Day</b></p>
-    {% if word %}
-      {{ word }}
-    {% else %}
-      Sorry No Word!
-    {% endif %}  
-  </div>
-  <div class="content">
-    <p><b>What Love Is?</b></p>
-    Under Construction...
-  </div>  
-  <div class="content2">
-    <p><b>Live A Thousand Lives / Books</b></p>
-    {% if book %}
-      {{ book }}
-    {% else %}
-      Sorry No Book!
-    {% endif %}  
-  </div>  
-  <div class="content">
-    <p><b>Monarch Butterfly</b></p>
-    Under Construction...
-  </div>  
 <div class="footer">
   <p>
     {% with messages = get_flashed_messages() %}

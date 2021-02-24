@@ -55,6 +55,38 @@ def get_a_random_photo() :
     print(doc)
     return(doc["_source"]["Photo File Name"])
 
+def get_a_random_book() :    
+    results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+    random_index = random.randint(0,hit_count-1)
+    print("generated random index = %d" % random_index)
+    doc = results["hits"]["hits"][random_index]
+    print(doc)
+    #print(doc["_source"]["Book Title"])
+    #print(doc["_source"]["Author"])
+    #print(doc["_source"]["Year Published"])
+    bookinfo = "Title: " + doc["_source"]["Book Title"] + ".  Author: " + doc["_source"]["Author"] + ".  Year Published: " + doc["_source"]["Year Published"]
+    print(bookinfo)
+    return(bookinfo)
+
+def get_all_book() :    
+    results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+
+    #doc = results["hits"]["hits"][random_index]
+    #print(doc)
+    allbooks = results["hits"]["hits"]
+    print(allbooks)
+    return(allbooks, hit_count)   
+    #print(doc["_source"]["Book Title"])
+    #print(doc["_source"]["Author"])
+    #print(doc["_source"]["Year Published"])
+    #bookinfo = "Title: " + doc["_source"]["Book Title"] + ".  Author: " + doc["_source"]["Author"] + ".  Year Published: " + doc["_source"]["Year Published"]
+    #print(bookinfo)
+    #return(bookinfo)
+
 #test
 #for num, doc in enumerate(results["hits"]["hits"]): 
 #    print("index = %d" % num)
