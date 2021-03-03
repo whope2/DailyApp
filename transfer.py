@@ -28,7 +28,8 @@ def index():
 	random_quote = elasticsearch_access.get_a_random_quote()
 	random_word = elasticsearch_access.get_a_random_word()
 	random_book = elasticsearch_access.get_a_random_book()
-	return render_template('index.html',word=random_word,quote=random_quote,photo=file_path,book=random_book)
+	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
+	return render_template('index.html',word=random_word,quote=random_quote,photo=file_path,book=random_book,love_quote=random_love_quote)
 	
 @app.route("/<name>")
 def hello_name(name):
@@ -96,6 +97,13 @@ def wordoftheday():
 	return render_template('echo.html', text="Word of The Day- " + random_word)
 	#return render_template('index.html', word=random_word)
 
+@app.route("/about")
+def about():
+	about_text = "Welcome to my personal website, where literature meets computing!\r\n\
+	Enjoy daily photo, daily quote, daily word, daily book, and many more!\r\n\
+	Subscribe to receive it in your inbox!"
+	return render_template('echo.html', text=about_text)
+
 @app.route("/liveathousandlives")
 def liveathousandlives():
 	allbooks, count = elasticsearch_access.get_all_book()
@@ -110,6 +118,32 @@ def liveathousandlives():
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 		columns=["Book Title","Author","Year Published","Date Finished"]
 	return render_template('booklist.html', columns=columns, items=items, count=count)
+
+@app.route("/whatloveis")
+def whatloveis():
+	allrecords, count = elasticsearch_access.get_all_love_quotes()
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allrecords):
+		oneitem["Quote"] = doc["_source"]["Quote"]
+		oneitem["Author"] = doc["_source"]["Author"]
+		#print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+		columns=["Quote","Author"]
+	return render_template('lovequotelist.html', columns=columns, items=items, count=count, love_quote=oneitem["Quote"]+" - "+oneitem["Author"])
+
+@app.route("/subscribe", methods=['POST'])
+def subscribe():
+	email = request.form['email']
+	elasticsearch_access.add_a_subscription(email)
+	return render_template('echo.html', text="Thanks for your subscription!")
+
+@app.route("/addlovequote", methods=['POST'])
+def addlovequote():
+	quote = request.form['QuoteText']
+	author = request.form['QuoteAuthor']
+	elasticsearch_access.add_a_love_quote(quote, author)
+	return render_template('echo.html', text="Thanks for your contribution!")
 
 @app.after_request
 def add_header(response):
@@ -203,5 +237,5 @@ def signup():
 '''
 
 if __name__ == '__main__':
-	#app.run(port=5001,debug=False)
-	app.run(host='0.0.0.0',port=80)
+	app.run(port=5001,debug=False)
+	#app.run(host='0.0.0.0',port=80)

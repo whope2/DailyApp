@@ -43,7 +43,17 @@ def get_a_random_quote() :
     print("generated random index = %d" % random_index)
     doc = results["hits"]["hits"][random_index]
     print(doc)
-    return(doc["_source"]["Author"] + ": " + doc["_source"]["Quote"])
+    return(doc["_source"]["Quote"] + " - " + doc["_source"]["Author"])
+
+def get_a_random_love_quote() :    
+    results=client.search(index="lovequotelist",body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+    random_index = random.randint(0,hit_count-1)
+    print("generated random index = %d" % random_index)
+    doc = results["hits"]["hits"][random_index]
+    print(doc)
+    return(doc["_source"]["Quote"]+ " - " + doc["_source"]["Author"])
 
 def get_a_random_photo() :    
     results=client.search(index="photolist",body={"size":999,"query":{"match_all":{}}})
@@ -86,6 +96,30 @@ def get_all_book() :
     #bookinfo = "Title: " + doc["_source"]["Book Title"] + ".  Author: " + doc["_source"]["Author"] + ".  Year Published: " + doc["_source"]["Year Published"]
     #print(bookinfo)
     #return(bookinfo)
+
+def get_all_love_quotes() :    
+    results=client.search(index="lovequotelist",body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+
+    #doc = results["hits"]["hits"][random_index]
+    #print(doc)
+    allrecords = results["hits"]["hits"]
+    print(allrecords)
+    return(allrecords, hit_count)   
+
+def add_a_subscription(email) :
+    client.index(index='subscriptionlist', doc_type='post', body= \
+    {
+        'Email': email,
+    })
+
+def add_a_love_quote(quote, author) :
+    client.index(index='lovequotelist_new', doc_type='post', body= \
+    {
+        'Quote': quote,
+        'Author': author
+    })
 
 #test
 #for num, doc in enumerate(results["hits"]["hits"]): 

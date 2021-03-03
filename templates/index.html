@@ -78,7 +78,7 @@
     <a href="/quoteoftheday">Quote of The Day</a>
     <a href="/wordoftheday">Word of The Day</a>
     <a href="/whatloveis">What Love Is?</a>
-    <a href="/monarchbutterfly">Monarch Butterfly</a>
+    <a href="/about">About</a>
   </div>
 
   <div id="main-div" class="content2">
@@ -110,7 +110,13 @@
   </div>
   <div class="content">
     <p><b>What Love Is?</b></p>
-    Under Construction...
+    <p style="color: blue;"><i>
+    {% if love_quote %}
+      {{ love_quote }}
+    {% else %}
+      Sorry No Love Quote!
+    {% endif %}
+    </i></p>
   </div>  
   <div class="content2">
     <p><b>Live A Thousand Lives / Books</b></p>
@@ -121,8 +127,12 @@
     {% endif %}  
   </div>  
   <div class="content">
-    <p><b>Monarch Butterfly</b></p>
-    Under Construction...
+    <p><b>Subscription for Daily Update!</b></p>
+    <form action="/subscribe" method="post" enctype="multipart/form-data">
+      <label for="aname">Email: </label>
+      <input class="inputtext" type="text" id="fname" name="email" value="...">
+      <input type="submit" value="Subscribe">
+    </form>
   </div>  
 <div class="footer">
   <p>
@@ -139,10 +149,10 @@
 </div>
 <div class="botnav">
   <a href="/">Home</a>
-  <a href="/stat">Stat</a>
   <a href="https://twitter.com/tothemax2050">Twitter</a>
   <a href="https://www.facebook.com/wordsmartword">Facebook</a>
   <a href="https://www.instagram.com/tothemax2050">Instgram</a>
+  <a href="/about">About</a>
 </div>
 </body>
 </html>
