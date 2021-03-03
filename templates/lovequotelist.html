@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+ 
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+	<title>What Love Is?</title>	
+
+	<style type="text/css">    
+
+  table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  }
+  table.center {
+    margin-left: auto; 
+    margin-right: auto;
+  }  
+
+  body
+  {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 10vw;
+  }
+
+
+  /* Style the footer */
+  .footer {
+    background-color: #f1f1f1;
+    padding:2vw;
+    text-align: right;
+    font-size: 4vw;
+  }
+
+  h1
+  {
+    font-size:10vw;
+    color:rgb(20, 3, 104);
+  }
+
+  h2
+  {
+    font-size:8vw;
+    font-style: italic;
+    color:rgb(31, 4, 161);
+  }
+
+  </style>
+
+</head>  
+  
+<body>
+
+  <div class="topnav">
+    <a href="/">Home</a>
+    <a href="/liveathousandlives">Live A Thousand Lives / Books</a>
+    <a href="/pictureoftheday">Photo of The Day</a>
+    <a href="/quoteoftheday">Quote of The Day</a>
+    <a href="/wordoftheday">Word of The Day</a>
+    <a href="/whatloveis">What Love Is?</a>
+    <a href="/about">About</a>
+  </div>
+
+  <div class="content2">
+    <p><b>What Love Is?</b></p>
+    <p style="color: blue;"><i>
+    {% if love_quote %}
+      {{ love_quote }}
+    {% endif %}
+    </i></p>
+  </div>
+  
+  <div class="content">
+    <p>Your authentic love quote</p>
+      <form action="/addlovequote" method="post" enctype="multipart/form-data">
+        <textarea class="inputtextarea" rows = "4" name = "QuoteText">...
+      </textarea><br>
+        <label for="aname">Author</label>
+        <input class="inputtext" type="text" name="QuoteAuthor" value="...">
+        <input type="submit" value="Upload">
+      </form> 
+  </div>
+
+  <div class="content2">
+    <p><b>What Love is ? - {{ count }} Love Quotes</b></p>
+    <table class="center" border=1>
+      <thead>
+       {%- for column in columns %}
+          <th>{{ column }}</th>
+       {%- endfor %}
+      </thead>
+      <tbody>
+      {%- for row in items %}
+         <tr>
+         {%- for column in columns %}
+            <td>{{ row[column] }}</td>
+         {%- endfor %}
+         </tr>
+      {%- endfor %}
+      </tbody>
+      </table>
+    
+  </div>
+<div class="footer">
+  <p>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <p class=flashes>
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+      </p>
+      {% endif %}
+    {% endwith %}
+  </p>
+</div>
+<div class="botnav">
+  <a href="/">Home</a>
+  <a href="https://twitter.com/tothemax2050">Twitter</a>
+  <a href="https://www.facebook.com/wordsmartword">Facebook</a>
+  <a href="https://www.instagram.com/tothemax2050">Instgram</a>
+  <a href="/about">About</a>
+</div>
+</body>
+</html>
