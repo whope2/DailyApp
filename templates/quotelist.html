@@ -10,7 +10,7 @@
     box-sizing: border-box;
   }
 
-	<title>Live A Thousand Lives / Books</title>	
+	<title>Quote List</title>	
 
 	<style type="text/css">    
 
@@ -22,8 +22,11 @@
     margin-left: auto; 
     margin-right: auto;
     font-size: 2vw;
-  }  
-
+  }
+  th {
+    border: 1px solid black;
+  }
+ 
   body
   {
     text-align: center;
@@ -69,28 +72,28 @@
     <a href="/about">About</a>
   </div>
 
-  <div class="content">
-    <p><b>Book of The Day</b></p>
+  <div class="content2">
+    <p><b>Quote of The Day</b></p>
     <p style="color: blue;"><i>
-    {% if book %}
-      {{ book }}
+    {% if quote %}
+      {{ quote }}
     {% endif %}
     </i></p>
   </div>
 
-  <div id="main-div" class="content2">
-    <p><b>Recommended Books - {{ count }} Books</b></p>
+  <div class="content">
+    <p><b>{{ count }} Quotes</b></p>
     <table class="center" border=1>
       <thead>
-       {%- for column in columns %}
-          <th>{{ column }}</th>
+       {%- for col_name in col_names %}
+          <th style="width: {{col_width[col_name]}}">{{ col_name }}</th>
        {%- endfor %}
       </thead>
       <tbody>
       {%- for row in items %}
          <tr>
-         {%- for column in columns %}
-            <td>{{ row[column] }}</td>
+         {%- for col_name in col_names %}
+            <td style="width: {{col_width[col_name]}}">{{ row[col_name] }}</td>
          {%- endfor %}
          </tr>
       {%- endfor %}

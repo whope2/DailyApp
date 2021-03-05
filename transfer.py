@@ -9,6 +9,7 @@ import json
 import file_mgr
 
 import elasticsearch_access
+import random
 
 UPLOAD_FOLDER = 'static/uploads/'
 
@@ -84,25 +85,57 @@ def pictureoftheday():
 
 @app.route("/quoteoftheday")
 def quoteoftheday():
-	random_quote = elasticsearch_access.get_a_random_quote()
-	print(random_quote)
-	#return "Quote of The Day: " + random_quote
-	return render_template('echo.html', text="Quote of The Day: " + random_quote)
+	#random_quote = elasticsearch_access.get_a_random_quote()
+	#print(random_quote)
+	#return render_template('echo.html', text="Quote of The Day: " + random_quote)
+
+	allrecords, count = elasticsearch_access.get_all_quotes()
+	#count=10  #test
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allrecords):
+		oneitem["Quote"] = doc["_source"]["Quote"]
+		oneitem["Author"] = doc["_source"]["Author"]
+		print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+		#if num == count-1: #test
+		#	break
+	col_names=["Quote","Author"]
+	col_width={
+		'Quote':"75%",
+		'Author':"25%"
+	}
+
+	random_i = random.randint(0,count-1)
+	return render_template('quotelist.html', col_names=col_names, col_width=col_width, items=items, count=count, \
+		quote=items[random_i]["Quote"]+ " - " + items[random_i]["Author"])
+
 
 @app.route("/wordoftheday")
 def wordoftheday():
-	random_word = elasticsearch_access.get_a_random_word()
-	print(random_word)
-	#return "Word of The Day: " + random_word
-	return render_template('echo.html', text="Word of The Day- " + random_word)
-	#return render_template('index.html', word=random_word)
+	allrecords, count = elasticsearch_access.get_all_words()
+	#count=10  #test
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allrecords):
+		oneitem["Word"] = doc["_source"]["Word"]
+		oneitem["Definition"] = doc["_source"]["Definition"]
+		oneitem["Example Sentences"] = doc["_source"]["Example Sentences"]
+		print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+		#if num == count-1: #test
+		#	break
+	#columns=["Word","Definition","Example Sentences"]
+	col_names=["Word","Definition","Example Sentences"]
+	col_width={
+		'Word':"25%",
+		'Definition':"25%",
+		'Example Sentences':"50%"
+	}
 
-@app.route("/about")
-def about():
-	about_text = "Welcome to my personal website, where literature meets computing!\r\n\
-	Enjoy daily photo, daily quote, daily word, daily book, and many more!\r\n\
-	Subscribe to receive it in your inbox!"
-	return render_template('echo.html', text=about_text)
+	random_i = random.randint(0,count-1)
+	return render_template('wordsmart.html', col_names=col_names, col_width=col_width, items=items, count=count, \
+		word=items[random_i]["Word"]+ ": " + items[random_i]["Definition"]+ ". " + items[random_i]["Example Sentences"])
 
 @app.route("/liveathousandlives")
 def liveathousandlives():
@@ -116,8 +149,17 @@ def liveathousandlives():
 		oneitem["Date Finished"] = doc["_source"]["Date Finished"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
-		columns=["Book Title","Author","Year Published","Date Finished"]
-	return render_template('booklist.html', columns=columns, items=items, count=count)
+	columns=["Book Title","Author","Year Published","Date Finished"]
+	random_i = random.randint(0,count-1)
+	return render_template('booklist.html', columns=columns, items=items, count=count,\
+		book="Book Title: "+items[random_i]["Book Title"]+ ".  Author: " + items[random_i]["Author"]+ ".  Year Published: " + items[random_i]["Year Published"])
+
+@app.route("/about")
+def about():
+	about_text = "Welcome to my personal website, where literature meets computing!\r\n\
+	Enjoy daily photo, daily quote, daily word, daily book, and many more!\r\n\
+	Subscribe to receive it in your inbox!"
+	return render_template('echo.html', text=about_text)
 
 @app.route("/whatloveis")
 def whatloveis():
@@ -129,7 +171,7 @@ def whatloveis():
 		oneitem["Author"] = doc["_source"]["Author"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
-		columns=["Quote","Author"]
+	columns=["Quote","Author"]
 	return render_template('lovequotelist.html', columns=columns, items=items, count=count, love_quote=oneitem["Quote"]+" - "+oneitem["Author"])
 
 @app.route("/subscribe", methods=['POST'])
@@ -237,5 +279,5 @@ def signup():
 '''
 
 if __name__ == '__main__':
-	app.run(port=5001,debug=False)
-	#app.run(host='0.0.0.0',port=80)
+	#app.run(port=5000,debug=False)
+	app.run(host='0.0.0.0',port=80)

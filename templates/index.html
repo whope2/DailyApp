@@ -82,7 +82,7 @@
   </div>
 
   <div id="main-div" class="content2">
-    <p><b>Photo of The Day</b></p>
+    <p><b><a href={{ url_for('pictureoftheday') }}>Photo of The Day</a></b></p>
     {% if photo %}
       <img src="{{ photo }}" alt="Photo">
     {% else %}
@@ -91,7 +91,7 @@
     
   </div>
   <div class="content">
-    <p><b>Quote of The Day</b></p>
+    <p><b><a href={{ url_for('quoteoftheday') }}>Quote of The Day</a></b></p>
     <p style="color: blue;"><i>
     {% if quote %}
       {{ quote }}
@@ -101,7 +101,7 @@
   </i></p>     
   </div>
   <div class="content2">
-    <p><b>Word of The Day</b></p>
+    <p><b><a href={{ url_for('wordoftheday') }}>Word of The Day</a></b></p>
     {% if word %}
       {{ word }}
     {% else %}
@@ -109,7 +109,7 @@
     {% endif %}  
   </div>
   <div class="content">
-    <p><b>What Love Is?</b></p>
+    <p><b><a href={{ url_for('whatloveis') }}>What Love Is?</a></b></p>
     <p style="color: blue;"><i>
     {% if love_quote %}
       {{ love_quote }}
@@ -119,7 +119,7 @@
     </i></p>
   </div>  
   <div class="content2">
-    <p><b>Live A Thousand Lives / Books</b></p>
+    <p><b><a href={{ url_for('liveathousandlives') }}>Live A Thousand Lives / Books</a></b></p>
     {% if book %}
       {{ book }}
     {% else %}

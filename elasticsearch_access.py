@@ -106,7 +106,27 @@ def get_all_love_quotes() :
     #print(doc)
     allrecords = results["hits"]["hits"]
     print(allrecords)
-    return(allrecords, hit_count)   
+    return(allrecords, hit_count)
+
+def get_all_words() :    
+    results=client.search(index="wordlist",body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+
+    #doc = results["hits"]["hits"][random_index]
+    #print(doc)
+    allrecords = results["hits"]["hits"]
+    print(allrecords)
+    return(allrecords, hit_count)
+
+def get_all_quotes() :    
+    results=client.search(index="quotelist",body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+    allrecords = results["hits"]["hits"]
+    print(allrecords)
+    return(allrecords, hit_count)
+
 
 def add_a_subscription(email) :
     client.index(index='subscriptionlist', doc_type='post', body= \
