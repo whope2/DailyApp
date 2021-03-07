@@ -84,9 +84,9 @@
   <div id="main-div" class="content2">
     <p><b><a href={{ url_for('pictureoftheday') }}>Photo of The Day</a></b></p>
     {% if photo %}
-      <img src="{{ photo }}" alt="Photo">
+      <img src="{{ photo }}" alt="No Photo! Please refresh the page!">
     {% else %}
-      Sorry No Photo!
+      No Photo! Please refresh the page!
     {% endif %}
     
   </div>

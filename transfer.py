@@ -135,7 +135,7 @@ def wordoftheday():
 
 	random_i = random.randint(0,count-1)
 	return render_template('wordsmart.html', col_names=col_names, col_width=col_width, items=items, count=count, \
-		word=items[random_i]["Word"]+ ": " + items[random_i]["Definition"]+ ". " + items[random_i]["Example Sentences"])
+		word=items[random_i]["Word"], wordoftheday=items[random_i]["Word"]+ ": " + items[random_i]["Definition"]+ ". " + items[random_i]["Example Sentences"])
 
 @app.route("/liveathousandlives")
 def liveathousandlives():

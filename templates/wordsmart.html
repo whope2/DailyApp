@@ -73,14 +73,21 @@
   </div>
 
   <div class="content2">
-    <p><b>Word of The Day</b></p>
+    <p><b><a href={{ url_for('wordoftheday') }}>Word of The Day</a></b></p>
     <p style="color: blue;"><i>
-    {% if word %}
-      {{ word }}
+    {% if wordoftheday %}
+      {{ wordoftheday }}
     {% endif %}
     </i></p>
   </div>
 
+  <div class="content1">
+
+    <a id="yg-widget-0" class="youglish-widget" data-query="{{ word }}" data-lang="english" data-accent="us" data-components="8415" data-bkg-color="#" data-link-color="#" data-ttl-color="#" data-cap-color="#" data-marker-color="#" data-panels-bkg-color="#" data-text-color="#" data-keyword-color="#"  rel="nofollow" href="https://youglish.com">Visit YouGlish.com</a>
+    <script async src="https://youglish.com/public/emb/widget.js" charset="utf-8"></script>
+
+  </div>
+ 
   <div class="content">
     <p><b>Word Smart - {{ count }} Smart Words</b></p>
     <table class="center" border=1>
