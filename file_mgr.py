@@ -215,3 +215,12 @@ def save_plot_data(x,y):
     #backup the file
     cp_cmd = 'cp "%s" "%s"' % (plot_file, plot_backup_file)
     os.system(cp_cmd)    
+
+
+def get_pw() :
+    #document_path = os.getcwd()
+    myfile = "pw"
+    with open(myfile, "r") as file_hdl:
+        pwn = file_hdl.readline()
+        pw = pwn.replace("\n", "")
+        return(pw)

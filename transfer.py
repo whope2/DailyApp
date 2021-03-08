@@ -11,6 +11,11 @@ import file_mgr
 import elasticsearch_access
 import random
 
+import smtplib, ssl	
+sender_email = "whereliteraturemeetscomputing@gmail.com"
+receiver_email = "whope2@gmail.com"
+port = 465  # For SSL
+
 UPLOAD_FOLDER = 'static/uploads/'
 
 app = Flask(__name__)
@@ -178,6 +183,20 @@ def whatloveis():
 def subscribe():
 	email = request.form['email']
 	elasticsearch_access.add_a_subscription(email)
+
+	#email notification
+	message = """\
+	Subject: WLMC - New subscription!
+
+	This message is sent from Python."""
+	#password = input("Type your password and press enter: ")
+	password = file_mgr.get_pw()
+	# Create a secure SSL context
+	context = ssl.create_default_context()
+	with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+		server.login(sender_email, password)
+		server.sendmail(sender_email, receiver_email, message)
+
 	return render_template('echo.html', text="Thanks for your subscription!")
 
 @app.route("/addlovequote", methods=['POST'])
@@ -185,6 +204,20 @@ def addlovequote():
 	quote = request.form['QuoteText']
 	author = request.form['QuoteAuthor']
 	elasticsearch_access.add_a_love_quote(quote, author)
+	
+	#email notification
+	message = """\
+	Subject: WLMC - love quote entered
+
+	This message is sent from Python."""
+	#password = input("Type your password and press enter: ")
+	password = file_mgr.get_pw()
+	# Create a secure SSL context
+	context = ssl.create_default_context()
+	with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+		server.login(sender_email, password)
+		server.sendmail(sender_email, receiver_email, message)
+
 	return render_template('echo.html', text="Thanks for your contribution!")
 
 @app.after_request
@@ -193,90 +226,7 @@ def add_header(response):
 	response.headers["Pragma"] = "no-cache" # HTTP 1.0.
 	response.headers["Expires"] = "0" # Proxies.	
 	return response
-'''
-@app.route('/quote', methods=['POST'])
-def upload_quote():
-	quote_text = request.form['QuoteText']
-	print(quote_text)
-	quote_author = request.form['QuoteAuthor']
-	print(quote_author)
-	file_mgr.upload_a_quote(quote_text, quote_author)
-	flash("New quote: " + quote_text + "  By " + quote_author)
-	return redirect('/')
 
-@app.route('/word', methods=['POST'])
-def upload_word():
-	word_text = request.form['WordText']
-	print(word_text)
-	word_def = request.form['WordDefinition']
-	print(word_def)
-	word_sents = request.form['WordSentences']
-	print(word_sents)	
-	file_mgr.upload_a_word(word_text, word_def, word_sents)
-	flash("New word: " + word_text + ": " + word_def + ".  " + word_sents)
-	return redirect('/')
-
-@app.route('/note', methods=['POST'])
-def upload_note():
-	note_label = request.form['NoteLabel']
-	print(note_label)
-	note_text = request.form['NoteText']
-	print(note_text)
-	file_mgr.upload_a_note(note_label, note_text)
-	flash("New Note: " + note_label + ": " + note_text)
-	return redirect('/')
-
-@app.route('/plot', methods=['POST'])
-def plot():
-	x = request.form['xarray']
-	print(x)
-	y = request.form['yarray']
-	print(y)
-	#print(request.form['Yaccumulated'])
-	accu = False
-	if "Yaccumulated" in request.form:
-		if( request.form['Yaccumulated'] == 'on' ):
-			accu = True
-	plot_fname = plot_mgr.plot(x,y,accu)
-	#flash("New word: " + word_text + ": " + word_def + ".  " + word_sents)
-	return redirect(plot_fname)
-
-@app.route('/upload', methods=['POST'])
-def upload_image():
-	if 'file' not in request.files:
-		flash('No file part')
-		return redirect('/')
-	file = request.files['file']
-	if file.filename == '':
-		flash('No image selected for uploading')
-		return redirect('/')
-	if file and allowed_file(file.filename):
-		file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-		file_mgr.add_photo(file.filename)
-		#flash('Image successfully uploaded and displayed')
-		#return render_template('index.html', filename=file.filename)
-		return redirect('/display/'+file.filename)
-	else:
-		flash('Allowed image types are -> png, jpg, jpeg, gif')
-		return redirect('/')
-'''
-
-@app.route('/display/<filename>')
-def display_image(filename):
-	#print('display_image filename: ' + filename)
-	#return redirect(url_for('static', filename='uploads/' + filename), code=301)
-	url = url_for('static', filename='uploads/' + filename, _external=True)
-	flash(url)
-	flash('Copy & send the above url. Open it with a web browser. The file will be deleted in 24 hours.')
-	return redirect('/')
-
-'''
-@app.route('/signup', methods = ['POST'])
-def signup():
-    email = request.form['email']
-    print("The email address is '" + email + "'")
-    return redirect('/')
-'''
 
 if __name__ == '__main__':
 	#app.run(port=5000,debug=False)
