@@ -142,6 +142,28 @@ def wordoftheday():
 	return render_template('wordsmart.html', col_names=col_names, col_width=col_width, items=items, count=count, \
 		word=items[random_i]["Word"], wordoftheday=items[random_i]["Word"]+ ": " + items[random_i]["Definition"]+ ". " + items[random_i]["Example Sentences"])
 
+@app.route("/wordoftheday/<word>")
+def wordoftheday_withword(word):
+	allrecords, count = elasticsearch_access.get_all_words()
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allrecords):
+		oneitem["Word"] = doc["_source"]["Word"]
+		oneitem["Definition"] = doc["_source"]["Definition"]
+		oneitem["Example Sentences"] = doc["_source"]["Example Sentences"]
+		print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+	col_names=["Word","Definition","Example Sentences"]
+	col_width={
+		'Word':"25%",
+		'Definition':"25%",
+		'Example Sentences':"50%"
+	}
+
+	#render the page with the word passed in
+	return render_template('wordsmart.html', col_names=col_names, col_width=col_width, items=items, count=count, \
+		word=word, wordoftheday=word)
+
 @app.route("/liveathousandlives")
 def liveathousandlives():
 	allbooks, count = elasticsearch_access.get_all_book()
@@ -229,5 +251,5 @@ def add_header(response):
 
 
 if __name__ == '__main__':
-	#app.run(port=5000,debug=False)
+	#app.run(port=5001,debug=False)
 	app.run(host='0.0.0.0',port=80)
