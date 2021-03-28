@@ -29,14 +29,24 @@ def allowed_file(filename):
         
 @app.route('/')
 def index():
-	file_name = elasticsearch_access.get_a_random_photo()
-	file_path = "static/uploads/"+file_name
+
+	#get a random photo from Instagam
+	photolist = [ "CM4PMeIhQ0n", "CMkTiEcAydu", "CMZbmfDBDwr", "CMXK6TQhQj2", "CMUNyMXBje4", "CLwNyIxBWB3", "CKyY8uOB5Vb", "CHc_XsahcVH", "CF55n-ZB_-w", "CM5g3mOHNCR",
+	 "CF8Krp9BvpF", "CATF5idhkNQ", "B9-ZkJ3FozY", "B-ZYFl-F4lo", "B-qFAdzBpal", "B-vPV2pBLqd", "B_yJRLAhmgp", "CMwkKCphTYg", "CMzFmO_h9do", "CMgJbhzhoaQ"]
+	photo_count = len(photolist)
+	random_count = random.randint(0,photo_count-1)
+	photolink = photolist[random_count]
+	
 	random_quote = elasticsearch_access.get_a_random_quote()
 	random_word = elasticsearch_access.get_a_random_word()
 	random_book = elasticsearch_access.get_a_random_book()
 	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
-	return render_template('index.html',word=random_word,quote=random_quote,photo=file_path,book=random_book,love_quote=random_love_quote)
+	return render_template('index.html',word=random_word,quote=random_quote,photolink=photolink,book=random_book,love_quote=random_love_quote)
 	
+@app.route('/echo_search')
+def echo_search():
+	return render_template('echo_search.html')
+
 @app.route("/<name>")
 def hello_name(name):
     #return "Hello " + name
@@ -84,16 +94,10 @@ def stat():
 
 @app.route("/pictureoftheday")
 def pictureoftheday():
-	photo_path = elasticsearch_access.get_a_random_photo()
-	#print('display_image filename: ' + filename)
-	return redirect(url_for('static', filename='uploads/' + photo_path), code=301)
+	return redirect('/')
 
 @app.route("/quoteoftheday")
 def quoteoftheday():
-	#random_quote = elasticsearch_access.get_a_random_quote()
-	#print(random_quote)
-	#return render_template('echo.html', text="Quote of The Day: " + random_quote)
-
 	allrecords, count = elasticsearch_access.get_all_quotes()
 	#count=10  #test
 	items = [{}] * count
@@ -115,9 +119,14 @@ def quoteoftheday():
 	return render_template('quotelist.html', col_names=col_names, col_width=col_width, items=items, count=count, \
 		quote=items[random_i]["Quote"]+ " - " + items[random_i]["Author"])
 
+#api: /genwordoftheday/
+#Generate a random word
+#Redirect to /wordoftheday?word=... to render the wordsmart.html template
+@app.route("/genwordoftheday")
+def genwordoftheday():
 
-@app.route("/wordoftheday")
-def wordoftheday():
+	#Generate a random word
+	#The following code can be simplified. No need to retreive all words from ES
 	allrecords, count = elasticsearch_access.get_all_words()
 	#count=10  #test
 	items = [{}] * count
@@ -126,11 +135,10 @@ def wordoftheday():
 		oneitem["Word"] = doc["_source"]["Word"]
 		oneitem["Definition"] = doc["_source"]["Definition"]
 		oneitem["Example Sentences"] = doc["_source"]["Example Sentences"]
-		print(oneitem)
+		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 		#if num == count-1: #test
 		#	break
-	#columns=["Word","Definition","Example Sentences"]
 	col_names=["Word","Definition","Example Sentences"]
 	col_width={
 		'Word':"25%",
@@ -139,20 +147,44 @@ def wordoftheday():
 	}
 
 	random_i = random.randint(0,count-1)
-	return render_template('wordsmart.html', col_names=col_names, col_width=col_width, items=items, count=count, \
-		word=items[random_i]["Word"], wordoftheday=items[random_i]["Word"]+ ": " + items[random_i]["Definition"]+ ". " + items[random_i]["Example Sentences"])
+	word = items[random_i]["Word"]
+	defi = items[random_i]["Definition"]
+	sens = items[random_i]["Example Sentences"]
 
-@app.route("/wordoftheday/<word>")
-def wordoftheday_withword(word):
+	url = url_for('wordoftheday') + "?word=%s&def=%s&sens=%s" % (word,defi,sens) 
+	print(url)
+
+	return redirect(url)
+
+#api: /wordoftheday/
+#one   args: Use the arg as the word
+#two   args: The first is word, the second is def
+#three args: The first is word, the second is def, the third sentenses.
+@app.route("/wordoftheday")
+def wordoftheday():
+	arg_count = len(request.args)
+	word = arg_word = request.args.get('word')
+	defi = arg_defi = request.args.get('def')
+	sens = arg_sens = request.args.get('sens')
+	print(arg_word)
+	print(arg_defi)
+	print(arg_sens)
+
 	allrecords, count = elasticsearch_access.get_all_words()
+	#count=10  #test
 	items = [{}] * count
 	oneitem = {}
 	for num, doc in enumerate(allrecords):
 		oneitem["Word"] = doc["_source"]["Word"]
 		oneitem["Definition"] = doc["_source"]["Definition"]
 		oneitem["Example Sentences"] = doc["_source"]["Example Sentences"]
+		urlt = url_for('wordoftheday') + "?word=%s&def=%s&sens=%s" % (doc["_source"]["Word"],doc["_source"]["Definition"],doc["_source"]["Example Sentences"]) 
+		url = urlt.replace(" ", "%20")
+		oneitem["URL"] = url
 		print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+		#if num == count-1: #test
+		#	break
 	col_names=["Word","Definition","Example Sentences"]
 	col_width={
 		'Word':"25%",
@@ -160,9 +192,14 @@ def wordoftheday_withword(word):
 		'Example Sentences':"50%"
 	}
 
-	#render the page with the word passed in
-	return render_template('wordsmart.html', col_names=col_names, col_width=col_width, items=items, count=count, \
-		word=word, wordoftheday=word)
+	if arg_word == None :
+		random_i = random.randint(0,count-1)
+		word = items[random_i]["Word"]
+		defi = items[random_i]["Definition"]
+		sens = items[random_i]["Example Sentences"]
+
+	return render_template("wordsmart.html", col_names=col_names, col_width=col_width, items=items, count=count, \
+		word=word, defi=defi, sens=sens)
 
 @app.route("/liveathousandlives")
 def liveathousandlives():
@@ -183,10 +220,11 @@ def liveathousandlives():
 
 @app.route("/about")
 def about():
-	about_text = "Welcome to my personal website, where literature meets computing!\r\n\
-	Enjoy daily photo, daily quote, daily word, daily book, and many more!\r\n\
-	Subscribe to receive it in your inbox!"
-	return render_template('echo.html', text=about_text)
+	line1 = "Welcome to my personal website ─"
+	line2 = "Where Literature Meets Computing!"
+	line3 = "Enjoy daily photo, daily quote, daily smart word, daily love quote, and daily book!"
+	line4 = "Subscribe to receive it in your inbox!"
+	return render_template('about.html', line1=line1, line2=line2, line3=line3, line4=line4)
 
 @app.route("/whatloveis")
 def whatloveis():
@@ -242,6 +280,27 @@ def addlovequote():
 
 	return render_template('echo.html', text="Thanks for your contribution!")
 
+@app.route("/postcomment", methods=['POST'])
+def postcomment():
+	comment = request.form['CommentText']
+	author = request.form['CommentAuthor']
+	elasticsearch_access.add_a_comment(comment, author)
+	
+	#email notification
+	message = """\
+	Subject: WLMC - a comment added
+
+	This message is sent from Python."""
+	#password = input("Type your password and press enter: ")
+	password = file_mgr.get_pw()
+	# Create a secure SSL context
+	context = ssl.create_default_context()
+	with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+		server.login(sender_email, password)
+		server.sendmail(sender_email, receiver_email, message)
+
+	return render_template('echo.html', text="Thanks for your comment!")
+
 @app.after_request
 def add_header(response):
 	response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate" # HTTP 1.1.
@@ -251,5 +310,5 @@ def add_header(response):
 
 
 if __name__ == '__main__':
-	#app.run(port=5001,debug=False)
+	#app.run(port=5002,debug=False)
 	app.run(host='0.0.0.0',port=80)

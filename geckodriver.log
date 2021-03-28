@@ -1,0 +1,632 @@
+1615514411038	geckodriver	INFO	Listening on 127.0.0.1:40579
+1615514411046	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile1KupYU"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615514417627	Marionette	INFO	Listening on port 33997
+1615514417694	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615514427089	Marionette	INFO	Stopped listening on port 33997
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615514612449	geckodriver	INFO	Listening on 127.0.0.1:40329
+1615514612454	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileAgJcCV"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615514619229	Marionette	INFO	Listening on port 42375
+1615514619308	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615514625858	Marionette	INFO	Stopped listening on port 42375
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+JavaScript error: resource://gre/modules/UrlClassifierListManager.jsm, line 691: TypeError: this.tablesData[table] is undefined
+1615514687472	geckodriver	INFO	Listening on 127.0.0.1:60449
+1615514687477	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileMferNa"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615514693950	Marionette	INFO	Listening on port 38785
+1615514694033	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615514700680	Marionette	INFO	Stopped listening on port 38785
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615514827431	geckodriver	INFO	Listening on 127.0.0.1:59033
+1615514827437	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile8J1nXi"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615514834312	Marionette	INFO	Listening on port 38415
+1615514834387	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615514841514	Marionette	INFO	Stopped listening on port 38415
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615514883948	geckodriver	INFO	Listening on 127.0.0.1:57249
+1615514883955	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileCTbark"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615514890178	Marionette	INFO	Listening on port 35023
+1615514890310	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615514896915	Marionette	INFO	Stopped listening on port 35023
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615515413550	geckodriver	INFO	Listening on 127.0.0.1:37051
+1615515413557	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilensQEoY"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615515420029	Marionette	INFO	Listening on port 36645
+1615515420107	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615515426749	Marionette	INFO	Stopped listening on port 36645
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615515846691	geckodriver	INFO	Listening on 127.0.0.1:58011
+1615515847710	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileasDII7"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615515854344	Marionette	INFO	Listening on port 37379
+1615515854471	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615515888413	geckodriver	INFO	Listening on 127.0.0.1:46831
+1615515889434	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilegFMC7G"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615515895937	Marionette	INFO	Listening on port 35671
+1615515895986	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615515905065	Marionette	INFO	Stopped listening on port 35671
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615515941599	geckodriver	INFO	Listening on 127.0.0.1:33585
+1615515942618	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileW8oufo"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615515948696	Marionette	INFO	Listening on port 35725
+1615515948783	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615515963265	Marionette	INFO	Stopped listening on port 35725
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615517537558	geckodriver	INFO	Listening on 127.0.0.1:60901
+1615517538581	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileWq6pXQ"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615517545387	Marionette	INFO	Listening on port 43225
+1615517545460	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615517559718	Marionette	INFO	Stopped listening on port 43225
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615517884862	geckodriver	INFO	Listening on 127.0.0.1:44121
+1615517885888	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilefz0cw9"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615517892714	Marionette	INFO	Listening on port 41243
+1615517892755	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615517906958	Marionette	INFO	Stopped listening on port 41243
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615517958082	geckodriver	INFO	Listening on 127.0.0.1:40151
+1615517959106	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileOb1ThD"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615517966258	Marionette	INFO	Listening on port 37123
+1615517966377	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615517980790	Marionette	INFO	Stopped listening on port 37123
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615518223671	geckodriver	INFO	Listening on 127.0.0.1:59863
+1615518224696	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilet8NUuz"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615518230967	Marionette	INFO	Listening on port 38969
+1615518231066	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615518246880	Marionette	INFO	Stopped listening on port 38969
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615519275581	geckodriver	INFO	Listening on 127.0.0.1:45729
+1615519276606	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileFJRyqv"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615519283455	Marionette	INFO	Listening on port 41083
+1615519283575	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615519298173	Marionette	INFO	Stopped listening on port 41083
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615521164453	geckodriver	INFO	Listening on 127.0.0.1:58715
+1615521165471	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileeyjp3j"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615521171509	Marionette	INFO	Listening on port 39827
+1615521171644	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615521185895	Marionette	INFO	Stopped listening on port 39827
+1615521568495	geckodriver	INFO	Listening on 127.0.0.1:38725
+1615521569513	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileT4gxjA"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615521576464	Marionette	INFO	Listening on port 37367
+1615521576586	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615521590939	Marionette	INFO	Stopped listening on port 37367
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615522725479	geckodriver	INFO	Listening on 127.0.0.1:45597
+1615522726494	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile4vDPZC"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615522733253	Marionette	INFO	Listening on port 33717
+1615522733359	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615522747569	Marionette	INFO	Stopped listening on port 33717
+1615544412894	geckodriver	INFO	Listening on 127.0.0.1:47075
+1615544413913	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile6oJ3Wk"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615544421034	Marionette	INFO	Listening on port 38233
+1615544421113	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615544435577	Marionette	INFO	Stopped listening on port 38233
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1615544508184	geckodriver	INFO	Listening on 127.0.0.1:33141
+1615544509203	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileUbDIL9"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615544515940	Marionette	INFO	Listening on port 34945
+1615544516067	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615544530422	Marionette	INFO	Stopped listening on port 34945
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1615544674816	geckodriver	INFO	Listening on 127.0.0.1:58459
+1615544675835	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileUtF0BC"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615544682673	Marionette	INFO	Listening on port 39095
+1615544682799	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615544697399	Marionette	INFO	Stopped listening on port 39095
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1615562436128	geckodriver	INFO	Listening on 127.0.0.1:54193
+1615562437154	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileEF4Zi8"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615562444610	Marionette	INFO	Listening on port 39525
+1615562444734	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615562459168	Marionette	INFO	Stopped listening on port 39525
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1615562998187	geckodriver	INFO	Listening on 127.0.0.1:56369
+1615562999211	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileaL5yJz"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615563006424	Marionette	INFO	Listening on port 39789
+1615563006491	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615563020829	Marionette	INFO	Stopped listening on port 39789
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1615573912599	geckodriver	INFO	Listening on 127.0.0.1:51575
+1615573913624	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileGYNfpR"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615573920678	Marionette	INFO	Listening on port 36747
+1615573920860	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615573935318	Marionette	INFO	Stopped listening on port 36747
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615576110501	geckodriver	INFO	Listening on 127.0.0.1:51831
+1615576111527	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilekI2Yur"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615576118619	Marionette	INFO	Listening on port 34803
+1615576118707	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615576133332	Marionette	INFO	Stopped listening on port 34803
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615595837907	geckodriver	INFO	Listening on 127.0.0.1:53961
+1615595838925	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileZ1Te3F"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615595845753	Marionette	INFO	Listening on port 45865
+1615595845901	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615595860314	Marionette	INFO	Stopped listening on port 45865
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615596446549	geckodriver	INFO	Listening on 127.0.0.1:52417
+1615596447573	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile43drEx"
+1615596456087	geckodriver	INFO	Listening on 127.0.0.1:40603
+1615596457102	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileYDbN0k"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615596465110	Marionette	INFO	Listening on port 43727
+1615596465179	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615596479455	Marionette	INFO	Stopped listening on port 43727
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1615596966173	geckodriver	INFO	Listening on 127.0.0.1:49491
+1615596967191	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilejkQ5iI"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615596974162	Marionette	INFO	Listening on port 44843
+1615596974271	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615596988520	Marionette	INFO	Stopped listening on port 44843
+1615650996965	geckodriver	INFO	Listening on 127.0.0.1:36725
+1615650997987	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileZlXcbS"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615651004586	Marionette	INFO	Listening on port 39617
+1615651004648	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615651018900	Marionette	INFO	Stopped listening on port 39617
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615651661038	geckodriver	INFO	Listening on 127.0.0.1:52237
+1615651662057	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofiles5NKP5"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615651668177	Marionette	INFO	Listening on port 45357
+1615651668312	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615651682421	Marionette	INFO	Stopped listening on port 45357
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615660575744	geckodriver	INFO	Listening on 127.0.0.1:44623
+1615660576763	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileXxEMx4"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615660582953	Marionette	INFO	Listening on port 43173
+1615660583011	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615660596988	Marionette	INFO	Stopped listening on port 43173
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615664079975	geckodriver	INFO	Listening on 127.0.0.1:60119
+1615664080991	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileWaYylI"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615664087603	Marionette	INFO	Listening on port 40583
+1615664087647	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615664101766	Marionette	INFO	Stopped listening on port 40583
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615679823366	geckodriver	INFO	Listening on 127.0.0.1:38361
+1615679824384	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileb8anRi"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615679830449	Marionette	INFO	Listening on port 43243
+1615679830528	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615679844796	Marionette	INFO	Stopped listening on port 43243
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615680290873	geckodriver	INFO	Listening on 127.0.0.1:55935
+1615680291892	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileyyI6kz"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615680298303	Marionette	INFO	Listening on port 44985
+1615680298352	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615680312316	Marionette	INFO	Stopped listening on port 44985
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615723203758	geckodriver	INFO	Listening on 127.0.0.1:56919
+1615723203771	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileJVyxY4"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615723210434	Marionette	INFO	Listening on port 38729
+1615723210480	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615723719695	geckodriver	INFO	Listening on 127.0.0.1:60167
+1615723719709	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileBHxvII"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615723726267	Marionette	INFO	Listening on port 43413
+1615723726372	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615723840541	geckodriver	INFO	Listening on 127.0.0.1:41773
+1615723841564	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilesaawHh"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615723848346	Marionette	INFO	Listening on port 36079
+1615723848436	Marionette	WARN	TLS certificate errors will be ignored for this session
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1615724270995	geckodriver	INFO	Listening on 127.0.0.1:53203
+1615724272019	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilehbMpqH"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615724278462	Marionette	INFO	Listening on port 39325
+1615724278575	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615724383318	geckodriver	INFO	Listening on 127.0.0.1:40277
+1615724384343	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile6akm69"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615724390986	Marionette	INFO	Listening on port 38421
+1615724391101	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615724573380	geckodriver	INFO	Listening on 127.0.0.1:57293
+1615724574392	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile9BBde5"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615724581613	Marionette	INFO	Listening on port 39453
+1615724581713	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615724644359	geckodriver	INFO	Listening on 127.0.0.1:58601
+1615724644376	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile8zJCRX"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615724651660	Marionette	INFO	Listening on port 36817
+1615724651746	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615725165223	geckodriver	INFO	Listening on 127.0.0.1:36863
+1615725165239	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofiletNKJSx"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615725172936	Marionette	INFO	Listening on port 36721
+1615725173012	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615725309319	geckodriver	INFO	Listening on 127.0.0.1:41927
+1615725309336	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile8UrpcK"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615725317031	Marionette	INFO	Listening on port 35359
+1615725317168	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.instagram.com/static/bundles/es6/ConsumerUICommons.js/92096441d481.js, line 33: Error: Got unexpected null or undefined
+JavaScript error: https://www.instagram.com/static/bundles/es6/ConsumerUICommons.js/92096441d481.js, line 33: Error: Got unexpected null or undefined
+JavaScript error: https://www.instagram.com/static/bundles/es6/ConsumerUICommons.js/92096441d481.js, line 33: Error: Got unexpected null or undefined
+[Child 4330, MediaDecoderStateMachine #23] WARNING: Decoder=7f2e2eeca400 Decode error: NS_ERROR_DOM_MEDIA_CANCELED (0x806e000a) - RefPtr<MediaSourceTrackDemuxer::SeekPromise> mozilla::MediaSourceTrackDemuxer::DoSeek(const mozilla::media::TimeUnit &): manager is detached.: file /build/firefox-jHEl1G/firefox-86.0+build3/dom/media/MediaDecoderStateMachine.cpp:3474
+JavaScript error: https://www.instagram.com/static/bundles/es6/Consumer.js/509b09c0154f.js, line 51: OZ_SOURCE_BUFFER: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/51451da3c548.js, line 33: InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable
+[Child 4330, MediaDecoderStateMachine #26] WARNING: Decoder=7f2e5a17e800 Decode error: NS_ERROR_DOM_MEDIA_CANCELED (0x806e000a) - RefPtr<MediaSourceTrackDemuxer::SeekPromise> mozilla::MediaSourceTrackDemuxer::DoSeek(const mozilla::media::TimeUnit &): manager is detached.: file /build/firefox-jHEl1G/firefox-86.0+build3/dom/media/MediaDecoderStateMachine.cpp:3474
+[Child 4330, MediaDecoderStateMachine #31] WARNING: Decoder=7f2dfa998c00 Decode error: NS_ERROR_DOM_MEDIA_CANCELED (0x806e000a) - RefPtr<MediaSourceTrackDemuxer::SeekPromise> mozilla::MediaSourceTrackDemuxer::DoSeek(const mozilla::media::TimeUnit &): manager is detached.: file /build/firefox-jHEl1G/firefox-86.0+build3/dom/media/MediaDecoderStateMachine.cpp:3474
+1615733833996	geckodriver	INFO	Listening on 127.0.0.1:48445
+1615733835080	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileCrq4d9"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615733849019	Marionette	INFO	Listening on port 44183
+1615733849354	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615733924042	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.instagram.com/static/bundles/es6/Consumer.js/509b09c0154f.js, line 51: OZ_SOURCE_BUFFER: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/51451da3c548.js, line 33: InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/Consumer.js/509b09c0154f.js, line 51: OZ_SOURCE_BUFFER: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/51451da3c548.js, line 33: InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable
+[Child 7147, MediaDecoderStateMachine #30] WARNING: Decoder=7fcd521cf000 Decode error: NS_ERROR_DOM_MEDIA_CANCELED (0x806e000a) - RefPtr<MediaSourceTrackDemuxer::SeekPromise> mozilla::MediaSourceTrackDemuxer::DoSeek(const mozilla::media::TimeUnit &): manager is detached.: file /build/firefox-jHEl1G/firefox-86.0+build3/dom/media/MediaDecoderStateMachine.cpp:3474
+1615741867327	geckodriver	INFO	Listening on 127.0.0.1:54943
+1615741868347	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileiDgVUZ"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615741876226	Marionette	INFO	Listening on port 39993
+1615741876323	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615742035586	geckodriver	INFO	Listening on 127.0.0.1:58285
+1615742036605	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileANFfSi"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615742043817	Marionette	INFO	Listening on port 37407
+1615742043877	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615742088437	geckodriver	INFO	Listening on 127.0.0.1:48201
+1615742089458	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileFz3Ptx"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615742096366	Marionette	INFO	Listening on port 45589
+1615742096438	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615742485395	geckodriver	INFO	Listening on 127.0.0.1:45727
+1615742486489	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileEXOQY3"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615742492996	Marionette	INFO	Listening on port 33851
+1615742493061	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1615745056407	geckodriver	INFO	Listening on 127.0.0.1:42039
+1615745057431	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileqoG2Y7"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615745066042	Marionette	INFO	Listening on port 35699
+1615745066131	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615745191129	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/51451da3c548.js, line 32: cancelled: operation is cancelled
+JavaScript error: https://www.instagram.com/static/bundles/es6/Consumer.js/509b09c0154f.js, line 51: OZ_SOURCE_BUFFER: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/51451da3c548.js, line 33: InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable
+1615839380752	geckodriver	INFO	Listening on 127.0.0.1:56697
+1615839381807	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile6HYURW"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615839389945	Marionette	INFO	Listening on port 43631
+1615839390078	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615839436253	geckodriver	INFO	Listening on 127.0.0.1:45991
+1615839437272	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileCAnOS0"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615839444979	Marionette	INFO	Listening on port 37579
+1615839445037	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.instagram.com/static/bundles/es6/Consumer.js/4f417f814642.js, line 51: OZ_SOURCE_BUFFER: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/51451da3c548.js, line 33: InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/Consumer.js/4f417f814642.js, line 51: OZ_SOURCE_BUFFER: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/51451da3c548.js, line 33: InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable
+1615844892536	geckodriver	INFO	Listening on 127.0.0.1:45201
+1615844893661	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile1P9SAO"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615844909616	Marionette	INFO	Listening on port 37827
+1615844910078	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1615937375777	geckodriver	INFO	Listening on 127.0.0.1:38261
+1615937376833	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileHOEcqN"
+1615937386897	geckodriver	INFO	Listening on 127.0.0.1:40215
+1615937387913	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilePklZ3X"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615937412400	Marionette	INFO	Listening on port 34187
+1615937412813	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615937638168	geckodriver	INFO	Listening on 127.0.0.1:37241
+1615937638289	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileXjxEUv"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615937658037	Marionette	INFO	Listening on port 46429
+1615937658300	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1615938481538	Marionette	INFO	Stopped listening on port 46429
+1615944305298	geckodriver	INFO	Listening on 127.0.0.1:47337
+1615944306344	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileuFXi1N"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615944324805	Marionette	INFO	Listening on port 45913
+1615944325109	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1615945134567	Marionette	INFO	Stopped listening on port 45913
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1615948791263	geckodriver	INFO	Listening on 127.0.0.1:59371
+1615948792282	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileKFNr0f"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615948798768	Marionette	INFO	Listening on port 39865
+1615948798838	Marionette	WARN	TLS certificate errors will be ignored for this session
+1615948832755	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+[Child 6351, MediaDecoderStateMachine #4] WARNING: Decoder=7f12bc007000 Decode error: NS_ERROR_DOM_MEDIA_CANCELED (0x806e000a) - RefPtr<MediaSourceTrackDemuxer::SeekPromise> mozilla::MediaSourceTrackDemuxer::DoSeek(const mozilla::media::TimeUnit &): manager is detached.: file /build/firefox-jHEl1G/firefox-86.0+build3/dom/media/MediaDecoderStateMachine.cpp:3474
+1615949553136	Marionette	INFO	Stopped listening on port 39865
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615971535674	geckodriver	INFO	Listening on 127.0.0.1:45151
+1615971536695	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileUoitT9"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615971543324	Marionette	INFO	Listening on port 39091
+1615971543470	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1615973063031	Marionette	INFO	Stopped listening on port 39091
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1615986248655	geckodriver	INFO	Listening on 127.0.0.1:40587
+1615986249675	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileUWzV4B"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615986257043	Marionette	INFO	Listening on port 43659
+1615986257138	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1615987792175	Marionette	INFO	Stopped listening on port 43659
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1615995510005	geckodriver	INFO	Listening on 127.0.0.1:46987
+1615995511020	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileknL2B1"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1615995518260	Marionette	INFO	Listening on port 43807
+1615995518387	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 23745, MediaDecoderStateMachine #2] WARNING: Decoder=7fee7cb9f000 Decode error: NS_ERROR_DOM_MEDIA_CANCELED (0x806e000a) - RefPtr<MediaSourceTrackDemuxer::SeekPromise> mozilla::MediaSourceTrackDemuxer::DoSeek(const mozilla::media::TimeUnit &): manager is detached.: file /build/firefox-jHEl1G/firefox-86.0+build3/dom/media/MediaDecoderStateMachine.cpp:3474
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1615997106828	Marionette	INFO	Stopped listening on port 43807
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616031981643	geckodriver	INFO	Listening on 127.0.0.1:58115
+1616031982665	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile7X0dcC"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616031988671	Marionette	INFO	Listening on port 33501
+1616031988716	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616033524188	Marionette	INFO	Stopped listening on port 33501
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616059059014	geckodriver	INFO	Listening on 127.0.0.1:36349
+1616059060032	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileop9ZJA"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616059066458	Marionette	INFO	Listening on port 41471
+1616059066589	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616060624697	Marionette	INFO	Stopped listening on port 41471
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616072221917	geckodriver	INFO	Listening on 127.0.0.1:60201
+1616072221963	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile578Zb2"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616072228975	Marionette	INFO	Listening on port 41105
+1616072229019	Marionette	WARN	TLS certificate errors will be ignored for this session
+1616072354934	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616073889928	Marionette	INFO	Stopped listening on port 41105
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1616081328440	geckodriver	INFO	Listening on 127.0.0.1:46797
+1616081329449	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilem0uc5T"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616081337396	Marionette	INFO	Listening on port 41393
+1616081337526	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616082927409	Marionette	INFO	Stopped listening on port 41393
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616117450221	geckodriver	INFO	Listening on 127.0.0.1:57383
+1616117451166	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileSWecbe"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616117459929	Marionette	INFO	Listening on port 35643
+1616117460420	Marionette	WARN	TLS certificate errors will be ignored for this session
+1616117504945	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616118988004	Marionette	INFO	Stopped listening on port 35643
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616148220820	geckodriver	INFO	Listening on 127.0.0.1:40843
+1616148221836	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileJsnUCe"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616148227724	Marionette	INFO	Listening on port 46129
+1616148227780	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616149775462	Marionette	INFO	Stopped listening on port 46129
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616167119318	geckodriver	INFO	Listening on 127.0.0.1:46799
+1616167120338	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileQRvHsH"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616167126788	Marionette	INFO	Listening on port 43797
+1616167126889	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616169401892	Marionette	INFO	Stopped listening on port 43797
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616195631204	geckodriver	INFO	Listening on 127.0.0.1:38677
+1616195632223	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilepdXtMz"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616195640298	Marionette	INFO	Listening on port 43357
+1616195640391	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.instagram.com/static/bundles/es6/Consumer.js/513acac53abf.js, line 50: OZ_SOURCE_BUFFER: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/377e2106bad0.js, line 33: InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616197233585	Marionette	INFO	Stopped listening on port 43357
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+1616204847136	geckodriver	INFO	Listening on 127.0.0.1:41419
+1616204848162	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileo8tEOB"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616204855451	Marionette	INFO	Listening on port 45989
+1616204855538	Marionette	WARN	TLS certificate errors will be ignored for this session
+1616204908614	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616206386001	Marionette	INFO	Stopped listening on port 45989
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616234279889	geckodriver	INFO	Listening on 127.0.0.1:44365
+1616234280909	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileQtKVnk"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616234287192	Marionette	INFO	Listening on port 39767
+1616234287264	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/377e2106bad0.js, line 38: IndexSizeError: Index or size is negative or greater than the allowed amount
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.instagram.com/static/bundles/es6/ConsumerUICommons.js/a7d50c1a45ca.js, line 33: Error: Got unexpected null or undefined
+1616235853686	Marionette	INFO	Stopped listening on port 39767
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616256078713	geckodriver	INFO	Listening on 127.0.0.1:37999
+1616256079736	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileq1rkFu"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616256087168	Marionette	INFO	Listening on port 43691
+1616256087203	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/377e2106bad0.js, line 32: cancelled: operation is cancelled
+1616256151613	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.instagram.com/static/bundles/es6/ConsumerUICommons.js/a7d50c1a45ca.js, line 33: Error: Got unexpected null or undefined
+1616258525121	Marionette	INFO	Stopped listening on port 43691
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616281004422	geckodriver	INFO	Listening on 127.0.0.1:43673
+1616281004435	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilehIa3zH"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616281010919	Marionette	INFO	Listening on port 40025
+1616281010996	Marionette	WARN	TLS certificate errors will be ignored for this session
+1616281029992	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1616281077498	geckodriver	INFO	Listening on 127.0.0.1:37011
+1616281078524	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilemF8Qjn"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616281086060	Marionette	INFO	Listening on port 40241
+1616281086193	Marionette	WARN	TLS certificate errors will be ignored for this session
+1616281117472	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616282638888	Marionette	INFO	Stopped listening on port 40241
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+1616293616680	geckodriver	INFO	Listening on 127.0.0.1:36639
+1616293617703	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilesnYcmF"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616293624369	Marionette	INFO	Listening on port 40359
+1616293624461	Marionette	WARN	TLS certificate errors will be ignored for this session
+1616293641372	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1616295240280	Marionette	INFO	Stopped listening on port 40359
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1616320650868	geckodriver	INFO	Listening on 127.0.0.1:39513
+1616320651890	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileKVv5x1"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616320658974	Marionette	INFO	Listening on port 45741
+1616320659049	Marionette	WARN	TLS certificate errors will be ignored for this session
+1616320675039	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.instagram.com/static/bundles/es6/ConsumerUICommons.js/a7d50c1a45ca.js, line 33: Error: Got unexpected null or undefined
+1616322336121	Marionette	INFO	Stopped listening on port 45741
+JavaScript error: resource://activity-stream/lib/ASRouter.jsm, line 988: NS_ERROR_ILLEGAL_VALUE: Component returned failure code: 0x80070057 (NS_ERROR_ILLEGAL_VALUE) [nsIObserverService.removeObserver]
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PLayerTransaction::Msg_ReleaseLayer Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+1616325137661	geckodriver	INFO	Listening on 127.0.0.1:43111
+1616325138677	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile5YstVh"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1616325148049	Marionette	INFO	Listening on port 42035
+1616325148112	Marionette	WARN	TLS certificate errors will be ignored for this session

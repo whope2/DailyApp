@@ -141,6 +141,13 @@ def add_a_love_quote(quote, author) :
         'Author': author
     })
 
+def add_a_comment(comment, author) :
+    client.index(index='commentlist', doc_type='post', body= \
+    {
+        'Comment': comment,
+        'Author': author
+    })
+
 #test
 #for num, doc in enumerate(results["hits"]["hits"]): 
 #    print("index = %d" % num)

@@ -32,12 +32,38 @@
 
   <div id="main-div" class="content2">
   <p style="color: blue;">
-    {% if text %}
-      {{ text }}
+    {% if line1 %}
+      {{ line1 }}
     {% endif %}
   </p>
+  <p style="color: blue;">
+    {% if line2 %}
+    &nbsp&nbsp&nbsp&nbsp{{ line2 }}
+    {% endif %}
+  </p>
+  <p style="color: blue;">
+    {% if line3 %}
+      {{ line3 }}
+    {% endif %}
+  </p>
+  <p style="color: blue;">
+    {% if line4 %}
+      {{ line4 }}
+    {% endif %}
+  </p> 
   </div>
 
+  <div class="content">
+    <p>Drop a comment below</p>
+      <form action="/postcomment" method="post" enctype="multipart/form-data">
+        <textarea class="inputtextarea" rows = "4" name = "CommentText">...
+      </textarea><br>
+        <label for="aname">Your name</label>
+        <input class="inputtext" type="text" name="CommentAuthor" value="...">
+        <input type="submit" value="Send">
+      </form> 
+  </div>
+  
   <div class="botnav">
     <a href="/about">About</a>
     <a href="mailto:whereliteraturemeetscomputing@gmail.com">Email</a>

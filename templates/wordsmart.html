@@ -67,19 +67,31 @@
     <a href="/liveathousandlives">Live A Thousand Lives</a>
     <a href="/pictureoftheday">Photo of The Day</a>
     <a href="/quoteoftheday">Quote of The Day</a>
-    <a href="/wordoftheday">Word of The Day</a>
+    <a href="/genwordoftheday">Word of The Day</a>
     <a href="/whatloveis">What Love Is?</a>
-    <a href="/about">About</a>
   </div>
 
   <div class="content2">
-    <p><b><a href={{ url_for('wordoftheday') }}>Word of The Day</a></b></p>
+    <p><b><a href={{ url_for('genwordoftheday') }}>Word of The Day</a></b></p>
     <p style="color: blue;"><i>
-    {% if wordoftheday %}
-      {{ wordoftheday }}
+    {% if word %}
+      {{ word }}
     {% endif %}
     </i></p>
+    <p style="color: blue;">
+      {% if defi %}
+        {{ defi }}
+      {% endif %}
+    </p>
+    <p style="color: blue;"><i>
+      {% if sens %}
+        {{ sens }}
+      {% endif %}
+    </i></p>
   </div>
+
+  <script async src="https://cse.google.com/cse.js?cx=9e3cd1b0a2f319a1b"></script>
+  <div class="gcse-search" data-queryParameterName="word"></div>
 
   <div class="content1">
 
@@ -92,18 +104,22 @@
     <p><b>Word Smart - {{ count }} Smart Words</b></p>
     <table class="center" border=1>
       <thead>
-       {%- for col_name in col_names %}
+       {% for col_name in col_names %}
           <th style="width: {{col_width[col_name]}}">{{ col_name }}</th>
-       {%- endfor %}
+       {% endfor %}
       </thead>
       <tbody>
-      {%- for row in items %}
+      {% for row in items %}
          <tr>
-         {%- for col_name in col_names %}
-            <td style="width: {{col_width[col_name]}}">{{ row[col_name] }}</td>
-         {%- endfor %}
+         {% for col_name in col_names %}
+            {% if col_name == "Word" %}
+              <td style="width: {{col_width[col_name]}}"><a href={{ row["URL"] }}>{{ row[col_name] }}</a></td>
+            {% else %} 
+              <td style="width: {{col_width[col_name]}}">{{ row[col_name] }}</td>
+            {% endif %}
+         {% endfor %}
          </tr>
-      {%- endfor %}
+      {% endfor %}
       </tbody>
       </table>
     
@@ -122,11 +138,11 @@
   </p>
 </div>
 <div class="botnav">
-  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <a href="mailto:whereliteraturemeetscomputing@gmail.com">Email</a>
   <a href="https://twitter.com/tothemax2050">Twitter</a>
   <a href="https://www.facebook.com/wordsmartword">Facebook</a>
   <a href="https://www.instagram.com/tothemax2050">Instgram</a>
-  <a href="/about">About</a>
 </div>
 </body>
 </html>
