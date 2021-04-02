@@ -65,16 +65,14 @@
     <a href="/pictureoftheday">Photo of The Day</a>
     <a href="/quoteoftheday">Quote of The Day</a>
     <a href="/genwordoftheday">Word of The Day</a>
-    <a href="/whatloveis">What Love Is?</a>
+    <a href="/whatloveis">What Love Is</a>
   </div>
 
   <div class="content">
     <p><b>Book of The Day</b></p>
-    <p style="color: blue;"><i>
-    {% if book %}
-      {{ book }}
-    {% endif %}
-    </i></p>
+    {%- for book in booklist %}
+    <blockquote class="twitter-tweet" data-conversation="none" align="center"><p lang="en" dir="ltr">...<a href="https://twitter.com/tothemax2050/status/{{ book }}">pic.twitter.com/jstcxC4t20</a></p>&mdash; Max (@tothemax2050) <a href="https://twitter.com/tothemax2050/status/{{ book }}?ref_src=twsrc%5Etfw">March 10, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    {%- endfor %}
   </div>
 
   <div id="main-div" class="content2">

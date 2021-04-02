@@ -53,7 +53,7 @@ def get_a_random_love_quote() :
     print("generated random index = %d" % random_index)
     doc = results["hits"]["hits"][random_index]
     print(doc)
-    return(doc["_source"]["Quote"]+ " - " + doc["_source"]["Author"])
+    return(doc["_source"]["Quote"]) #+ " - " + doc["_source"]["Author"])
 
 def get_a_random_photo() :    
     results=client.search(index="photolist",body={"size":999,"query":{"match_all":{}}})

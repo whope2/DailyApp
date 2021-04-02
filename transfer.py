@@ -107,8 +107,6 @@ def quoteoftheday():
 		oneitem["Author"] = doc["_source"]["Author"]
 		print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
-		#if num == count-1: #test
-		#	break
 	col_names=["Quote","Author"]
 	col_width={
 		'Quote':"75%",
@@ -203,6 +201,21 @@ def wordoftheday():
 
 @app.route("/liveathousandlives")
 def liveathousandlives():
+
+	#get a list of my book posts from Twitter
+	booklist = [ 
+		"1369445515784491020", #Great Alone
+		"1374465337375158278", #Silent patient
+		"1377976696742281216", #born a crime
+		"1377381280254472195", #Hobbit
+		"1371854745426653187", #Know my name
+		"1370492268034060293", #a promised land
+		"1367157299882708994", #hillbilly elegy
+		"1363941579405279240", #give of stars
+		"1360372421921038336", #vanishing half
+		]
+	bookcount = len(booklist)
+
 	allbooks, count = elasticsearch_access.get_all_book()
 	items = [{}] * count
 	oneitem = {}
@@ -216,7 +229,7 @@ def liveathousandlives():
 	columns=["Book Title","Author","Year Published","Date Finished"]
 	random_i = random.randint(0,count-1)
 	return render_template('booklist.html', columns=columns, items=items, count=count,\
-		book="Book Title: "+items[random_i]["Book Title"]+ ".  Author: " + items[random_i]["Author"]+ ".  Year Published: " + items[random_i]["Year Published"])
+		booklist=booklist, bookcount=bookcount)
 
 @app.route("/about")
 def about():
@@ -233,11 +246,11 @@ def whatloveis():
 	oneitem = {}
 	for num, doc in enumerate(allrecords):
 		oneitem["Quote"] = doc["_source"]["Quote"]
-		oneitem["Author"] = doc["_source"]["Author"]
+		#oneitem["Author"] = doc["_source"]["Author"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
-	columns=["Quote","Author"]
-	return render_template('lovequotelist.html', columns=columns, items=items, count=count, love_quote=oneitem["Quote"]+" - "+oneitem["Author"])
+	columns=["Quote"] #,"Author"]
+	return render_template('lovequotelist.html', columns=columns, items=items, count=count, love_quote=oneitem["Quote"])
 
 @app.route("/subscribe", methods=['POST'])
 def subscribe():
