@@ -55,7 +55,7 @@ def get_a_random_love_quote() :
     print(doc)
     return(doc["_source"]["Quote"]) #+ " - " + doc["_source"]["Author"])
 
-def get_a_random_photo() :    
+def get_a_random_photo() :
     results=client.search(index="photolist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
@@ -65,7 +65,7 @@ def get_a_random_photo() :
     print(doc)
     return(doc["_source"]["Photo File Name"])
 
-def get_a_random_book() :    
+def get_a_random_book() :
     results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
@@ -80,7 +80,7 @@ def get_a_random_book() :
     print(bookinfo)
     return(bookinfo)
 
-def get_all_book() :    
+def get_all_book() :
     results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)

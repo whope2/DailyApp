@@ -29,14 +29,7 @@ def allowed_file(filename):
         
 @app.route('/')
 def index():
-
-	#get a random photo from Instagam
-	photolist = [ "CM4PMeIhQ0n", "CMkTiEcAydu", "CMZbmfDBDwr", "CMXK6TQhQj2", "CMUNyMXBje4", "CLwNyIxBWB3", "CKyY8uOB5Vb", "CHc_XsahcVH", "CF55n-ZB_-w", "CM5g3mOHNCR",
-	 "CF8Krp9BvpF", "CATF5idhkNQ", "B9-ZkJ3FozY", "B-ZYFl-F4lo", "B-qFAdzBpal", "B-vPV2pBLqd", "B_yJRLAhmgp", "CMwkKCphTYg", "CMzFmO_h9do", "CMgJbhzhoaQ"]
-	photo_count = len(photolist)
-	random_count = random.randint(0,photo_count-1)
-	photolink = photolist[random_count]
-	
+	photolink = elasticsearch_access.get_a_random_photo()
 	random_quote = elasticsearch_access.get_a_random_quote()
 	random_word = elasticsearch_access.get_a_random_word()
 	random_book = elasticsearch_access.get_a_random_book()
@@ -201,21 +194,8 @@ def wordoftheday():
 
 @app.route("/liveathousandlives")
 def liveathousandlives():
-
 	#get a list of my book posts from Twitter
-	booklist = [ 
-		"1369445515784491020", #Great Alone
-		"1374465337375158278", #Silent patient
-		"1377976696742281216", #born a crime
-		"1377381280254472195", #Hobbit
-		"1371854745426653187", #Know my name
-		"1370492268034060293", #a promised land
-		"1367157299882708994", #hillbilly elegy
-		"1363941579405279240", #give of stars
-		"1360372421921038336", #vanishing half
-		]
-	bookcount = len(booklist)
-
+	booklist = []
 	allbooks, count = elasticsearch_access.get_all_book()
 	items = [{}] * count
 	oneitem = {}
@@ -226,6 +206,11 @@ def liveathousandlives():
 		oneitem["Date Finished"] = doc["_source"]["Date Finished"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+		if doc["_source"]["TweetID"] != None :  #if not an empty
+			booklist.append( doc["_source"]["TweetID"] ) #add to the list
+	
+	random.shuffle(booklist)
+	bookcount = len(booklist)
 	columns=["Book Title","Author","Year Published","Date Finished"]
 	random_i = random.randint(0,count-1)
 	return render_template('booklist.html', columns=columns, items=items, count=count,\
