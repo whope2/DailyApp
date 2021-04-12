@@ -70,6 +70,13 @@
     <a href="/genwordoftheday">Word of The Day</a>
     <a href="/whatloveis">What Love Is</a>
   </div>
+  
+  <div class="content">
+    <form action="/searchaword" method="post" enctype="multipart/form-data">
+      <input class="inputtext" type="text" name="searchaword" value="">
+      <input type="submit" value="Search A Word">
+    </form>
+  </div> 
 
   <div class="content2">
     <p><b><a href={{ url_for('genwordoftheday') }}>Word of The Day</a></b></p>

@@ -161,6 +161,23 @@ def wordoftheday():
 	print(arg_defi)
 	print(arg_sens)
 
+	if defi == None :
+		dict_api_url = \
+		"https://dictionaryapi.com/api/v3/references/collegiate/json/\
+		%s?key=77e0d2f9-1fcf-482e-a786-be6cc82ec61e" % (word)	
+		dict_api_result = requests.get(dict_api_url).json()
+		try :
+			def_list = dict_api_result[0]["shortdef"]
+			#defi = def_list[0] #the first definition
+			#get all definitions
+			defi = ""
+			for one_def in def_list:
+				defi += one_def
+				defi += "; "
+			print(defi)
+		except :
+			print("dict api return error - word not found")
+
 	allrecords, count = elasticsearch_access.get_all_words()
 	#count=10  #test
 	items = [{}] * count
@@ -191,6 +208,13 @@ def wordoftheday():
 
 	return render_template("wordsmart.html", col_names=col_names, col_width=col_width, items=items, count=count, \
 		word=word, defi=defi, sens=sens)
+
+@app.route("/searchaword", methods=['POST'])
+def searchaword():
+	word = request.form['searchaword']
+	url = url_for('wordoftheday') + "?word=%s" % (word) 
+	print(url)
+	return redirect(url)
 
 @app.route("/liveathousandlives")
 def liveathousandlives():
@@ -308,5 +332,5 @@ def add_header(response):
 
 
 if __name__ == '__main__':
-	#app.run(port=5002,debug=False)
+	#app.run(port=5000,debug=False)
 	app.run(host='0.0.0.0',port=80)
