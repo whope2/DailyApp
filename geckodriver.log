@@ -1319,3 +1319,297 @@ TimedPromise/<@chrome://marionette/content/sync.js:231:19
 TimedPromise@chrome://marionette/content/sync.js:216:10
 interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
 webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1619383807307	geckodriver	INFO	Listening on 127.0.0.1:47269
+1619383807322	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilejU1T08"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619383814618	Marionette	INFO	Listening on port 40165
+1619383814748	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619384084364	geckodriver	INFO	Listening on 127.0.0.1:40451
+1619384085383	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileWvvfWi"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619384091980	Marionette	INFO	Listening on port 39681
+1619384092050	Marionette	WARN	TLS certificate errors will be ignored for this session
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+Handler function threw an exception: [Exception... "Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIHttpChannelInternal.remoteAddress]"  nsresult: "0x80040111 (NS_ERROR_NOT_AVAILABLE)"  location: "JS frame :: resource://devtools/server/actors/network-monitor/network-observer.js :: _onResponseHeader :: line 1188"  data: no]
+Stack: _onResponseHeader@resource://devtools/server/actors/network-monitor/network-observer.js:1188:5
+_dispatchActivity@resource://devtools/server/actors/network-monitor/network-observer.js:631:14
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:740:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 1188, column: 0
+console.error: ({})
+Handler function threw an exception: TypeError: undefined has no properties
+Stack: _getWaitTiming@resource://devtools/server/actors/network-monitor/network-observer.js:1287:1
+_setupHarTimings@resource://devtools/server/actors/network-monitor/network-observer.js:1512:28
+_onTransactionClose@resource://devtools/server/actors/network-monitor/network-observer.js:1235:27
+_dispatchActivity@resource://devtools/server/actors/network-monitor/network-observer.js:634:14
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:740:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 1287, column: 1
+console.error: (new TypeError("undefined has no properties", "resource://devtools/server/actors/network-monitor/network-observer.js", 1287))
+Handler function threw an exception: [Exception... "Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsIHttpChannelInternal.remoteAddress]"  nsresult: "0x80040111 (NS_ERROR_NOT_AVAILABLE)"  location: "JS frame :: resource://devtools/server/actors/network-monitor/network-observer.js :: _onResponseHeader :: line 1188"  data: no]
+Stack: _onResponseHeader@resource://devtools/server/actors/network-monitor/network-observer.js:1188:5
+_dispatchActivity@resource://devtools/server/actors/network-monitor/network-observer.js:631:14
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:740:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 1188, column: 0
+console.error: ({})
+Handler function threw an exception: TypeError: undefined has no properties
+Stack: _getWaitTiming@resource://devtools/server/actors/network-monitor/network-observer.js:1287:1
+_setupHarTimings@resource://devtools/server/actors/network-monitor/network-observer.js:1512:28
+_onTransactionClose@resource://devtools/server/actors/network-monitor/network-observer.js:1235:27
+_dispatchActivity@resource://devtools/server/actors/network-monitor/network-observer.js:634:14
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:740:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 1287, column: 1
+console.error: (new TypeError("undefined has no properties", "resource://devtools/server/actors/network-monitor/network-observer.js", 1287))
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619384655039	geckodriver	INFO	Listening on 127.0.0.1:57069
+1619384655054	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileuBC7AN"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619384662300	Marionette	INFO	Listening on port 37299
+1619384662419	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619384788225	geckodriver	INFO	Listening on 127.0.0.1:42839
+1619384789233	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilex04IQu"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619384796675	Marionette	INFO	Listening on port 39155
+1619384796794	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619387760176	geckodriver	INFO	Listening on 127.0.0.1:33809
+1619387760191	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileAwWE66"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619387768118	Marionette	INFO	Listening on port 45517
+1619387768161	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619387824912	geckodriver	INFO	Listening on 127.0.0.1:49429
+1619387825933	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileUpSTk5"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619387832627	Marionette	INFO	Listening on port 46379
+1619387832693	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619388028114	geckodriver	INFO	Listening on 127.0.0.1:50255
+1619388028132	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileGrG4Ys"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619388034957	Marionette	INFO	Listening on port 39049
+1619388035002	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619388146400	geckodriver	INFO	Listening on 127.0.0.1:43011
+1619388147421	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileCKnusy"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619388154482	Marionette	INFO	Listening on port 42635
+1619388154582	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619392377797	geckodriver	INFO	Listening on 127.0.0.1:50381
+1619392378823	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileC5YEHV"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619392385698	Marionette	INFO	Listening on port 42205
+1619392385777	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619392627004	Marionette	INFO	Stopped listening on port 39049
+1619392636190	geckodriver	INFO	Listening on 127.0.0.1:45881
+1619392637214	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilecPmZnc"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619392644194	Marionette	INFO	Listening on port 40721
+1619392644271	Marionette	WARN	TLS certificate errors will be ignored for this session
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619393795903	geckodriver	INFO	Listening on 127.0.0.1:58353
+1619393796925	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilej7IMFf"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619393804051	Marionette	INFO	Listening on port 40843
+1619393804091	Marionette	WARN	TLS certificate errors will be ignored for this session
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+console.error: "Error while calling actor 'pagestyle's method 'getLayout'" "node is null"
+console.error: "getLayout@resource://devtools/server/actors/page-style.js:1002:5\nhandler@resource://devtools/shared/protocol/Actor.js:172:37\nonPacket@resource://devtools/server/devtools-server-connection.js:379:58\nreceiveMessage@resource://devtools/shared/transport/child-transport.js:68:16\n"
+console.error: (new Error("Protocol error (TypeError): node is null from: server0.conn0.child3/pagestyle24 (resource://devtools/server/actors/page-style.js:1002:5)", "resource://devtools/shared/protocol/Front.js", 361))
+1619395074727	geckodriver	INFO	Listening on 127.0.0.1:55401
+1619395075735	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile3jrjRt"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619395085582	Marionette	INFO	Listening on port 43369
+1619395085636	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619395202197	geckodriver	INFO	Listening on 127.0.0.1:58889
+1619395202215	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilengE0ED"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619395208897	Marionette	INFO	Listening on port 42451
+1619395208976	Marionette	WARN	TLS certificate errors will be ignored for this session
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619396130967	geckodriver	INFO	Listening on 127.0.0.1:38223
+1619396130983	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilepwe7Uo"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619396138569	Marionette	INFO	Listening on port 44603
+1619396138665	Marionette	WARN	TLS certificate errors will be ignored for this session
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+console.error: (new TypeError("parent is null", "resource://devtools/client/inspector/shared/style-change-tracker.js", 67))
+TypeError: parent is null: canMutationImpactCurrentStyles@resource://devtools/client/inspector/shared/style-change-tracker.js:67:24
+onMutations@resource://devtools/client/inspector/shared/style-change-tracker.js:84:41
+_emit@resource://devtools/shared/event-emitter.js:226:34
+emit@resource://devtools/shared/event-emitter.js:172:18
+emit@resource://devtools/shared/event-emitter.js:324:18
+getMutations@resource://devtools/client/fronts/walker.js:358:10
+
+console.error: (new TypeError("container.node.targetFront is null", "resource://devtools/client/inspector/markup/markup.js", 2307))
+console.error: (new TypeError("container.node.targetFront is null", "resource://devtools/client/inspector/markup/markup.js", 2307))
+console.error: (new TypeError("container.node.targetFront is null", "resource://devtools/client/inspector/markup/markup.js", 2307))
+console.error: (new TypeError("container.node.targetFront is null", "resource://devtools/client/inspector/markup/markup.js", 2307))
+console.error: (new TypeError("container.node.targetFront is null", "resource://devtools/client/inspector/markup/markup.js", 2307))
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+1619398732797	geckodriver	INFO	Listening on 127.0.0.1:48705
+1619398732966	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile7FOBNS"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619398747160	Marionette	INFO	Listening on port 39105
+1619398747509	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619398850889	geckodriver	INFO	Listening on 127.0.0.1:52975
+1619398851912	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile4VQNla"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619398861039	Marionette	INFO	Listening on port 38223
+1619398861083	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619399012253	geckodriver	INFO	Listening on 127.0.0.1:33431
+1619399013276	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile6p1fgl"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619399025396	Marionette	INFO	Listening on port 45187
+1619399025493	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619399352797	geckodriver	INFO	Listening on 127.0.0.1:38705
+1619399353820	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileNgXeoM"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619399360923	Marionette	INFO	Listening on port 46311
+1619399360980	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1619399510097	Marionette	INFO	Stopped listening on port 39105
+1619399510929	geckodriver	INFO	Listening on 127.0.0.1:55977
+1619399510967	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileMZtFrg"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619399520483	Marionette	INFO	Listening on port 42407
+1619399520562	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619399610140	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://marionette/content/sync.js:231:19
+TimedPromise@chrome://marionette/content/sync.js:216:10
+interaction.flushEventLoop@chrome://marionette/content/interaction.js:433:10
+webdriverClickElement@chrome://marionette/content/interaction.js:179:31
+1619436349816	geckodriver	INFO	Listening on 127.0.0.1:54255
+1619436349831	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileKRBsMF"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619436357230	Marionette	INFO	Listening on port 38373
+1619436357305	Marionette	WARN	TLS certificate errors will be ignored for this session
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 567"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:567:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:128:18
+Line: 567, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 567: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.instagram.com/static/bundles/es6/Consumer.js/d575aab3c2da.js, line 51: OZ_SOURCE_BUFFER: An attempt was made to use an object that is not, or is no longer, usable
+JavaScript error: https://www.instagram.com/static/bundles/es6/oz-player.main.js/158f9625a7ae.js, line 33: InvalidStateError: An attempt was made to use an object that is not, or is no longer, usable
+1619437061089	geckodriver	INFO	Listening on 127.0.0.1:37101
+1619437061104	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileGqtW87"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619437068644	Marionette	INFO	Listening on port 44713
+1619437068768	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619437381228	geckodriver	INFO	Listening on 127.0.0.1:51175
+1619437381248	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileEeP8aj"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619437388370	Marionette	INFO	Listening on port 33535
+1619437388408	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619437516918	geckodriver	INFO	Listening on 127.0.0.1:41327
+1619437517941	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilepWzcAV"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619437524803	Marionette	INFO	Listening on port 33049
+1619437524904	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619437719203	geckodriver	INFO	Listening on 127.0.0.1:39335
+1619437719217	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilez0XqPX"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619437725855	Marionette	INFO	Listening on port 42503
+1619437725988	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619438359944	geckodriver	INFO	Listening on 127.0.0.1:50607
+1619438360967	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilewFF29i"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619438367823	Marionette	INFO	Listening on port 36901
+1619438367934	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619439496332	geckodriver	INFO	Listening on 127.0.0.1:44405
+1619439497359	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilePWXfmn"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619439504789	Marionette	INFO	Listening on port 35185
+1619439504822	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619439744602	geckodriver	INFO	Listening on 127.0.0.1:37737
+1619439744623	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilevWKHrS"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619439753064	Marionette	INFO	Listening on port 35169
+1619439753223	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619440412354	geckodriver	INFO	Listening on 127.0.0.1:58667
+1619440413376	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilexDYoA2"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619440420061	Marionette	INFO	Listening on port 42081
+1619440420140	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619440639617	geckodriver	INFO	Listening on 127.0.0.1:40855
+1619440640639	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileDeHKpT"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619440647346	Marionette	INFO	Listening on port 43247
+1619440647408	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619440958766	geckodriver	INFO	Listening on 127.0.0.1:43353
+1619440959787	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileW4l0L8"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619440966536	Marionette	INFO	Listening on port 45393
+1619440966648	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619442572133	geckodriver	INFO	Listening on 127.0.0.1:32927
+1619442572150	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilevbjB8e"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619442578552	Marionette	INFO	Listening on port 46173
+1619442578619	Marionette	WARN	TLS certificate errors will be ignored for this session
+1619442793888	geckodriver	INFO	Listening on 127.0.0.1:42149
+1619442793904	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile14OWLf"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1619442800763	Marionette	INFO	Listening on port 34387
+1619442800868	Marionette	WARN	TLS certificate errors will be ignored for this session
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1619443949953	Marionette	INFO	Stopped listening on port 34387

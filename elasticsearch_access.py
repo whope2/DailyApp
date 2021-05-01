@@ -20,58 +20,58 @@ def stat_photolist() :
     resp_wordlist = requests.get('http://localhost:9200/photolist/_search?pretty')
     return(resp_wordlist.json())
 '''
-def get_a_random_word() :    
-    results=client.search(index="wordlist",body={"size":999,"query":{"match_all":{}}})
-    hit_count = len(results["hits"]["hits"])
-    print("%d hits" % hit_count)
-    random_index = random.randint(0,hit_count-1)
-    print("generated random index = %d" % random_index)
-    doc = results["hits"]["hits"][random_index]
-    print(doc)
+
+def get_a_random_word() :
+    index_name = "wordlist"
+    docs_count = client.count(index=index_name)['count']
+    print("docs_count = %d" % docs_count)
+    random_doc_id = random.randint(1,docs_count)
+    print("generate random doc_id = %d" % random_doc_id)
+    doc = client.get(index=index_name, id=str(random_doc_id))
+    #print(doc)
     #print(doc["_source"]["message"])
     #print(doc["_source"]["Word"])
     #print(doc["_source"]["Definition"])
     #print(doc["_source"]["Example Sentences"])
     #return(doc["_source"]["message"])
-    return(doc["_source"]["Word"] + ": " + doc["_source"]["Definition"] + ".  " + doc["_source"]["Example Sentences"])
+    return(doc["_source"])
 
-def get_a_random_quote() :    
-    results=client.search(index="quotelist",body={"size":999,"query":{"match_all":{}}})
-    hit_count = len(results["hits"]["hits"])
-    print("%d hits" % hit_count)
-    random_index = random.randint(0,hit_count-1)
-    print("generated random index = %d" % random_index)
-    doc = results["hits"]["hits"][random_index]
-    print(doc)
+def get_a_random_quote() :
+    index_name = "quotelist"
+    docs_count = client.count(index=index_name)['count']
+    print("docs_count = %d" % docs_count)
+    random_doc_id = random.randint(1,docs_count)
+    print("generate random doc_id = %d" % random_doc_id)
+    doc = client.get(index=index_name, id=str(random_doc_id))
     return(doc["_source"]["Quote"] + " - " + doc["_source"]["Author"])
 
-def get_a_random_love_quote() :    
-    results=client.search(index="lovequotelist",body={"size":999,"query":{"match_all":{}}})
-    hit_count = len(results["hits"]["hits"])
-    print("%d hits" % hit_count)
-    random_index = random.randint(0,hit_count-1)
-    print("generated random index = %d" % random_index)
-    doc = results["hits"]["hits"][random_index]
+def get_a_random_love_quote() :
+    index_name = "lovequotelist"
+    docs_count = client.count(index=index_name)['count']
+    print("docs_count = %d" % docs_count)
+    random_doc_id = random.randint(1,docs_count)
+    print("generate random doc_id = %d" % random_doc_id)
+    doc = client.get(index=index_name, id=str(random_doc_id))
     print(doc)
-    return(doc["_source"]["Quote"]) #+ " - " + doc["_source"]["Author"])
+    return(doc["_source"]["Quote"])
 
 def get_a_random_photo() :
-    results=client.search(index="photolist",body={"size":999,"query":{"match_all":{}}})
-    hit_count = len(results["hits"]["hits"])
-    print("%d hits" % hit_count)
-    random_index = random.randint(0,hit_count-1)
-    print("generated random index = %d" % random_index)
-    doc = results["hits"]["hits"][random_index]
+    index_name = "photolist"
+    docs_count = client.count(index=index_name)['count']
+    print("docs_count = %d" % docs_count)
+    random_doc_id = random.randint(1,docs_count)
+    print("generate random doc_id = %d" % random_doc_id)
+    doc = client.get(index=index_name, id=str(random_doc_id))
     print(doc)
     return(doc["_source"]["Photo File Name"])
 
 def get_a_random_book() :
-    results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})
-    hit_count = len(results["hits"]["hits"])
-    print("%d hits" % hit_count)
-    random_index = random.randint(0,hit_count-1)
-    print("generated random index = %d" % random_index)
-    doc = results["hits"]["hits"][random_index]
+    index_name = "booklist"
+    docs_count = client.count(index=index_name)['count']
+    print("docs_count = %d" % docs_count)
+    random_doc_id = random.randint(1,docs_count)
+    print("generate random doc_id = %d" % random_doc_id)
+    doc = client.get(index=index_name, id=str(random_doc_id))
     print(doc)
     #print(doc["_source"]["Book Title"])
     #print(doc["_source"]["Author"])
@@ -84,26 +84,14 @@ def get_all_book() :
     results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
-
-    #doc = results["hits"]["hits"][random_index]
-    #print(doc)
     allbooks = results["hits"]["hits"]
     print(allbooks)
     return(allbooks, hit_count)   
-    #print(doc["_source"]["Book Title"])
-    #print(doc["_source"]["Author"])
-    #print(doc["_source"]["Year Published"])
-    #bookinfo = "Title: " + doc["_source"]["Book Title"] + ".  Author: " + doc["_source"]["Author"] + ".  Year Published: " + doc["_source"]["Year Published"]
-    #print(bookinfo)
-    #return(bookinfo)
 
 def get_all_love_quotes() :    
     results=client.search(index="lovequotelist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
-
-    #doc = results["hits"]["hits"][random_index]
-    #print(doc)
     allrecords = results["hits"]["hits"]
     print(allrecords)
     return(allrecords, hit_count)
@@ -112,9 +100,6 @@ def get_all_words() :
     results=client.search(index="wordlist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
-
-    #doc = results["hits"]["hits"][random_index]
-    #print(doc)
     allrecords = results["hits"]["hits"]
     print(allrecords)
     return(allrecords, hit_count)
@@ -127,9 +112,25 @@ def get_all_quotes() :
     print(allrecords)
     return(allrecords, hit_count)
 
+def get_all_subscribers():
+    #index_name = "subscriptionlist_test"
+    index_name = "subscriptionlist"
+    results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+    allrecords = results["hits"]["hits"]
+    print(allrecords)
+    return(allrecords, hit_count)
 
 def add_a_subscription(email) :
+    #client.index(index='subscriptionlist_test', doc_type='post', body= \
     client.index(index='subscriptionlist', doc_type='post', body= \
+    {
+        'Email': email,
+    })
+
+def remove_a_subscription(email) :
+    client.index(index='unsubscriptionlist', doc_type='post', body= \
     {
         'Email': email,
     })

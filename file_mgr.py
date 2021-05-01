@@ -1,7 +1,6 @@
 import json
 import os.path, time
 
-
 def stat():
     print(os.path.getmtime("photos.json"))
     print(os.path.getmtime("photos2.json"))

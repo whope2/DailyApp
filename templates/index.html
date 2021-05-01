@@ -101,11 +101,13 @@
   </div>
   <div class="content2">
     <p><b><a href={{ url_for('genwordoftheday') }}>Word of The Day</a></b></p>
+    <p style="color: blue;"><i>
     {% if word %}
       {{ word }}
     {% else %}
       Sorry No Word!
-    {% endif %}  
+    {% endif %}
+  </i></p>  
   </div>
   <div class="content">
     <p><b><a href={{ url_for('whatloveis') }}>What Love Is?</a></b></p>
@@ -119,11 +121,13 @@
   </div>  
   <div class="content2">
     <p><b><a href={{ url_for('liveathousandlives') }}>Live A Thousand Lives / Books</a></b></p>
+    <p style="color: blue;"><i>
     {% if book %}
       {{ book }}
     {% else %}
       Sorry No Book!
     {% endif %}  
+  </i></p>
   </div>  
   <div class="content">
     <p><b>Subscription for Daily Update!</b></p>
