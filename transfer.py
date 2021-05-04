@@ -267,11 +267,17 @@ def email_notify_me(subject, content):
 		server.login(sender_email, password)
 		server.send_message(message)
 
+TESTING_NEWSLETTER = False
 @app.route("/subscribe", methods=['POST'])
 def subscribe():
+	global TESTING_NEWSLETTER
 	email = request.form['email']
-	elasticsearch_access.add_a_subscription(email)
-	email_notify_me("TWLMC - New subscription!", ("from: %s" % email))
+	if TESTING_NEWSLETTER == True:
+		elasticsearch_access.add_a_subscription_test(email)
+		email_notify_me("TWLMC - New subscription Test!", ("from: %s" % email))
+	else:
+		elasticsearch_access.add_a_subscription(email)
+		email_notify_me("TWLMC - New subscription!", ("from: %s" % email))
 	return render_template('echo.html', text="Thanks for your subscription!")
 
 @app.route("/unsubscribe")
@@ -307,6 +313,7 @@ def add_header(response):
 	return response
 
 def newsletter():
+	global TESTING_NEWSLETTER
 	print("Produce Newsletter! The time is: %s" % datetime.now())
 	
 	#prepare newsletter content
@@ -323,38 +330,55 @@ Daily Book:\n\
     %s\n\n\
 Daily Word:\n\
     %s\n\n\n\
-Thanks for your time. Simply reply this email to suggest anything or unsubcribe the newsletter.\n\
+Thanks for your time and have a nice day!\n\
 http://www.whereliteraturemeetscomputing.com"\
 % (random_quote, random_book, random_word)
 
 	#prepare email
 	message = EmailMessage()
-	message.set_content(newsletter_content)
 	message['Subject'] = "Literature Newsletter"
 	message['From'] = sender_email
-	#message['To'] = to_email
+	
 	password = file_mgr.get_pw()
 	# Create a secure SSL context
 	context = ssl.create_default_context()
 	server = smtplib.SMTP_SSL("smtp.gmail.com", port, context=context)
 	server.login(sender_email, password)
-	#server.send_message(message)
 
 	#get all subscriber emails from elasticsearch
-	all_subscribers, count = elasticsearch_access.get_all_subscribers()
+	if TESTING_NEWSLETTER == True:
+		all_subscribers, count = elasticsearch_access.get_all_subscribers_test()
+	else:
+		all_subscribers, count = elasticsearch_access.get_all_subscribers()
 	for num, doc in enumerate(all_subscribers):
 		email = doc["_source"]["Email"]
 		message['To'] = email
 		#WARNING!!! DO NOT SENT DEBUGGING MSG TO CUSTOMERS!!!
+		#set content and attachment
+		message.clear_content()
+		message.set_content(newsletter_content)	
+		html_content = '<br><a href="http://www.whereliteraturemeetscomputing.com/unsubscribe?email=%s">Unsubscribe</a></br>' % (email)	
+		message.add_attachment(html_content, subtype="html")
+	
 		server.send_message(message)
 		del message['To']
 	server.quit()
 	email_notify_me("WLMC - newsletter sent!", "")
 
+#Testing trigger newsletter
+@app.route("/testtriggernewsletter")
+def testtriggernewsletter():
+	global TESTING_NEWSLETTER
+	TESTING_NEWSLETTER = True
+	newsletter()
+	return render_template('echo.html', text="Test Newsletter sent!")
+
 #manually trigger newsletter first
 #switch to a scheduler later
 @app.route("/triggernewsletter")
 def triggernewsletter():
+	global TESTING_NEWSLETTER
+	TESTING_NEWSLETTER = False
 	newsletter()
 	return render_template('echo.html', text="Newsletter sent!")
 

@@ -113,7 +113,6 @@ def get_all_quotes() :
     return(allrecords, hit_count)
 
 def get_all_subscribers():
-    #index_name = "subscriptionlist_test"
     index_name = "subscriptionlist"
     results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
@@ -122,8 +121,22 @@ def get_all_subscribers():
     print(allrecords)
     return(allrecords, hit_count)
 
+def get_all_subscribers_test():
+    index_name = "subscriptionlist_test"
+    results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+    allrecords = results["hits"]["hits"]
+    print(allrecords)
+    return(allrecords, hit_count)
+
+def add_a_subscription_test(email) :
+    client.index(index='subscriptionlist_test', doc_type='post', body= \
+    {
+        'Email': email,
+    })
+
 def add_a_subscription(email) :
-    #client.index(index='subscriptionlist_test', doc_type='post', body= \
     client.index(index='subscriptionlist', doc_type='post', body= \
     {
         'Email': email,
