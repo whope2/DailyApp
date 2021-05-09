@@ -30,39 +30,21 @@
     font-size: 10vw;
   }
 
-
   /* Style the content */
-
-  .content3 {
-    background-color: #ddd;
+  .checkbox-label {
     font-size: 3vw;
-    padding:2vw;
-  }
-  .content4 {
-    background-color: rgb(227, 232, 233);
-    font-size: 3vw;
-    padding:2vw;
   }
 
+  .label {
+      color: blue;
+  }
+ 
   /* Style the footer */
   .footer {
     background-color: #f1f1f1;
     padding:2vw;
     text-align: right;
     font-size: 4vw;
-  }
-
-  h1
-  {
-    font-size:10vw;
-    color:rgb(20, 3, 104);
-  }
-
-  h2
-  {
-    font-size:8vw;
-    font-style: italic;
-    color:rgb(31, 4, 161);
   }
 
   </style>
@@ -130,10 +112,22 @@
   </i></p>
   </div>  
   <div class="content">
-    <p><b>Subscription for Daily Update!</b></p>
-    <form action="/subscribe" method="post" enctype="multipart/form-data">
-      <label for="aname">Email: </label>
-      <input class="inputtext" type="text" id="fname" name="email" value="...">
+    <p style="color: blue">Subscription for Daily Update!</p>
+    <form id="sub" action="/subscribe" method="post" enctype="multipart/form-data">
+      <div class="checkbox-label">
+      <input type="checkbox" id="interest0" name="interest_photo" value=1>
+      <label for="interest0">Photo</label>
+      <input type="checkbox" id="interest1" name="interest_quote" value=1 checked>
+      <label for="interest1">Quote</label>
+      <input type="checkbox" id="interest2" name="interest_book" value=1 checked>
+      <label for="interest2">Book</label>
+      <input type="checkbox" id="interest3" name="interest_word" value=1 checked>
+      <label for="interest3">Word</label>
+      <input type="checkbox" id="interest4" name="interest_lovequote" value=1>
+      <label for="interest4">Love Quote</label><br>
+      </div>
+      <input class="inputtext" type="text" id="email" name="email" value={{ email }}>
+      <label for="email">Email: </label>
       <input type="submit" value="Subscribe">
     </form>
   </div>  

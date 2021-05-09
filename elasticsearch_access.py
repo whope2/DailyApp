@@ -130,16 +130,11 @@ def get_all_subscribers_test():
     print(allrecords)
     return(allrecords, hit_count)
 
-def add_a_subscription_test(email) :
-    client.index(index='subscriptionlist_test', doc_type='post', body= \
+def add_a_subscription(email, interest) :
+    client.index(index='ingestsubscriptionlist', doc_type='post', body= \
     {
         'Email': email,
-    })
-
-def add_a_subscription(email) :
-    client.index(index='subscriptionlist', doc_type='post', body= \
-    {
-        'Email': email,
+        'Interest': interest
     })
 
 def remove_a_subscription(email) :

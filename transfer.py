@@ -33,6 +33,12 @@ def allowed_file(filename):
         
 @app.route('/')
 def index():
+	arg_count = len(request.args)
+	email = "..."
+	if( arg_count > 0):
+		email = request.args.get('email')
+		print("index %s" % email)
+
 	photolink = elasticsearch_access.get_a_random_photo()
 	random_quote = elasticsearch_access.get_a_random_quote()
 
@@ -41,7 +47,7 @@ def index():
 
 	random_book = elasticsearch_access.get_a_random_book()
 	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
-	return render_template('index.html',word=random_word,quote=random_quote,photolink=photolink,book=random_book,love_quote=random_love_quote)
+	return render_template('index.html',word=random_word,quote=random_quote,photolink=photolink,book=random_book,love_quote=random_love_quote,email=email)
 	
 @app.route('/echo_search')
 def echo_search():
@@ -267,17 +273,39 @@ def email_notify_me(subject, content):
 		server.login(sender_email, password)
 		server.send_message(message)
 
-TESTING_NEWSLETTER = False
+#/prescribe?email=...
+@app.route("/presubscribe")
+def presubscribe():
+	arg_count = len(request.args)
+	email = request.args.get('email')
+	print("presubscribe %s" % email)
+	#prepare url with arguments for a new endpoint
+	url = url_for('index') + "?email=%s#sub" % (email) 
+	print(url)
+	return redirect(url)
+
 @app.route("/subscribe", methods=['POST'])
 def subscribe():
-	global TESTING_NEWSLETTER
 	email = request.form['email']
-	if TESTING_NEWSLETTER == True:
-		elasticsearch_access.add_a_subscription_test(email)
-		email_notify_me("TWLMC - New subscription Test!", ("from: %s" % email))
-	else:
-		elasticsearch_access.add_a_subscription(email)
-		email_notify_me("TWLMC - New subscription!", ("from: %s" % email))
+	#prepare the interest string from the form request (e.g. "Quote,Book,Word")
+	interest = ""
+	if( "interest_photo" in request.form ):
+		interest += ",Photo"
+	if( "interest_quote" in request.form ):
+		interest += ",Quote"
+	if( "interest_book" in request.form ):
+		interest += ",Book"
+	if( "interest_word" in request.form ):
+		interest += ",Word"
+	if( "interest_lovequote" in request.form ):
+		interest += ",Lovequote"
+	#strip the first comma if it exists
+	if( interest[0] == ",") :
+		interest = interest[1:]
+
+	elasticsearch_access.add_a_subscription(email, interest)
+	email_notify_me("TWLMC - New subscription!", ("from: %s" % email))
+
 	return render_template('echo.html', text="Thanks for your subscription!")
 
 @app.route("/unsubscribe")
@@ -312,6 +340,7 @@ def add_header(response):
 	response.headers["Expires"] = "0" # Proxies.	
 	return response
 
+TESTING_NEWSLETTER = False
 def newsletter():
 	global TESTING_NEWSLETTER
 	print("Produce Newsletter! The time is: %s" % datetime.now())
@@ -322,17 +351,7 @@ def newsletter():
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 	random_book = elasticsearch_access.get_a_random_book()
 
-	newsletter_content = "\
-Welcome to our nascent Literature Newsletter!!!\n\n\
-Daily Quote:\n\
-    %s\n\n\
-Daily Book:\n\
-    %s\n\n\
-Daily Word:\n\
-    %s\n\n\n\
-Thanks for your time and have a nice day!\n\
-http://www.whereliteraturemeetscomputing.com"\
-% (random_quote, random_book, random_word)
+	newsletter_content = "Welcome to our nascent Literature Newsletter!!!\n\n"
 
 	#prepare email
 	message = EmailMessage()
@@ -346,22 +365,40 @@ http://www.whereliteraturemeetscomputing.com"\
 	server.login(sender_email, password)
 
 	#get all subscriber emails from elasticsearch
-	if TESTING_NEWSLETTER == True:
-		all_subscribers, count = elasticsearch_access.get_all_subscribers_test()
-	else:
-		all_subscribers, count = elasticsearch_access.get_all_subscribers()
+	all_subscribers, count = elasticsearch_access.get_all_subscribers()
+	
 	for num, doc in enumerate(all_subscribers):
 		email = doc["_source"]["Email"]
+		interest = doc["_source"]["Interest"]
+
+		if( "Quote" in interest ):
+			newsletter_content += "Daily Quote:\n    %s\n\n" % (random_quote)
+		if( "Book" in interest ):
+			newsletter_content += "Daily Book:\n    %s\n\n" % (random_book)
+		if( "Word" in interest ):
+			newsletter_content += "Daily Word:\n    %s\n\n\n" % (random_word)
+
+		newsletter_content += "Thanks for your time and have a nice day!\nhttp://www.whereliteraturemeetscomputing.com"
+		#for testing, only send to my personal email
+		if TESTING_NEWSLETTER == True:
+			email = myemail
+
 		message['To'] = email
 		#WARNING!!! DO NOT SENT DEBUGGING MSG TO CUSTOMERS!!!
 		#set content and attachment
 		message.clear_content()
 		message.set_content(newsletter_content)	
-		html_content = '<br><a href="http://www.whereliteraturemeetscomputing.com/unsubscribe?email=%s">Unsubscribe</a></br>' % (email)	
+		html_content = '\
+<br><a href="http://www.whereliteraturemeetscomputing.com/presubscribe?email=%s#sub">Change Subscription</a>  |  \
+<a href="http://www.whereliteraturemeetscomputing.com/unsubscribe?email=%s">Unsubscribe</a></br>' % (email, email)	
 		message.add_attachment(html_content, subtype="html")
 	
 		server.send_message(message)
 		del message['To']
+
+		if TESTING_NEWSLETTER == True:
+			break
+		
 	server.quit()
 	email_notify_me("WLMC - newsletter sent!", "")
 
