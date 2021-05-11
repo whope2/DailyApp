@@ -239,11 +239,7 @@ def liveathousandlives():
 
 @app.route("/about")
 def about():
-	line1 = "Welcome to my personal website ─"
-	line2 = "Where Literature Meets Computing!"
-	line3 = "Enjoy daily photo, daily quote, daily smart word, daily love quote, and daily book!"
-	line4 = "Subscribe to receive it in your inbox!"
-	return render_template('about.html', line1=line1, line2=line2, line3=line3, line4=line4)
+	return render_template('about.html')
 
 @app.route("/whatloveis")
 def whatloveis():

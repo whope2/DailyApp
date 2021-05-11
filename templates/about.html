@@ -21,40 +21,24 @@
   
 <body>  
   <div class="topnav">
-    <a href="/">Home</a>
-    <a href="/liveathousandlives">Live A Thousand Lives</a>
-    <a href="/pictureoftheday">Photo of The Day</a>
-    <a href="/quoteoftheday">Quote of The Day</a>
-    <a href="/genwordoftheday">Word of The Day</a>
-    <a href="/whatloveis">What Love Is</a>
+    <a href="/"><img src="static/home.png" alt="Home" style="width:4vw;height:auto;"></a>
+    <a href="/liveathousandlives">Live 1000 Lives<img src="static/books.png" style="width:3vw;height:auto;"></a>
+    <a href="/pictureoftheday">Photo</a>
+    <a href="/quoteoftheday">Quote</a>
+    <a href="/genwordoftheday">Word</a>
+    <a href="/whatloveis">Love<img src="static/heart.png" style="width:3vw;height:auto;"></a>
   </div>
 
-
   <div id="main-div" class="content2">
-  <p style="color: blue;">
-    {% if line1 %}
-      {{ line1 }}
-    {% endif %}
+  <p style="color: blue;">Welcome to my personal website ─
+  <br><br>&nbsp&nbsp&nbsp&nbspWhere Literature Meets Computing!
+  <br><br>Enjoy daily photo, daily quote, daily smart word, daily love quote, and daily book!
+  <br><br><a href="/#sub">Subscribe</a> to receive your daily Literature newsletter in your inbox!
   </p>
-  <p style="color: blue;">
-    {% if line2 %}
-    &nbsp&nbsp&nbsp&nbsp{{ line2 }}
-    {% endif %}
-  </p>
-  <p style="color: blue;">
-    {% if line3 %}
-      {{ line3 }}
-    {% endif %}
-  </p>
-  <p style="color: blue;">
-    {% if line4 %}
-      {{ line4 }}
-    {% endif %}
-  </p> 
   </div>
 
   <div class="content">
-    <p>Drop a comment below</p>
+    <p style="color: blue;">Drop a comment below</p>
       <form action="/postcomment" method="post" enctype="multipart/form-data">
         <textarea class="inputtextarea" rows = "4" name = "CommentText">...
       </textarea><br>
@@ -65,11 +49,12 @@
   </div>
   
   <div class="botnav">
-    <a href="/about">About</a>
-    <a href="mailto:whereliteraturemeetscomputing@gmail.com">Email</a>
-    <a href="https://twitter.com/tothemax2050">Twitter</a>
-    <a href="https://www.facebook.com/wordsmartword">Facebook</a>
-    <a href="https://www.instagram.com/tothemax2050">Instgram</a>
+    <a href="/about"><img src="static/information.png" alt="About" style="width:4vw;height:auto;"></a>
+    <a href="/#sub"><img src="static/subscribe.png" alt="Subscribe" style="width:4vw;height:auto;"></a>
+    <a href="mailto:whereliteraturemeetscomputing@gmail.com"><img src="static/email.png" alt="Email" style="width:4vw;height:auto;"></a>
+    <a href="https://twitter.com/tothemax2050"><img src="static/twitter.png" alt="Twitter" style="width:4vw;height:auto;"></a>
+    <a href="https://www.facebook.com/wordsmartword"><img src="static/facebook.png" alt="Facebook" style="width:4vw;height:auto;"></a>
+    <a href="https://www.instagram.com/tothemax2050"><img src="static/instagram.png" alt="Instagram" style="width:4vw;height:auto;"></a>
   </div>
 </body>
 </html>
