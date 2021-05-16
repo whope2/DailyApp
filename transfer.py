@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask import render_template
 from flask import request, redirect
-from flask import flash, url_for
+from flask import url_for
 from flask import jsonify
 import json
 
@@ -94,9 +94,7 @@ def stat():
 /elasticsearch/_cat/indices \n\
 /elasticsearch/quotelist/_search?pretty=true \n\
 /elasticsearch/wordlist/_search?pretty=true&size=20"
-	print(instruction)
-	flash(instruction)
-	return redirect('/')
+	return render_template('echo.html', text=instruction)
 
 @app.route("/pictureoftheday")
 def pictureoftheday():
@@ -246,13 +244,14 @@ def whatloveis():
 	allrecords, count = elasticsearch_access.get_all_love_quotes()
 	items = [{}] * count
 	oneitem = {}
+	random_i = random.randint(0,count-1)
 	for num, doc in enumerate(allrecords):
 		oneitem["Quote"] = doc["_source"]["Quote"]
 		#oneitem["Author"] = doc["_source"]["Author"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 	columns=["Quote"] #,"Author"]
-	return render_template('lovequotelist.html', columns=columns, items=items, count=count, love_quote=oneitem["Quote"])
+	return render_template('lovequotelist.html', columns=columns, items=items, count=count, love_quote=items[random_i]["Quote"])
 
 def email_notify_me(subject, content):
 	#email notification
@@ -346,8 +345,9 @@ def newsletter():
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 	random_book = elasticsearch_access.get_a_random_book()
+	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
 
-	newsletter_content = "Welcome to our nascent Literature Newsletter!!!\n\n"
+	newsletter_prefix = "Welcome to our nascent Literature Newsletter!!!\n\n"
 
 	#prepare email
 	message = EmailMessage()
@@ -364,6 +364,9 @@ def newsletter():
 	all_subscribers, count = elasticsearch_access.get_all_subscribers()
 	
 	for num, doc in enumerate(all_subscribers):
+
+		newsletter_content = newsletter_prefix
+
 		email = doc["_source"]["Email"]
 		interest = doc["_source"]["Interest"]
 
@@ -372,9 +375,11 @@ def newsletter():
 		if( "Book" in interest ):
 			newsletter_content += "Daily Book:\n    %s\n\n" % (random_book)
 		if( "Word" in interest ):
-			newsletter_content += "Daily Word:\n    %s\n\n\n" % (random_word)
+			newsletter_content += "Daily Word:\n    %s\n\n" % (random_word)
+		if( "Love" in interest ):
+			newsletter_content += "Daily Love Quote:\n    %s\n\n" % (random_love_quote)
 
-		newsletter_content += "Thanks for your time and have a nice day!\nhttp://www.whereliteraturemeetscomputing.com"
+		newsletter_content += "\nThanks for your time and have a nice day!\nhttp://www.whereliteraturemeetscomputing.com"
 		#for testing, only send to my personal email
 		if TESTING_NEWSLETTER == True:
 			email = myemail
@@ -391,9 +396,6 @@ def newsletter():
 	
 		server.send_message(message)
 		del message['To']
-
-		if TESTING_NEWSLETTER == True:
-			break
 		
 	server.quit()
 	email_notify_me("WLMC - newsletter sent!", "")
