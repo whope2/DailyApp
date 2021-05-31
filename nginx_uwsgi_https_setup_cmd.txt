@@ -1,0 +1,68 @@
+
+
+sudo apt install nginx
+sudo ufw app list
+sudo ufw allow 'Nginx Full'
+sudo ufw enable
+systemctl status nginx
+
+
+sudo systemctl stop nginx
+sudo systemctl start nginx
+sudo systemctl restart nginx (stop&restart)
+sudo systemctl reload nginx
+sudo systemctl disable nginx
+sudo systemctl enable nginx
+
+sudo ufw allow 5000
+
+pip3 install uwsgi
+
+#start uwsgi to serve flask dailyapp
+uwsgi --socket 0.0.0.0:5000 --protocol=http -w wsgi:app
+
+#or start uwsgi with a ini config file
+uwsgi --ini dailyapp.ini
+
+# uwsgi config file: dailyapp.ini
+[uwsgi]
+module = wsgi:app
+[uwsgi]
+module = wsgi:app
+master = true
+processes = 5
+socket = dailyapp.sock
+chmod-socket = 666  #666 solves the socket permission issue with 660
+vacuum = true
+die-on-term = true
+
+#optional if more than one domains
+sudo ln -s /etc/nginx/sites-available/dailyapp /etc/nginx/sites-enabled
+
+#Configuring Nginx to Proxy Requests in dailyapp under /etc/nginx/sites-available/
+server {
+    listen 80;
+    server_name localhost www.localhost;
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/home/ubuntu/DailyApp/dailyapp.sock;
+    }
+}
+
+#test syntax error
+sudo nginx -t
+
+#no longer use port 5000
+sudo ufw delete allow 5000
+sudo ufw allow 'Nginx Full'
+
+#nginx error -> /var/log/nginx/error.log
+
+#cerbot installation
+$ sudo apt-get install software-properties-common
+$ sudo add-apt-repository ppa:certbot/certbot
+$ sudo apt-get update
+$ sudo apt-get install certbot
+
+

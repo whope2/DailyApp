@@ -63,7 +63,7 @@ def get_a_random_photo() :
     print("generate random doc_id = %d" % random_doc_id)
     doc = client.get(index=index_name, id=str(random_doc_id))
     print(doc)
-    return(doc["_source"]["Photo File Name"])
+    return(doc["_source"]["Photo File Name"], doc["_source"]["Media ID"], doc["_source"]["Image URL"])
 
 def get_a_random_book() :
     index_name = "booklist"

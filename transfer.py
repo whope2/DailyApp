@@ -11,7 +11,7 @@ import file_mgr
 import elasticsearch_access
 import random
 
-from apscheduler.schedulers.background import BackgroundScheduler
+#from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 
 import smtplib, ssl	
@@ -39,7 +39,7 @@ def index():
 		email = request.args.get('email')
 		print("index %s" % email)
 
-	photolink = elasticsearch_access.get_a_random_photo()
+	photo_id, media_id, image_url = elasticsearch_access.get_a_random_photo()
 	random_quote = elasticsearch_access.get_a_random_quote()
 
 	doc_word = elasticsearch_access.get_a_random_word()
@@ -47,7 +47,7 @@ def index():
 
 	random_book = elasticsearch_access.get_a_random_book()
 	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
-	return render_template('index.html',word=random_word,quote=random_quote,photolink=photolink,book=random_book,love_quote=random_love_quote,email=email)
+	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,book=random_book,love_quote=random_love_quote,email=email)
 	
 @app.route('/echo_search')
 def echo_search():
@@ -58,43 +58,6 @@ def hello_name(name):
     #return "Hello " + name
 	#return render_template('echo.html', text=name)
 	return render_template('index.html', name=name)
-
-import requests
-@app.route("/elasticsearch/<args>")
-def route_es_args(args):
-	url = request.full_path
-	es_url = url.replace("/elasticsearch","http://localhost:9200")
-	print(es_url)
-	#return(redirect(es_url))
-	try: 
-		es_result = requests.get(es_url).json()  #Es throws an exception if not json format
-	except ValueError:
-		es_result = requests.get(es_url).content
-	print(es_result)
-	return(es_result)
-
-@app.route("/elasticsearch/<es_api>/<args>")
-def route_es_api_args(es_api,args):
-	url = request.full_path
-	es_url = url.replace("/elasticsearch","http://localhost:9200")
-	print(es_url)
-	#return(redirect(es_url))
-	try: 
-		es_result = requests.get(es_url).json()  #Es throws an exception if not json format
-	except ValueError:
-		es_result = requests.get(es_url).content
-	print(es_result)
-	return(es_result)
-
-@app.route("/stat")
-def stat():
-	#stat_json = elasticsearch_access.stat_wordlist()
-	#return stat_json	
-	instruction = "Use the browser and elasticsearch api: \n\
-/elasticsearch/_cat/indices \n\
-/elasticsearch/quotelist/_search?pretty=true \n\
-/elasticsearch/wordlist/_search?pretty=true&size=20"
-	return render_template('echo.html', text=instruction)
 
 @app.route("/pictureoftheday")
 def pictureoftheday():
@@ -335,6 +298,14 @@ def add_header(response):
 	response.headers["Expires"] = "0" # Proxies.	
 	return response
 
+def ig_shortcode_to_media_id(short_code):
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_'
+    media_id = 0
+    for letter in short_code:
+        media_id = (media_id*64) + alphabet.index(letter)
+
+    return media_id
+
 TESTING_NEWSLETTER = False
 def newsletter():
 	global TESTING_NEWSLETTER
@@ -345,9 +316,12 @@ def newsletter():
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 	random_book = elasticsearch_access.get_a_random_book()
-	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
+	random_love_quote = elasticsearch_access.get_a_random_love_quote()
+	photo_id, media_id, image_url = elasticsearch_access.get_a_random_photo()
 
-	newsletter_prefix = "Welcome to our nascent Literature Newsletter!!!\n\n"
+	#media_id_gen = ig_shortcode_to_media_id(photo_id)
+	
+	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n\n"
 
 	#prepare email
 	message = EmailMessage()
@@ -378,8 +352,9 @@ def newsletter():
 			newsletter_content += "Daily Word:\n    %s\n\n" % (random_word)
 		if( "Love" in interest ):
 			newsletter_content += "Daily Love Quote:\n    %s\n\n" % (random_love_quote)
-
-		newsletter_content += "\nThanks for your time and have a nice day!\nhttp://www.whereliteraturemeetscomputing.com"
+		if( "Photo" in interest ):
+			newsletter_content += "Daily Photo:\n"
+			
 		#for testing, only send to my personal email
 		if TESTING_NEWSLETTER == True:
 			email = myemail
@@ -389,11 +364,17 @@ def newsletter():
 		#set content and attachment
 		message.clear_content()
 		message.set_content(newsletter_content)	
-		html_content = '\
-<br><a href="http://www.whereliteraturemeetscomputing.com/presubscribe?email=%s#sub">Change Subscription</a>  |  \
-<a href="http://www.whereliteraturemeetscomputing.com/unsubscribe?email=%s">Unsubscribe</a></br>' % (email, email)	
+
+		if( "Photo" in interest ):
+			html_content_photo = '<img src="%s" alt="Photo of the Day" style="width:50%%;height:auto;"><br>' % image_url
+			message.add_attachment(html_content_photo, subtype="html")
+
+		html_content = "<br>Thanks for your time and have a nice day!<br>https://whereliteraturemeetscomputing.com"
+		html_content += '\
+<br><a href="https://whereliteraturemeetscomputing.com/presubscribe?email=%s#sub">Modify Subscription</a>  |  \
+<a href="https://whereliteraturemeetscomputing.com/unsubscribe?email=%s">Unsubscribe</a></br>' % (email, email)	
 		message.add_attachment(html_content, subtype="html")
-	
+
 		server.send_message(message)
 		del message['To']
 		
@@ -418,7 +399,7 @@ def triggernewsletter():
 	return render_template('echo.html', text="Newsletter sent!")
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
 
 	#newsletter scheduler
 	#scheduler = BackgroundScheduler()
@@ -428,5 +409,6 @@ if __name__ == '__main__':
 	#scheduler.add_job(newsletter, trigger='cron', second=20)
 	#scheduler.start()
 
+	#sslcontext = ('fullchain.pem','privkey.pem') #use nginx for https
 	#app.run(port=5000,debug=False)
-	app.run(host='0.0.0.0',port=80)
+	#app.run(host='0.0.0.0',port=80)
