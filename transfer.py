@@ -20,6 +20,8 @@ sender_email = "whereliteraturemeetscomputing@gmail.com"
 myemail = "whope2@gmail.com"
 port = 465  # For SSL
 
+import twitterbot
+
 UPLOAD_FOLDER = 'static/uploads/'
 
 app = Flask(__name__)
@@ -256,7 +258,7 @@ def subscribe():
 	if( "interest_word" in request.form ):
 		interest += ",Word"
 	if( "interest_lovequote" in request.form ):
-		interest += ",Lovequote"
+		interest += ",Love"
 	#strip the first comma if it exists
 	if( interest[0] == ",") :
 		interest = interest[1:]
@@ -366,6 +368,7 @@ def newsletter():
 		message.set_content(newsletter_content)	
 
 		if( "Photo" in interest ):
+			image_url = "https://whereliteraturemeetscomputing.com/static/instagram/%s.jpg" % photo_id
 			html_content_photo = '<img src="%s" alt="Photo of the Day" style="width:50%%;height:auto;"><br>' % image_url
 			message.add_attachment(html_content_photo, subtype="html")
 
@@ -398,17 +401,12 @@ def triggernewsletter():
 	newsletter()
 	return render_template('echo.html', text="Newsletter sent!")
 
+@app.route("/tweetquote")
+def tweetquote():
+	quote, author = elasticsearch_access.get_a_random_quote_and_author()
+	twitterbot.tweet_quote(quote, author)
+	return render_template('echo.html', text="A quote tweeted!")
 
 #if __name__ == '__main__':
-
-	#newsletter scheduler
-	#scheduler = BackgroundScheduler()
-	##scheduler.add_job(newsletter, 'interval', seconds=20) #trigger job at every 20 second interval
-	#trigger cron-style job whenever second==20 (every minute)
-	##newsletter()
-	#scheduler.add_job(newsletter, trigger='cron', second=20)
-	#scheduler.start()
-
-	#sslcontext = ('fullchain.pem','privkey.pem') #use nginx for https
 	#app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)

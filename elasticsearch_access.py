@@ -45,6 +45,13 @@ def get_a_random_quote() :
     doc = client.get(index=index_name, id=str(random_doc_id))
     return(doc["_source"]["Quote"] + " - " + doc["_source"]["Author"])
 
+def get_a_random_quote_and_author() :
+    index_name = "quotelist"
+    docs_count = client.count(index=index_name)['count']
+    random_doc_id = random.randint(1,docs_count)
+    doc = client.get(index=index_name, id=str(random_doc_id))
+    return(doc["_source"]["Quote"], doc["_source"]["Author"])
+
 def get_a_random_love_quote() :
     index_name = "lovequotelist"
     docs_count = client.count(index=index_name)['count']
