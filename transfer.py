@@ -10,6 +10,7 @@ import file_mgr
 
 import elasticsearch_access
 import random
+import requests
 
 #from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
@@ -407,6 +408,12 @@ def tweetquote():
 	twitterbot.tweet_quote(quote, author)
 	return render_template('echo.html', text="A quote tweeted!")
 
-#if __name__ == '__main__':
-	#app.run(port=5000,debug=False)
-	#app.run(host='0.0.0.0',port=80)
+@app.route("/retweetbook")
+def retweetbook():
+	tweet_id = elasticsearch_access.get_a_random_book_tweet_id()
+	twitterbot.retweet_book(tweet_id)
+	return render_template('echo.html', text="A book retweeted!")
+
+if __name__ == '__main__':
+	app.run(port=5000,debug=False)
+	app.run(host='0.0.0.0',port=80)

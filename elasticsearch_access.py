@@ -28,12 +28,6 @@ def get_a_random_word() :
     random_doc_id = random.randint(1,docs_count)
     print("generate random doc_id = %d" % random_doc_id)
     doc = client.get(index=index_name, id=str(random_doc_id))
-    #print(doc)
-    #print(doc["_source"]["message"])
-    #print(doc["_source"]["Word"])
-    #print(doc["_source"]["Definition"])
-    #print(doc["_source"]["Example Sentences"])
-    #return(doc["_source"]["message"])
     return(doc["_source"])
 
 def get_a_random_quote() :
@@ -71,6 +65,41 @@ def get_a_random_photo() :
     doc = client.get(index=index_name, id=str(random_doc_id))
     print(doc)
     return(doc["_source"]["Photo File Name"], doc["_source"]["Media ID"], doc["_source"]["Image URL"])
+
+def get_a_random_book_tweet_id() :
+    index_name = "booklist"
+    #results=client.search(index=index_name, body={"query": { "exists": { "field": "TweetID"} } })
+    results=client.search(index=index_name, body=\
+        {
+            "size":999,
+            "query": {
+                
+                "bool": {
+                    "should": [{
+                        "exists": {
+                            "field": "TweetID"
+                        }
+                    },
+                    {
+                        "exists": {
+                            "field": "External TweetID"
+                        }
+                    }
+                    ]
+                }
+            }
+        }
+    )
+        
+    hit_count = len(results["hits"]["hits"])
+    print("%d hits" % hit_count)
+    random_doc_index = random.randint(1,hit_count)
+    print(random_doc_index)
+    tweet_id = results["hits"]["hits"][random_doc_index-1]["_source"]["TweetID"]
+    ext_tweet_id = results["hits"]["hits"][random_doc_index-1]["_source"]["External TweetID"]
+    random_tweet_id = tweet_id if tweet_id != None else ext_tweet_id
+    print(random_tweet_id)
+    return(random_tweet_id)
 
 def get_a_random_book() :
     index_name = "booklist"
@@ -168,3 +197,5 @@ def add_a_comment(comment, author) :
 #for num, doc in enumerate(results["hits"]["hits"]): 
 #    print("index = %d" % num)
 #    print(doc)
+
+#get_a_random_book_tweet_id()
