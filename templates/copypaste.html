@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+ 
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+	<style type="text/css">    
+
+  table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  }
+  table.center {
+    margin-left: auto; 
+    margin-right: auto;
+    font-size: 2vw;
+  }  
+
+  body
+  {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 10vw;
+  }
+
+
+  /* Style the footer */
+  .footer {
+    background-color: #f1f1f1;
+    padding:2vw;
+    text-align: right;
+    font-size: 4vw;
+  }
+
+  h1
+  {
+    font-size:10vw;
+    color:rgb(20, 3, 104);
+  }
+
+  h2
+  {
+    font-size:8vw;
+    font-style: italic;
+    color:rgb(31, 4, 161);
+  }
+
+  </style>
+
+</head>  
+  
+<body>
+  <div class="topnav">
+    <a href="/"><img src="static/home.png" alt="Home" style="width:4vw;height:auto;"></a>
+    <a href="/liveathousandlives">Live 1000 Lives<img src="static/books.png" style="width:3vw;height:auto;"></a>
+    <a href="/pictureoftheday">Photo</a>
+    <a href="/quoteoftheday">Quote</a>
+    <a href="/genwordoftheday">Word</a>
+    <a href="/whatloveis">Love<img src="static/heart.png" style="width:3vw;height:auto;"></a>
+  </div>
+
+  <div class="content">
+    <p>Global Copy & Paste ({{ state }})</p>  
+    <form action="/copy" method="post" enctype="multipart/form-data">
+        <textarea class="inputtextarea" rows = "15" name = "CopyText">{{ text }}</textarea><br>
+        <input type="submit" value="Copy">
+      </form>
+  </div>
+  
+<div class="botnav">
+  <a href="/about"><img src="static/information.png" alt="About" style="width:4vw;height:auto;"></a>
+  <a href="/#sub"><img src="static/subscribe.png" alt="Subscribe" style="width:4vw;height:auto;"></a>
+  <a href="mailto:whereliteraturemeetscomputing@gmail.com"><img src="static/email.png" alt="Email" style="width:4vw;height:auto;"></a>
+  <a href="https://twitter.com/tothemax2050"><img src="static/twitter.png" alt="Twitter" style="width:4vw;height:auto;"></a>
+  <a href="https://www.facebook.com/wordsmartword"><img src="static/facebook.png" alt="Facebook" style="width:4vw;height:auto;"></a>
+  <a href="https://www.instagram.com/tothemax2050"><img src="static/instagram.png" alt="Instagram" style="width:4vw;height:auto;"></a>
+  <b style="color: white;font-family: Arial"><i>Where Literature Meets Computing!</i></b>
+</div>
+</body>
+</html>

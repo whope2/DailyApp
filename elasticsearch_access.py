@@ -193,6 +193,66 @@ def add_a_comment(comment, author) :
         'Author': author
     })
 
+def global_copy(text) :
+    client.index(index='globalcopypaste', id="1", body= \
+    {
+        'Text': text
+    })
+
+def global_paste() :
+    try:
+        doc = client.get(index='globalcopypaste', id="1")
+        print(doc)
+        return doc["_source"]["Text"]
+    except:
+        return ""
+
+def file_upload(filename) :
+    client.index(index='globalfiletransfer', id="1", body= \
+    {
+        'File Name': filename
+    })
+
+def file_download() :
+    try:
+        doc = client.get(index='globalfiletransfer', id="1")
+        print(doc)
+        return doc["_source"]["File Name"]
+    except:
+        return ""
+
+def save_blog(date, title, text) :
+    index_name = "blog"
+    if client.indices.exists(index_name) == False:
+        print("es save_blog, index does not exist, create the first entry")
+        id = 1 #first entry
+    else:
+        id = client.count(index=index_name)['count']
+        print("save_blog, docs_count = %d" % id)
+        id = id+1
+    print("id= %s" % str(id))
+    client.index(index='blog', id=str(id), body= \
+    {
+        'Date': date,
+        'Title' : title,
+        'Text': text
+    })
+    return
+
+def get_latest_blog() :
+    index_name = "blog"
+    id = client.count(index=index_name)['count']
+    print("docs_count = %d" % id)
+    doc = client.get(index=index_name, id=str(id))
+    return doc["_source"]["Date"], doc["_source"]["Title"], doc["_source"]["Text"]
+
+def get_all_blogs() :
+    index_name = "blog"
+    results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    allblogs = results["hits"]["hits"]
+    print(allblogs)
+    return(allblogs, hit_count) 
 #test
 #for num, doc in enumerate(results["hits"]["hits"]): 
 #    print("index = %d" % num)

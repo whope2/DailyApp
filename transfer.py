@@ -414,6 +414,60 @@ def retweetbook():
 	twitterbot.retweet_book(tweet_id)
 	return render_template('echo.html', text="A book retweeted!")
 
-if __name__ == '__main__':
-	app.run(port=5000,debug=False)
-	app.run(host='0.0.0.0',port=80)
+@app.route("/copy", methods=['POST'])
+def copy():
+	copy_paste_text = request.form['CopyText']
+	elasticsearch_access.global_copy(copy_paste_text)
+	return render_template('copypaste.html', text=copy_paste_text, state="copied")
+
+@app.route("/copypaste")
+def copypaste():
+	copy_paste_text = elasticsearch_access.global_paste()
+	return render_template('copypaste.html', text=copy_paste_text)
+
+@app.route("/transferfile")
+def transferfile():
+	filename = elasticsearch_access.file_download()
+	return render_template('transferfile.html', state="download", filename=filename)
+
+@app.route('/uploadfile', methods=['POST'])
+def uploadfile():
+	if 'file' not in request.files:
+		#No file part
+		return render_template('transferfile.html', state="No file part")
+	file = request.files['file']
+	if file.filename == '':
+		#No file selected
+		return render_template('transferfile.html', state="No file selected")
+
+	file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+	elasticsearch_access.file_upload(file.filename)
+	return render_template('transferfile.html', state=file.filename+" uploaded")
+
+@app.route("/blog")
+def blog():
+	try:
+		allblogs, count = elasticsearch_access.get_all_blogs()
+	except:
+		return render_template('blog.html')	
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allblogs):
+		oneitem = doc["_source"]
+		print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+	if items != None :
+		items.reverse()
+	return render_template('blog.html', blogs=items, count=count)
+
+@app.route("/saveblog", methods=['POST'])
+def saveblog():
+	text = request.form['BlogText']
+	title = request.form['BlogTitle']
+	date = datetime.now().date()
+	elasticsearch_access.save_blog(date, title, text)
+	return redirect('/blog')
+
+#if __name__ == '__main__':
+	#app.run(port=5000,debug=False)
+	#app.run(host='0.0.0.0',port=80)
