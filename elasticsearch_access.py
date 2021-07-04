@@ -44,7 +44,7 @@ def get_a_random_quote_and_author() :
     docs_count = client.count(index=index_name)['count']
     random_doc_id = random.randint(1,docs_count)
     doc = client.get(index=index_name, id=str(random_doc_id))
-    return(doc["_source"]["Quote"], doc["_source"]["Author"])
+    return(doc["_source"]["Quote"], doc["_source"]["Author"], doc["_source"]["TweetID"])
 
 def get_a_random_love_quote() :
     index_name = "lovequotelist"
@@ -73,7 +73,6 @@ def get_a_random_book_tweet_id() :
         {
             "size":999,
             "query": {
-                
                 "bool": {
                     "should": [{
                         "exists": {
@@ -221,41 +220,68 @@ def file_download() :
     except:
         return ""
 
-def save_blog(date, title, text) :
-    index_name = "blog"
+def save_journal(date, title, text, type) :
+    index_name = "journal"
     if client.indices.exists(index_name) == False:
-        print("es save_blog, index does not exist, create the first entry")
+        print("es save_journal, index does not exist, create the first entry")
         id = 1 #first entry
     else:
         id = client.count(index=index_name)['count']
-        print("save_blog, docs_count = %d" % id)
+        print("save_journal, docs_count = %d" % id)
         id = id+1
     print("id= %s" % str(id))
-    client.index(index='blog', id=str(id), body= \
+    client.index(index='journal', id=str(id), body= \
     {
         'Date': date,
         'Title' : title,
-        'Text': text
+        'Text': text,
+        'Type': type
     })
     return
 
-def get_latest_blog() :
-    index_name = "blog"
-    id = client.count(index=index_name)['count']
-    print("docs_count = %d" % id)
-    doc = client.get(index=index_name, id=str(id))
-    return doc["_source"]["Date"], doc["_source"]["Title"], doc["_source"]["Text"]
 
-def get_all_blogs() :
-    index_name = "blog"
+def edit_journal(id, title, text, type) :
+    index_name = "journal"
+    print("edit_journal, id=%s" % id)
+
+    doc = client.get(index='journal', id=id)
+
+    client.index(index='journal', id=str(id), body= \
+    {
+        'Date': doc["_source"]["Date"],
+        'Title' : title,
+        'Text': text,
+        'Type': type
+    })
+    return
+
+def get_all_journals() :
+    index_name = "journal"
     results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
+    alljournals = results["hits"]["hits"]
+    print(alljournals)
+    return(alljournals, hit_count) 
+
+def get_all_blogs():
+    index_name = "journal"
+    results=client.search(index=index_name, body=\
+    {
+    "query": {
+        "match": {
+        "Type": {
+            "query": "Blog"
+        }
+        }
+    }
+    })
+    hit_count = len(results["hits"]["hits"])
     allblogs = results["hits"]["hits"]
-    print(allblogs)
-    return(allblogs, hit_count) 
+    return allblogs, hit_count
 #test
 #for num, doc in enumerate(results["hits"]["hits"]): 
 #    print("index = %d" % num)
 #    print(doc)
 
 #get_a_random_book_tweet_id()
+#get_a_random_quote_and_author()

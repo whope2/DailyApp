@@ -65,19 +65,38 @@
     <a href="/whatloveis">Love<img src="static/heart.png" style="width:3vw;height:auto;"></a>
   </div>
 
+  {% if journaling %}
   <div class="content2">
-  <p>New Blog
-  <form action="/saveblog" method="post" enctype="multipart/form-data">
+  <p>New Journal or Blog
+  <form action="/savejournal" method="post" enctype="multipart/form-data">
       <input class="inputtext" type="text" name="BlogTitle" value="{{ title }}">
       <textarea class="inputtextarea" rows = "25" name = "BlogText">{{ text }}</textarea><br>
+      <label for="isblog">Blog</label>
+      <input type="checkbox" id="isblog" name="is_blog" value=1>
       <input type="submit" value="Save">
   </form>
   </p> 
   </div>
+  {% endif %}
+
   <div class="content">
     {%- for blog in blogs %}
-    <p>{{ blog["Title"] }} - {{ blog["Date"] }}<br>
-        <textarea class="inputtextarea" rows = "25" readonly>{{ blog["Text"] }}</textarea></p>
+    <p>{{ blog["Type"] }} - {{ blog["Title"] }} - {{ blog["Date"] }} - {{ blog["ID"] }}<br>
+      {% if journaling %}
+      <form action="{{ url_for('editjournal', id=blog["ID"]) }}" method="post" enctype="multipart/form-data">
+        <input class="inputtext" type="text" name="BlogTitle" value="{{ blog["Title"] }}">  
+        <textarea class="inputtextarea" rows = "25" name = "BlogText">{{ blog["Text"] }}</textarea></p>
+        <label for="isblog">Blog</label>
+        {% if blog["Type"] == "blog" %}
+        <input type="checkbox" id="isblog" name="is_blog" value=1 checked>
+        {% else %}
+        <input type="checkbox" id="isblog" name="is_blog" value=1>
+        {% endif %}
+        <input type="submit" value="Save">  
+      </form>
+      {% else %}
+      <textarea class="inputtextarea" rows = "25" readonly>{{ blog["Text"] }}</textarea></p>
+      {% endif %}
     <p>----------------------------</p>
     {%- endfor %}  
   </div>

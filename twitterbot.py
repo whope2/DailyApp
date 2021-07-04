@@ -27,17 +27,24 @@ def twitter_authorization() :
     
     return(api)
 
-def tweet_quote(quote, author) :
+def tweet_quote(quote, author, tweet_id) :
 
     api = twitter_authorization()
 
-    hashtags = "#quote #quoteoftheday"
-    tweet_text = quote +"\n" + "—" + author + "  " + hashtags
-
-    #tweet
-    status = api.update_status(tweet_text)
-    #like it
-    api.create_favorite(status.id)
+    if tweet_id:
+        #retweet
+        status = api.get_status(tweet_id)
+        if status.retweeted == True: #undo the previous retweet
+            api.unretweet(tweet_id)    
+        api.retweet(tweet_id)
+    else:
+        hashtags = "#quote #quoteoftheday"
+        tweet_text = quote +"\n" + "—" + author + "  " + hashtags
+        #tweet
+        status = api.update_status(tweet_text)
+        #like it
+        api.create_favorite(status.id)
+    
     return
 
 '''

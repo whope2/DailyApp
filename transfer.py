@@ -404,8 +404,10 @@ def triggernewsletter():
 
 @app.route("/tweetquote")
 def tweetquote():
-	quote, author = elasticsearch_access.get_a_random_quote_and_author()
-	twitterbot.tweet_quote(quote, author)
+	quote, author, tweet_id = elasticsearch_access.get_a_random_quote_and_author()
+	#test
+	#tweet_id = "1402369345595006982"
+	twitterbot.tweet_quote(quote, author, tweet_id)
 	return render_template('echo.html', text="A quote tweeted!")
 
 @app.route("/retweetbook")
@@ -444,6 +446,23 @@ def uploadfile():
 	elasticsearch_access.file_upload(file.filename)
 	return render_template('transferfile.html', state=file.filename+" uploaded")
 
+@app.route("/journal")
+def journal():
+	try:
+		alljournals, count = elasticsearch_access.get_all_journals()
+	except:
+		return render_template('blog.html')	
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(alljournals):
+		oneitem = doc["_source"]
+		oneitem["ID"] = doc["_id"]
+		print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+	if items != None :
+		items.reverse()
+	return render_template('blog.html', blogs=items, count=count, journaling=1)
+
 @app.route("/blog")
 def blog():
 	try:
@@ -460,13 +479,27 @@ def blog():
 		items.reverse()
 	return render_template('blog.html', blogs=items, count=count)
 
-@app.route("/saveblog", methods=['POST'])
-def saveblog():
+@app.route("/savejournal", methods=['POST'])
+def savejournal():
 	text = request.form['BlogText']
 	title = request.form['BlogTitle']
 	date = datetime.now().date()
-	elasticsearch_access.save_blog(date, title, text)
-	return redirect('/blog')
+	if( "is_blog" in request.form ):
+		elasticsearch_access.save_journal(date, title, text, "blog")
+	else:
+		elasticsearch_access.save_journal(date, title, text, "journal")
+	return redirect('/journal')
+
+@app.route("/editjournal", methods=['POST'])
+def editjournal():
+	text = request.form['BlogText']
+	title = request.form['BlogTitle']
+	id = request.args.get("id")
+	if( "is_blog" in request.form ):
+		elasticsearch_access.edit_journal(id, title, text, "blog")
+	else:
+		elasticsearch_access.edit_journal(id, title, text, "journal")
+	return redirect('/journal')
 
 #if __name__ == '__main__':
 	#app.run(port=5000,debug=False)
