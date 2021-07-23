@@ -54,7 +54,9 @@
   }
 
   </style>
-
+  
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  
 </head>  
   
 <body>
@@ -67,15 +69,109 @@
     <a href="/whatloveis">Love<img src="static/heart.png" style="width:3vw;height:auto;"></a>
   </div>
 
-  <div class="content">
-    <p><b>Book of The Day</b></p>
+  <div id="main-div" class="content">
+    <p><b>Books I Recommend on Twitter</b></p>
+    <img id="load-prev-button-top" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
+    <img id="load-next-button-top" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
+  </div>
+  <div id="main-photo-div" class="content">
     {%- for book in booklist %}
-    <blockquote class="twitter-tweet" data-conversation="none" align="center"><p lang="en" dir="ltr">...<a href="https://twitter.com/tothemax2050/status/{{ book }}">pic.twitter.com/jstcxC4t20</a></p>&mdash; Max (@tothemax2050) <a href="https://twitter.com/tothemax2050/status/{{ book }}?ref_src=twsrc%5Etfw">March 10, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <blockquote class="twitter-tweet" data-conversation="none" align="center"><p lang="en" dir="ltr">...<a href="https://twitter.com/tothemax2050/status/{{ book }}">pic.twitter.com/jstcxC4t20</a></p>&mdash; Max (@tothemax2050) <a href="https://twitter.com/tothemax2050/status/{{ book }}?ref_src=twsrc%5Etfw">March 10, 2021</a></blockquote>
     {%- endfor %}
   </div>
+  <div class="content">
+    <img id="load-prev-button" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
+<!--
+    <button id="load-prev-button" style="height:4vw;font-size:2vw;" onclick="loadPrevBooks()">Show Previous Books</button> 
+    <button id="load-next-button" style="height:4vw;font-size:2vw;" onclick="loadNextBooks()">Show More Books</button> 
+-->
+    <img id="load-next-button" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
+  </div>
+
+  <script>
+    var ulElementMain = document.getElementById("main-div");
+    var ulElementMainPhoto = document.getElementById("main-photo-div");
+    var photo_index = 0;
+    var photo_count = document.getElementById("main-photo-div").childElementCount;
+    var ulElementMainPhotoClone = ulElementMainPhoto.cloneNode(true);
+    ulElementMainPhoto.remove();
+    for (let i = 0; i < 5; i++) {
+      var clone = ulElementMainPhotoClone.children[i].cloneNode(true);
+      ulElementMain.appendChild(clone);
+    }
+    photo_index += 5;
+    ulElementMainPhoto.remove();
+    document.getElementById("load-prev-button").style.visibility = 'hidden';
+    document.getElementById("load-prev-button-top").style.visibility = 'hidden';
+    //document.getElementById("load-prev-button").disabled = true;
+  </script>
+  <script>
+    //document.getElementById("load-next-button").onclick = function() {loadMoreBooks()};
+    function positionBackNextButtons()
+    {
+      document.getElementById("load-prev-button").style.visibility = 'visible';
+      document.getElementById("load-next-button").style.visibility = 'visible';
+      document.getElementById("load-prev-button-top").style.visibility = 'visible';
+      document.getElementById("load-next-button-top").style.visibility = 'visible';
+
+      if(photo_index <= 5)
+      {
+        document.getElementById("load-prev-button").style.visibility = 'hidden';
+        document.getElementById("load-prev-button-top").style.visibility = 'hidden';
+      }
+
+      if(photo_index > photo_count)
+      {
+        document.getElementById("load-next-button").style.visibility = 'hidden';
+        document.getElementById("load-next-button-top").style.visibility = 'hidden';
+      }
+      //scroll to top of the page
+      scroll(0,0)
+    }
+
+    function appendScript() {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.charset = "utf-8"
+      s.src = "https://platform.twitter.com/widgets.js";
+      ulElementMain.appendChild(s);
+    }
+
+    function loadNextBooks() {
+      //remove all children except the first one
+      while(ulElementMain.children[3]) {
+        ulElementMain.children[3].remove()
+      }
+      var base = photo_index;
+      for (let i = 0; i < 5 && (i+photo_index<photo_count); i++) {
+        var clone = ulElementMainPhotoClone.children[base+i].cloneNode(true);
+        ulElementMain.appendChild(clone);
+      }
+      photo_index += 5;
+      appendScript();
+      positionBackNextButtons();
+    }
+
+    function loadPrevBooks() {
+      //remove all children except the first one
+      while(ulElementMain.children[3]) {
+        ulElementMain.children[3].remove()
+      }
+      var base = photo_index;
+      for (let i = 0; i < 5 && (base-10)>=0; i++) {
+        var clone = ulElementMainPhotoClone.children[base-10+i].cloneNode(true);
+        ulElementMain.appendChild(clone);
+      }
+      photo_index -= 5;
+      appendScript();
+      positionBackNextButtons();
+  }
+
+  </script>
 
   <div id="main-div" class="content2">
-    <p><b>Recommended Books - {{ count }} Books</b></p>
+    <p><b>More Books I Recommend - {{ count }} Books</b></p>
     <table class="center" border=1>
       <thead>
        {%- for column in columns %}

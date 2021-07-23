@@ -52,6 +52,16 @@
   }
 
   </style>
+  
+  <script>
+    function count_word( val )
+    {
+      var wom = val.match(/\S+/g);
+      return {
+          words : wom ? wom.length : 0
+      };
+    }
+  </script>
 
 </head>  
   
@@ -70,11 +80,23 @@
   <p>New Journal or Blog
   <form action="/savejournal" method="post" enctype="multipart/form-data">
       <input class="inputtext" type="text" name="BlogTitle" value="{{ title }}">
-      <textarea class="inputtextarea" rows = "25" name = "BlogText">{{ text }}</textarea><br>
+      <textarea id="textcontent" class="inputtextarea" rows = "25" name = "BlogText">{{ text }}</textarea><br>
       <label for="isblog">Blog</label>
       <input type="checkbox" id="isblog" name="is_blog" value=1>
       <input type="submit" value="Save">
   </form>
+  <div id="countWord"></div>
+  <script>
+    var textContent = document.getElementById("textcontent");
+    var showWordCount   = document.getElementById("countWord");
+
+    textContent.addEventListener("input", function(){
+      var v = count_word( this.value );
+      showWordCount.innerHTML = (
+          "Word Count: "+ v.words
+      );
+    }, false);
+  </script> 
   </p> 
   </div>
   {% endif %}

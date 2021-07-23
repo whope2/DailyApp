@@ -60,7 +60,7 @@ def echo_search():
 def hello_name(name):
     #return "Hello " + name
 	#return render_template('echo.html', text=name)
-	return render_template('index.html', name=name)
+	return redirect('/')
 
 @app.route("/pictureoftheday")
 def pictureoftheday():
@@ -405,9 +405,11 @@ def triggernewsletter():
 @app.route("/tweetquote")
 def tweetquote():
 	quote, author, tweet_id = elasticsearch_access.get_a_random_quote_and_author()
-	#test
-	#tweet_id = "1402369345595006982"
-	twitterbot.tweet_quote(quote, author, tweet_id)
+	quote2, author2, tweet_id2 = elasticsearch_access.get_a_random_quote_and_author()
+	if tweet_id :
+		twitterbot.tweet_quote(quote, author, tweet_id)
+	else:
+		twitterbot.tweet_quote(quote2, author2, tweet_id2)	
 	return render_template('echo.html', text="A quote tweeted!")
 
 @app.route("/retweetbook")
@@ -420,7 +422,7 @@ def retweetbook():
 def copy():
 	copy_paste_text = request.form['CopyText']
 	elasticsearch_access.global_copy(copy_paste_text)
-	return render_template('copypaste.html', text=copy_paste_text, state="copied")
+	return redirect('/copypaste')
 
 @app.route("/copypaste")
 def copypaste():
