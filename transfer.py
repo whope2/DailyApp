@@ -461,8 +461,6 @@ def journal():
 		oneitem["ID"] = doc["_id"]
 		print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
-	if items != None :
-		items.reverse()
 	return render_template('blog.html', blogs=items, count=count, journaling=1)
 
 @app.route("/blog")
@@ -477,8 +475,6 @@ def blog():
 		oneitem = doc["_source"]
 		print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
-	if items != None :
-		items.reverse()
 	return render_template('blog.html', blogs=items, count=count)
 
 @app.route("/savejournal", methods=['POST'])

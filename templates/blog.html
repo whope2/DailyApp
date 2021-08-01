@@ -80,7 +80,7 @@
   <p>New Journal or Blog
   <form action="/savejournal" method="post" enctype="multipart/form-data">
       <input class="inputtext" type="text" name="BlogTitle" value="{{ title }}">
-      <textarea id="textcontent" class="inputtextarea" rows = "25" name = "BlogText">{{ text }}</textarea><br>
+      <textarea id="textcontent" class="inputtextarea" rows = "12" name = "BlogText">{{ text }}</textarea><br>
       <label for="isblog">Blog</label>
       <input type="checkbox" id="isblog" name="is_blog" value=1>
       <input type="submit" value="Save">
@@ -107,7 +107,7 @@
       {% if journaling %}
       <form action="{{ url_for('editjournal', id=blog["ID"]) }}" method="post" enctype="multipart/form-data">
         <input class="inputtext" type="text" name="BlogTitle" value="{{ blog["Title"] }}">  
-        <textarea class="inputtextarea" rows = "25" name = "BlogText">{{ blog["Text"] }}</textarea></p>
+        <textarea class="inputtextarea" rows = "12" name = "BlogText">{{ blog["Text"] }}</textarea></p>
         <label for="isblog">Blog</label>
         {% if blog["Type"] == "blog" %}
         <input type="checkbox" id="isblog" name="is_blog" value=1 checked>
@@ -117,7 +117,7 @@
         <input type="submit" value="Save">  
       </form>
       {% else %}
-      <textarea class="inputtextarea" rows = "25" readonly>{{ blog["Text"] }}</textarea></p>
+      <textarea class="inputtextarea" rows = "12" readonly>{{ blog["Text"] }}</textarea></p>
       {% endif %}
     <p>----------------------------</p>
     {%- endfor %}  

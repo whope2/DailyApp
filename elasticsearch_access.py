@@ -257,7 +257,11 @@ def edit_journal(id, title, text, type) :
 
 def get_all_journals() :
     index_name = "journal"
-    results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
+    results=client.search(index=index_name,body=\
+    {   "size":999,
+        "query":{"match_all":{}},
+        "sort" : [ { "Date" : "desc" } ]
+    })
     hit_count = len(results["hits"]["hits"])
     alljournals = results["hits"]["hits"]
     print(alljournals)
@@ -267,13 +271,14 @@ def get_all_blogs():
     index_name = "journal"
     results=client.search(index=index_name, body=\
     {
-    "query": {
-        "match": {
-        "Type": {
-            "query": "Blog"
-        }
-        }
-    }
+        "query": {
+            "match": {
+            "Type": {
+                "query": "Blog"
+            }
+            }
+        },
+        "sort" : [ { "Date" : "desc" } ]
     })
     hit_count = len(results["hits"]["hits"])
     allblogs = results["hits"]["hits"]
@@ -285,3 +290,4 @@ def get_all_blogs():
 
 #get_a_random_book_tweet_id()
 #get_a_random_quote_and_author()
+#get_all_journals()

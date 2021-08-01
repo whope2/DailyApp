@@ -81,24 +81,115 @@
 
   <div class="content">
     <p><b>{{ count }} Quotes</b></p>
-    <table class="center" border=1>
-      <thead>
-       {%- for col_name in col_names %}
-          <th style="width: {{col_width[col_name]}}">{{ col_name }}</th>
-       {%- endfor %}
-      </thead>
-      <tbody>
-      {%- for row in items %}
-         <tr>
-         {%- for col_name in col_names %}
-            <td style="width: {{col_width[col_name]}}">{{ row[col_name] }}</td>
-         {%- endfor %}
-         </tr>
-      {%- endfor %}
-      </tbody>
-      </table>
-    
+    <img id="load-prev-button-top" onclick="loadPrev()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
+    <img id="load-next-button-top" onclick="loadNext()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
+    <table id="quotetable" class="center" border=1>
+    </table>
+    <br>
+    <img id="load-prev-button" onclick="loadPrev()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
+    <img id="load-next-button" onclick="loadNext()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
+
+  <script>
+    //tojson is a Jinja filter that dumps the structure to a JSON string and marks it safe 
+    //so that Jinja does not autoescape it
+    var columns = {{col_names | tojson}} 
+    var items = {{items | tojson}}
+    var col_width = {{ col_width | tojson }}
+    var table = document.getElementById("quotetable");
+    // Create an empty <thead> element and add it to the table:
+    var header = table.createTHead();
+    // Create an empty <tr> element and add it to the first position of <thead>:
+    var headrow = header.insertRow(0);
+    for(let i = 0; i < columns.length; i++){ 
+    // Insert a new cell (<td>) at the first position of the "new" <tr> element:
+      let cell = headrow.insertCell(i);
+      // Add some bold text in the new cell:
+      let column = columns[i];
+      cell.innerHTML = "<b>" + column + "</b>"; 
+      cell.style.width = col_width[column];
+    }
+    var tablebody = table.createTBody();
+    var total_entry_count = items.length;
+    var page_base_index = 0;
+    var page_entry_count_config = 20;
+    for(let i = 0; i < page_entry_count_config; i++){ 
+      // Create an empty <tr> element and add it to the ith position of the table:
+      let bodyrow = tablebody.insertRow(i);
+      for(let j = 0; j < columns.length; j++){ 
+        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+        let cell = bodyrow.insertCell(j);
+        let column = columns[j];
+        // Add some text to the new cells:
+        cell.innerHTML = items[i][column];
+        cell.style.width = col_width[column];
+      }
+    }
+    page_base_index += page_entry_count_config;
+    document.getElementById("load-prev-button").style.visibility = 'hidden';
+    document.getElementById("load-prev-button-top").style.visibility = 'hidden';
+  </script>
+  <script>
+    function emptyTableTbody()
+    {
+      //remove all rows in TBody      
+      let rowCount = tablebody.rows.length;
+      for (let i=rowCount-1; i>=0; i--) {
+        tablebody.deleteRow(i);
+      }
+    }
+    function positionBackNextButtons()
+    {
+      document.getElementById("load-prev-button").style.visibility = 'visible';
+      document.getElementById("load-next-button").style.visibility = 'visible';
+      document.getElementById("load-prev-button-top").style.visibility = 'visible';
+      document.getElementById("load-next-button-top").style.visibility = 'visible';
+
+      if(page_base_index <= page_entry_count_config)
+      {
+        document.getElementById("load-prev-button").style.visibility = 'hidden';
+        document.getElementById("load-prev-button-top").style.visibility = 'hidden';
+      }
+
+      if(page_base_index > total_entry_count)
+      {
+        document.getElementById("load-next-button").style.visibility = 'hidden';
+        document.getElementById("load-next-button-top").style.visibility = 'hidden';
+      }
+    }
+    function loadNext() {
+      emptyTableTbody();
+      for(let i = 0; i < page_entry_count_config && (i+page_base_index<total_entry_count); i++){ 
+        // Create an empty <tr> element and add it to the 1st position of the table:
+        let bodyrow = tablebody.insertRow(i);
+        for(let j = 0; j < columns.length; j++){ 
+          // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+          let cell = bodyrow.insertCell(j);
+          // Add some text to the new cells:
+          let column = columns[j];
+          cell.innerHTML = items[page_base_index+i][column];
+          cell.style.width = col_width[column];
+        }
+      }
+      page_base_index += page_entry_count_config;
+      positionBackNextButtons();
+    }
+
+    function loadPrev() {
+      emptyTableTbody();
+      for (let i = 0; i < page_entry_count_config && (page_base_index-2*page_entry_count_config)>=0; i++) {
+        let bodyrow = tablebody.insertRow(i);
+        for(let j = 0; j < columns.length; j++){ 
+          let cell = bodyrow.insertCell(j);
+          let column = columns[j];
+          cell.innerHTML = items[page_base_index-2*page_entry_count_config+i][column];
+          cell.style.width = col_width[column];
+        }
+      }
+      page_base_index -= page_entry_count_config;
+      positionBackNextButtons();
+    }
+  </script>
 
 <div class="botnav">
   <a href="/about"><img src="static/information.png" alt="About" style="width:4vw;height:auto;"></a>

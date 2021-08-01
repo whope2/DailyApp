@@ -70,7 +70,7 @@
   </div>
 
   <div id="main-div" class="content">
-    <p><b>Books I Recommend on Twitter</b></p>
+    <p><b>Books I Recommended on Twitter</b></p>
     <img id="load-prev-button-top" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
     <img id="load-next-button-top" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
@@ -81,10 +81,6 @@
   </div>
   <div class="content">
     <img id="load-prev-button" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
-<!--
-    <button id="load-prev-button" style="height:4vw;font-size:2vw;" onclick="loadPrevBooks()">Show Previous Books</button> 
-    <button id="load-next-button" style="height:4vw;font-size:2vw;" onclick="loadNextBooks()">Show More Books</button> 
--->
     <img id="load-next-button" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
 
@@ -103,10 +99,8 @@
     ulElementMainPhoto.remove();
     document.getElementById("load-prev-button").style.visibility = 'hidden';
     document.getElementById("load-prev-button-top").style.visibility = 'hidden';
-    //document.getElementById("load-prev-button").disabled = true;
   </script>
   <script>
-    //document.getElementById("load-next-button").onclick = function() {loadMoreBooks()};
     function positionBackNextButtons()
     {
       document.getElementById("load-prev-button").style.visibility = 'visible';
@@ -167,38 +161,56 @@
       appendScript();
       positionBackNextButtons();
   }
-
   </script>
 
-  <div id="main-div" class="content2">
+  <div class="content2">
     <p><b>More Books I Recommend - {{ count }} Books</b></p>
-    <table class="center" border=1>
-      <thead>
-       {%- for column in columns %}
-          <th>{{ column }}</th>
-       {%- endfor %}
-      </thead>
-      <tbody>
-      {%- for row in items %}
-         <tr>
-         {%- for column in columns %}
-            <td>{{ row[column] }}</td>
-         {%- endfor %}
-         </tr>
-      {%- endfor %}
-      </tbody>
-      </table>
-    
+    <table id="booktable" class="center" border=1>
+    </table>
   </div>
 
-<div class="botnav">
-  <a href="/about"><img src="static/information.png" alt="About" style="width:4vw;height:auto;"></a>
-  <a href="/#sub"><img src="static/subscribe.png" alt="Subscribe" style="width:4vw;height:auto;"></a>
-  <a href="mailto:whereliteraturemeetscomputing@gmail.com"><img src="static/email.png" alt="Email" style="width:4vw;height:auto;"></a>
-  <a href="https://twitter.com/tothemax2050"><img src="static/twitter.png" alt="Twitter" style="width:4vw;height:auto;"></a>
-  <a href="https://www.facebook.com/wordsmartword"><img src="static/facebook.png" alt="Facebook" style="width:4vw;height:auto;"></a>
-  <a href="https://www.instagram.com/tothemax2050"><img src="static/instagram.png" alt="Instagram" style="width:4vw;height:auto;"></a>
-  <b style="color: white;font-family: Arial"><i>Where Literature Meets Computing!</i></b>
-</div>
+  <script>
+    //tojson is a Jinja filter that dumps the structure to a JSON string and marks it safe 
+    //so that Jinja does not autoescape it
+    var columns = {{columns | tojson}} 
+    var items = {{items | tojson}}
+    var count = {{count | tojson}}
+    var table = document.getElementById("booktable");
+    // Create an empty <thead> element and add it to the table:
+    var header = table.createTHead();
+    // Create an empty <tr> element and add it to the first position of <thead>:
+    var headrow = header.insertRow(0);
+    for(let i = 0; i < columns.length; i++){ 
+    // Insert a new cell (<td>) at the first position of the "new" <tr> element:
+      let cell = headrow.insertCell(i);
+      // Add some bold text in the new cell:
+      cell.innerHTML = "<b>" + columns[i] + "</b>"; 
+      if( columns[i] == "Date Finished" ) //do not change column[i] as it is used for dictionary lookup
+        cell.innerHTML = "<b>" + "Date Read" + "</b>"; 
+    }
+    var body = table.createTBody();
+    for(let i = 0; i < items.length; i++){ 
+      // Create an empty <tr> element and add it to the 1st position of the table:
+      let bodyrow = body.insertRow(i);
+      for(let j = 0; j < columns.length; j++){ 
+        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+        let cell = bodyrow.insertCell(j);
+        // Add some text to the new cells:
+        let column = columns[j];
+        cell.innerHTML = items[i][column];
+      }
+    }
+  </script>
+
+  <div class="botnav">
+    <a href="/about"><img src="static/information.png" alt="About" style="width:4vw;height:auto;"></a>
+    <a href="/#sub"><img src="static/subscribe.png" alt="Subscribe" style="width:4vw;height:auto;"></a>
+    <a href="mailto:whereliteraturemeetscomputing@gmail.com"><img src="static/email.png" alt="Email" style="width:4vw;height:auto;"></a>
+    <a href="https://twitter.com/tothemax2050"><img src="static/twitter.png" alt="Twitter" style="width:4vw;height:auto;"></a>
+    <a href="https://www.facebook.com/wordsmartword"><img src="static/facebook.png" alt="Facebook" style="width:4vw;height:auto;"></a>
+    <a href="https://www.instagram.com/tothemax2050"><img src="static/instagram.png" alt="Instagram" style="width:4vw;height:auto;"></a>
+    <b style="color: white;font-family: Arial"><i>Where Literature Meets Computing!</i></b>
+  </div>
+
 </body>
 </html>
