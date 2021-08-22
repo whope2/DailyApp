@@ -108,12 +108,10 @@ def get_a_random_book() :
     print("generate random doc_id = %d" % random_doc_id)
     doc = client.get(index=index_name, id=str(random_doc_id))
     print(doc)
-    #print(doc["_source"]["Book Title"])
-    #print(doc["_source"]["Author"])
-    #print(doc["_source"]["Year Published"])
     bookinfo = "Title: " + doc["_source"]["Book Title"] + ".  Author: " + doc["_source"]["Author"] + ".  Year Published: " + doc["_source"]["Year Published"]
+    bookimage = doc["_source"]["Image File Name"]
     print(bookinfo)
-    return(bookinfo)
+    return(bookinfo, bookimage)
 
 def get_all_book() :
     results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})

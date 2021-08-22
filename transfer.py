@@ -48,7 +48,7 @@ def index():
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 
-	random_book = elasticsearch_access.get_a_random_book()
+	random_book, book_image = elasticsearch_access.get_a_random_book()
 	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
 	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,book=random_book,love_quote=random_love_quote,email=email)
 	
@@ -58,9 +58,9 @@ def echo_search():
 
 @app.route("/<name>")
 def hello_name(name):
-    #return "Hello " + name
-	#return render_template('echo.html', text=name)
-	return redirect('/')
+	text = '"Every one of us is losing something precious to us. Lost opportunities, lost possibilities, feelings we can never get back again. That’s part of what it means to be alive."—Haruki Murakami, Kafka on the Shore'
+	return render_template('echo.html', text=text)
+	#return redirect('/')
 
 @app.route("/pictureoftheday")
 def pictureoftheday():
@@ -318,13 +318,14 @@ def newsletter():
 	random_quote = elasticsearch_access.get_a_random_quote()
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
-	random_book = elasticsearch_access.get_a_random_book()
+	random_book, random_book_image = elasticsearch_access.get_a_random_book()
+	#random_book_image = "E9PKOW_WUAQrV9W.jpeg" #testing
 	random_love_quote = elasticsearch_access.get_a_random_love_quote()
 	photo_id, media_id, image_url = elasticsearch_access.get_a_random_photo()
 
 	#media_id_gen = ig_shortcode_to_media_id(photo_id)
 	
-	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n\n"
+	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
 
 	#prepare email
 	message = EmailMessage()
@@ -346,17 +347,6 @@ def newsletter():
 
 		email = doc["_source"]["Email"]
 		interest = doc["_source"]["Interest"]
-
-		if( "Quote" in interest ):
-			newsletter_content += "Daily Quote:\n    %s\n\n" % (random_quote)
-		if( "Book" in interest ):
-			newsletter_content += "Daily Book:\n    %s\n\n" % (random_book)
-		if( "Word" in interest ):
-			newsletter_content += "Daily Word:\n    %s\n\n" % (random_word)
-		if( "Love" in interest ):
-			newsletter_content += "Daily Love Quote:\n    %s\n\n" % (random_love_quote)
-		if( "Photo" in interest ):
-			newsletter_content += "Daily Photo:\n"
 			
 		#for testing, only send to my personal email
 		if TESTING_NEWSLETTER == True:
@@ -368,9 +358,29 @@ def newsletter():
 		message.clear_content()
 		message.set_content(newsletter_content)	
 
+		if( "Quote" in interest ):
+			html_content_quote = "<br>Daily Quote:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (random_quote)
+			message.add_attachment(html_content_quote, subtype="html")
+
+		if( "Book" in interest ):
+			html_content_book = "<br>Daily Book:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>&nbsp;&nbsp;&nbsp;&nbsp;" % (random_book)
+			if( random_book_image ):
+				book_url = "https://whereliteraturemeetscomputing.com/static/books/%s" % random_book_image
+				html_content_book += '<img src="%s" alt="Book of the Day" style="width:25%%;height:auto;"><br>' % book_url
+			message.add_attachment(html_content_book, subtype="html")
+
+		if( "Word" in interest ):
+			html_content_word = "<br>Daily Word:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (random_word)
+			message.add_attachment(html_content_word, subtype="html")
+
+		if( "Love" in interest ):
+			html_content_love = "<br>Daily Love Quote:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (random_love_quote)
+			message.add_attachment(html_content_love, subtype="html")
+
 		if( "Photo" in interest ):
+			html_content_photo = "<br>Daily Photo:<br>&nbsp;&nbsp;&nbsp;&nbsp;"
 			image_url = "https://whereliteraturemeetscomputing.com/static/instagram/%s.jpg" % photo_id
-			html_content_photo = '<img src="%s" alt="Photo of the Day" style="width:50%%;height:auto;"><br>' % image_url
+			html_content_photo += '<img src="%s" alt="Photo of the Day" style="width:50%%;height:auto;"><br>' % image_url
 			message.add_attachment(html_content_photo, subtype="html")
 
 		html_content = "<br>Thanks for your time and have a nice day!<br>https://whereliteraturemeetscomputing.com"
@@ -414,7 +424,7 @@ def tweetquote():
 
 @app.route("/retweetbook")
 def retweetbook():
-	tweet_id = elasticsearch_access.get_a_random_book_tweet_id()
+	tweet_id, book_image = elasticsearch_access.get_a_random_book_tweet_id()
 	twitterbot.retweet_book(tweet_id)
 	return render_template('echo.html', text="A book retweeted!")
 
@@ -499,6 +509,6 @@ def editjournal():
 		elasticsearch_access.edit_journal(id, title, text, "journal")
 	return redirect('/journal')
 
-#if __name__ == '__main__':
-	#app.run(port=5000,debug=False)
+if __name__ == '__main__':
+	app.run(port=5001,debug=False)
 	#app.run(host='0.0.0.0',port=80)
