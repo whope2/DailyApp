@@ -211,8 +211,6 @@
       let cell = headrow.insertCell(i);
       // Add some bold text in the new cell:
       cell.innerHTML = "<b>" + columns[i] + "</b>"; 
-      if( columns[i] == "Date Finished" ) //do not change column[i] as it is used for dictionary lookup
-        cell.innerHTML = "<b>" + "Date Read" + "</b>"; 
     }
     var body = table.createTBody();
     for(let i = 0; i < items.length; i++){ 
@@ -224,6 +222,13 @@
         // Add some text to the new cells:
         let column = columns[j];
         cell.innerHTML = items[i][column];
+        if( j== 0 ) { //image file 
+          let image_file_name = items[i][column];
+          //use backtics ` ` for formating a string (like %s in C)
+          let book_url = `static/books/${image_file_name}`;
+          cell.innerHTML = `<a href=${book_url}><img src=${book_url} alt="" style="width:auto;height:5vw;"></a>`;
+          //console.log(cell.innerHTML);
+        }
       }
     }
   </script>
