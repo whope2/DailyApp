@@ -50,7 +50,7 @@ def index():
 
 	random_book, book_image = elasticsearch_access.get_a_random_book()
 	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
-	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,book=random_book,love_quote=random_love_quote,email=email)
+	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,book=random_book,book_image=book_image,love_quote=random_love_quote,email=email)
 	
 @app.route('/echo_search')
 def echo_search():
@@ -189,7 +189,7 @@ def liveathousandlives():
 		oneitem["Book Title"] = doc["_source"]["Book Title"]
 		oneitem["Author"] = doc["_source"]["Author"]
 		oneitem["Year Published"] = doc["_source"]["Year Published"]
-		oneitem["Date Read"] = doc["_source"]["Date Finished"]
+		oneitem["My Rating"] = doc["_source"]["Rating"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 		if doc["_source"]["TweetID"] != None :  #if not an empty
@@ -197,7 +197,7 @@ def liveathousandlives():
 	
 	random.shuffle(booklist)
 	bookcount = len(booklist)
-	columns=["Cover Image","Book Title","Author","Year Published","Date Read"]
+	columns=["Cover Image","Book Title","Author","Year Published","My Rating"]
 	random_i = random.randint(0,count-1)
 	return render_template('booklist.html', columns=columns, items=items, count=count,\
 		booklist=booklist, bookcount=bookcount)
@@ -266,7 +266,7 @@ def subscribe():
 		interest = interest[1:]
 
 	elasticsearch_access.add_a_subscription(email, interest)
-	email_notify_me("TWLMC - New subscription!", ("from: %s" % email))
+	email_notify_me("TWLMC - New subscription!", ("from: %s, interest: %s" % (email,interest)))
 
 	return render_template('echo.html', text="Thanks for your subscription!")
 
@@ -274,6 +274,11 @@ def subscribe():
 def unsubscribe():
 	arg_count = len(request.args)
 	email = request.args.get('email')
+	return render_template('unsubscribe.html', email=email)
+
+@app.route("/unsubscribing", methods=['POST'])
+def unsubscribing():
+	email = request.form['email']
 	print("unsubscribe %s" % email)
 	elasticsearch_access.remove_a_subscription(email)
 	email_notify_me("TWLMC - Unsubscription", ("from: %s" % email))
@@ -425,7 +430,7 @@ def tweetquote():
 
 @app.route("/retweetbook")
 def retweetbook():
-	tweet_id, book_image = elasticsearch_access.get_a_random_book_tweet_id()
+	tweet_id = elasticsearch_access.get_a_random_book_tweet_id()
 	twitterbot.retweet_book(tweet_id)
 	return render_template('echo.html', text="A book retweeted!")
 
