@@ -82,12 +82,15 @@
   <div class="content">
     <p><b>{{ count }} Quotes</b></p>
     <img id="load-prev-button-top" onclick="loadPrev()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
+    <i id="page-indicator-top" style="font-size:2vw;">1/5</i>
     <img id="load-next-button-top" onclick="loadNext()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
     <table id="quotetable" class="center" border=1>
     </table>
     <br>
     <img id="load-prev-button" onclick="loadPrev()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
+    <i id="page-indicator-bot" style="font-size:2vw;">1/5</i>
     <img id="load-next-button" onclick="loadNext()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
+
   </div>
 
   <script>
@@ -125,6 +128,13 @@
         cell.style.width = col_width[column];
       }
     }
+    let page_begin = page_base_index/page_entry_count_config+1;
+    var page_end = Math.floor(total_entry_count/page_entry_count_config)+1;
+    if( total_entry_count % page_entry_count_config == 0)
+      page_end--;
+    document.getElementById("page-indicator-top").innerHTML = page_begin.toString() + "/" + page_end.toString();
+    document.getElementById("page-indicator-bot").innerHTML = page_begin.toString() + "/" + page_end.toString();
+
     page_base_index += page_entry_count_config;
     document.getElementById("load-prev-button").style.visibility = 'hidden';
     document.getElementById("load-prev-button-top").style.visibility = 'hidden';
@@ -144,6 +154,10 @@
       document.getElementById("load-next-button").style.visibility = 'visible';
       document.getElementById("load-prev-button-top").style.visibility = 'visible';
       document.getElementById("load-next-button-top").style.visibility = 'visible';
+
+      let page_begin = page_base_index/page_entry_count_config;
+      document.getElementById("page-indicator-top").innerHTML = page_begin.toString() + "/" + page_end.toString();
+      document.getElementById("page-indicator-bot").innerHTML = page_begin.toString() + "/" + page_end.toString();
 
       if(page_base_index <= page_entry_count_config)
       {

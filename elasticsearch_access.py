@@ -64,7 +64,7 @@ def get_a_random_photo() :
     print("generate random doc_id = %d" % random_doc_id)
     doc = client.get(index=index_name, id=str(random_doc_id))
     print(doc)
-    return(doc["_source"]["Photo File Name"], doc["_source"]["Media ID"], doc["_source"]["Image URL"])
+    return(doc["_source"]["Photo File Name"])
 
 def get_a_random_book_tweet_id() :
     index_name = "booklist"
@@ -116,11 +116,101 @@ def get_a_random_book() :
 def get_all_book() :
     results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
-    print("%d hits" % hit_count)
+    #print("%d hits" % hit_count)
     allbooks = results["hits"]["hits"]
-    print(allbooks)
+    #print(allbooks)
     return(allbooks, hit_count)   
 
+def get_book_statistics():
+    index_name = "booklist"
+    #total_count = client.count(index=index_name)['count']
+    allbooks, total_count = get_all_book()
+
+    results=client.count(index=index_name, body=\
+    {
+        "query": {
+            "match": {
+                "Genre": {
+                    "query": "Fiction"
+                }
+            }
+        }
+    })
+    fiction_count = results["count"]
+    nonfiction_count = total_count - fiction_count
+
+    #query "Audio Book" return invalid result as ES/query does not search exact string
+    #query "Audio" return correct result
+    #For same reason, query "Book" will not return physical book count
+    results=client.count(index=index_name, body=\
+    {
+        "query": {
+            "match": {
+                "Book Type": {
+                    "query": "Audio"
+                }
+            }
+        }
+    })
+    audio_book_count = results["count"]
+    results=client.count(index=index_name, body=\
+    {
+        "query": {
+            "match": {
+                "Book Type": {
+                    "query": "EBook"
+                }
+            }
+        }
+    })
+    ebook_count = results["count"]
+    phy_book_count = total_count - audio_book_count - ebook_count
+
+    ''' aggregration on text field not possible
+    results=client.search(index=index_name, body=\
+    {
+        "aggs": {
+            "avg_page_count": { "avg": { "field": "Page Count" } }
+        }
+    })
+    avg_page_count = results["aggregations"]["avg_page_count"]
+    '''
+
+    min_page_count = 500
+    max_page_count = 0
+    total_page_count = 0
+    count = 0
+    for doc in allbooks:
+        if( doc["_source"]["Page Count"] != None ) :            
+            page_count = int(doc["_source"]["Page Count"])
+            count = count + 1
+            total_page_count = total_page_count + page_count
+            if( page_count < min_page_count ):
+                min_page_count = page_count
+            if( page_count > max_page_count ):
+                max_page_count = page_count
+    avg_page_count = int(total_page_count / count)
+    print("min_page_count: %d" % min_page_count)
+    print("max_page_count: %d" % max_page_count)
+    print("total_page_count: %d" % total_page_count)
+    print("avg_page_count: %d" % avg_page_count)
+
+    book_stats = \
+    {
+        "total count": total_count,
+        "fiction count": fiction_count,
+        "nonfiction count": nonfiction_count,
+        "physical book count": phy_book_count,
+        "ebook count": ebook_count,
+        "audio book count": audio_book_count,
+        "min page count": min_page_count,
+        "max page count": max_page_count,
+        "total page count": total_page_count,
+        "total word count": total_page_count*299, # 250-300 words per page
+        "average page count": avg_page_count
+    }
+    return book_stats
+    
 def get_all_love_quotes() :    
     results=client.search(index="lovequotelist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
@@ -289,3 +379,4 @@ def get_all_blogs():
 #get_a_random_book_tweet_id()
 #get_a_random_quote_and_author()
 #get_all_journals()
+#get_book_statistics()

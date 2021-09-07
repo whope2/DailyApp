@@ -72,6 +72,7 @@
   <div id="main-div" class="content">
     <p><b>Books I Recommended on Twitter</b></p>
     <img id="load-prev-button-top" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
+    <i id="page-indicator-top" style="font-size:2vw;">1/5</i>
     <img id="load-next-button-top" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
   <div id="main-photo-div" class="content">
@@ -81,6 +82,7 @@
   </div>
   <div class="content">
     <img id="load-prev-button" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
+    <i id="page-indicator-bot" style="font-size:2vw;">1/5</i>
     <img id="load-next-button" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
 
@@ -91,11 +93,20 @@
     var photo_count = document.getElementById("main-photo-div").childElementCount;
     var ulElementMainPhotoClone = ulElementMainPhoto.cloneNode(true);
     ulElementMainPhoto.remove();
-    for (let i = 0; i < 5; i++) {
+    var photo_count_per_page =5;
+    for (let i = 0; i < photo_count_per_page; i++) {
       var clone = ulElementMainPhotoClone.children[i].cloneNode(true);
       ulElementMain.appendChild(clone);
     }
-    photo_index += 5;
+    let page_begin = photo_index/photo_count_per_page+1;
+    var page_end = Math.floor(photo_count/photo_count_per_page)+1;
+    if( photo_count % photo_count_per_page == 0)
+      page_end--;
+
+    document.getElementById("page-indicator-top").innerHTML = page_begin.toString() + "/" + page_end.toString();
+    document.getElementById("page-indicator-bot").innerHTML = page_begin.toString() + "/" + page_end.toString();
+
+    photo_index += photo_count_per_page;
     ulElementMainPhoto.remove();
     document.getElementById("load-prev-button").style.visibility = 'hidden';
     document.getElementById("load-prev-button-top").style.visibility = 'hidden';
@@ -108,18 +119,21 @@
       document.getElementById("load-prev-button-top").style.visibility = 'visible';
       document.getElementById("load-next-button-top").style.visibility = 'visible';
 
-      if(photo_index <= 5)
+      let page_begin = photo_index/photo_count_per_page;
+      document.getElementById("page-indicator-top").innerHTML = page_begin.toString() + "/" + page_end.toString();
+      document.getElementById("page-indicator-bot").innerHTML = page_begin.toString() + "/" + page_end.toString();
+
+      if(photo_index <= photo_count_per_page)
       {
         document.getElementById("load-prev-button").style.visibility = 'hidden';
         document.getElementById("load-prev-button-top").style.visibility = 'hidden';
       }
 
-      if(photo_index > photo_count)
+      if(photo_index >= photo_count)
       {
         document.getElementById("load-next-button").style.visibility = 'hidden';
         document.getElementById("load-next-button-top").style.visibility = 'hidden';
       }
-      //scroll to top of the page
       scroll(0,0)
     }
 
@@ -134,36 +148,37 @@
 
     function loadNextBooks() {
       //remove all children except the first one
-      while(ulElementMain.children[3]) {
-        ulElementMain.children[3].remove()
+      while(ulElementMain.children[4]) {  //bad dependency: 4 due to 3 elements ahead of the table
+        ulElementMain.children[4].remove()
       }
       var base = photo_index;
-      for (let i = 0; i < 5 && (i+photo_index<photo_count); i++) {
+      for (let i = 0; i < photo_count_per_page && (i+photo_index<photo_count); i++) {
         var clone = ulElementMainPhotoClone.children[base+i].cloneNode(true);
         ulElementMain.appendChild(clone);
       }
-      photo_index += 5;
+      photo_index += photo_count_per_page;
       appendScript();
       positionBackNextButtons();
     }
 
     function loadPrevBooks() {
       //remove all children except the first one
-      while(ulElementMain.children[3]) {
-        ulElementMain.children[3].remove()
+      while(ulElementMain.children[4]) { //bad dependency: 4 due to 3 elements ahead of the table
+        ulElementMain.children[4].remove()
       }
       var base = photo_index;
-      for (let i = 0; i < 5 && (base-10)>=0; i++) {
-        var clone = ulElementMainPhotoClone.children[base-10+i].cloneNode(true);
+      for (let i = 0; i < photo_count_per_page && (base-2*photo_count_per_page)>=0; i++) {
+        var clone = ulElementMainPhotoClone.children[base-2*photo_count_per_page+i].cloneNode(true);
         ulElementMain.appendChild(clone);
       }
-      photo_index -= 5;
+      photo_index -= photo_count_per_page;
       appendScript();
       positionBackNextButtons();
   }
   </script>
 
   <div class="content2">
+  <p><b>My Activities on Goodreads</b></p>
   <style>
     #gr_updates_widget{
     float:center;
@@ -190,47 +205,143 @@
   </div>
   
   <div class="content">
-    <p><b>Books I have read - {{ count }} Books</b></p>
-    <table id="booktable" class="center" border=1>
-    </table>
+  <p><b>My Fun Book Statistics</b></p>
+  <i>Shortest book page count: </i><b>{{bookstats["min page count"]}}</b><br>
+  <i>Average book page count: </i><b>{{bookstats["average page count"]}}</b><br>
+  <i>Longest book page count: </i><b>{{bookstats["max page count"]}}</b><br>
+  <i>Total book page count: </i><b>{{bookstats["total page count"]}}</b><br>
+  <i>Total word count: </i><b>{{bookstats["total word count"]}}</b>
+  <center>
+    <p>
+    <b>Book Types</b>
+    <div id="chart-container" style="width:50%">
+      <canvas id="Chart-BookType"></canvas>
+    </div>
+    <i style="background: yellow;font-size: 3vw;">Audio Book&nbsp;</i>
+    <i style="background: aqua;font-size: 3vw;">EBook&nbsp;</i>
+    <i style="background: fuchsia;font-size: 3vw;">Book&nbsp;</i>
+    </p>
+    <p>
+    <b>Book Genres</b>
+    <div id="chart-container" style="width:50%">
+      <canvas id="Chart-Genres"></canvas>
+    </div>
+    <i style="background: yellow;font-size: 3vw;">Fiction&nbsp;</i>
+    <i style="background: green;font-size: 3vw;">Nonfiction&nbsp;</i>
+  </p>
+  </center>
   </div>
-
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
   <script>
-    //tojson is a Jinja filter that dumps the structure to a JSON string and marks it safe 
-    //so that Jinja does not autoescape it
-    var columns = {{columns | tojson}} 
-    var items = {{items | tojson}}
-    var count = {{count | tojson}}
-    var table = document.getElementById("booktable");
-    // Create an empty <thead> element and add it to the table:
-    var header = table.createTHead();
-    // Create an empty <tr> element and add it to the first position of <thead>:
-    var headrow = header.insertRow(0);
-    for(let i = 0; i < columns.length; i++){ 
-    // Insert a new cell (<td>) at the first position of the "new" <tr> element:
-      let cell = headrow.insertCell(i);
-      // Add some bold text in the new cell:
-      cell.innerHTML = "<b>" + columns[i] + "</b>"; 
-    }
-    var body = table.createTBody();
-    for(let i = 0; i < items.length; i++){ 
-      // Create an empty <tr> element and add it to the 1st position of the table:
-      let bodyrow = body.insertRow(i);
-      for(let j = 0; j < columns.length; j++){ 
-        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-        let cell = bodyrow.insertCell(j);
-        // Add some text to the new cells:
-        let column = columns[j];
-        cell.innerHTML = items[i][column];
-        if( j== 0 ) { //image file 
-          let image_file_name = items[i][column];
-          //use backtics ` ` for formating a string (like %s in C)
-          let book_url = `static/books/${image_file_name}`;
-          cell.innerHTML = `<a href=${book_url}><img src=${book_url} alt="" style="width:auto;height:5vw;"></a>`;
-          //console.log(cell.innerHTML);
+
+  var book_stats = {{bookstats | tojson}}
+
+  const data = {
+    labels: [
+      'Book',
+      'EBook',
+      'Audio Book'
+    ],
+    datasets: [{
+      data: [ book_stats["physical book count"], book_stats["ebook count"], book_stats["audio book count"]],
+      backgroundColor: [
+        'fuchsia',
+        'aqua',
+        'yellow'
+      ],
+      hoverOffset: 4
+    }]
+  };
+  const config = {
+    type: 'pie',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'left',
+          display: false
         }
       }
     }
+  };
+  const data2 = {
+    labels: [
+      'Nonfiction',
+      'Fiction'
+    ],
+    datasets: [{
+      data: [book_stats["nonfiction count"], book_stats["fiction count"]],
+      backgroundColor: [
+        'green',
+        'yellow'
+      ],
+      hoverOffset: 4
+    }]
+  };
+  const config2 = {
+    type: 'pie',
+    data: data2,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'left',
+          display: false
+        }
+      }
+    }
+  };
+
+  Chart.defaults.font.size = 16;
+  var myChart = new Chart( document.getElementById('Chart-BookType'), config);
+  var myChart2 = new Chart( document.getElementById('Chart-Genres'), config2);
+
+  </script>
+
+<div class="content2">
+  <p><b>Books I have read - {{ count }} Books</b></p>
+  <table id="booktable" class="center" border=1>
+  </table>
+</div>
+
+<script>
+  //tojson is a Jinja filter that dumps the structure to a JSON string and marks it safe 
+  //so that Jinja does not autoescape it
+  var columns = {{columns | tojson}}
+  var items = {{items | tojson}}
+  var count = {{count | tojson}}
+  var table = document.getElementById("booktable");
+  // Create an empty <thead> element and add it to the table:
+  var header = table.createTHead();
+  // Create an empty <tr> element and add it to the first position of <thead>:
+  var headrow = header.insertRow(0);
+  for(let i = 0; i < columns.length; i++){ 
+  // Insert a new cell (<td>) at the first position of the "new" <tr> element:
+    let cell = headrow.insertCell(i);
+    // Add some bold text in the new cell:
+    cell.innerHTML = "<b>" + columns[i] + "</b>"; 
+  }
+  var body = table.createTBody();
+  for(let i = 0; i < items.length; i++){ 
+    // Create an empty <tr> element and add it to the 1st position of the table:
+    let bodyrow = body.insertRow(i);
+    for(let j = 0; j < columns.length; j++){ 
+      // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+      let cell = bodyrow.insertCell(j);
+      // Add some text to the new cells:
+      let column = columns[j];
+      cell.innerHTML = items[i][column];
+      if( j== 0 ) { //image file 
+        let image_file_name = items[i][column];
+        //use backtics ` ` for formating a string (like %s in C)
+        let book_url = `static/books/${image_file_name}`;
+        cell.innerHTML = `<a href=${book_url}><img src=${book_url} alt="" style="width:auto;height:5vw;"></a>`;
+        //console.log(cell.innerHTML);
+      }
+    }
+  }
   </script>
 
   <div class="botnav">

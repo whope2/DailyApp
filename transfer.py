@@ -42,7 +42,7 @@ def index():
 		email = request.args.get('email')
 		print("index %s" % email)
 
-	photo_id, media_id, image_url = elasticsearch_access.get_a_random_photo()
+	photo_id = elasticsearch_access.get_a_random_photo()
 	random_quote = elasticsearch_access.get_a_random_quote()
 
 	doc_word = elasticsearch_access.get_a_random_word()
@@ -199,8 +199,11 @@ def liveathousandlives():
 	bookcount = len(booklist)
 	columns=["Cover Image","Book Title","Author","Year Published","My Rating"]
 	random_i = random.randint(0,count-1)
+
+	book_stats = elasticsearch_access.get_book_statistics()
+
 	return render_template('booklist.html', columns=columns, items=items, count=count,\
-		booklist=booklist, bookcount=bookcount)
+		booklist=booklist, bookcount=bookcount, bookstats=book_stats)
 
 @app.route("/about")
 def about():
@@ -325,12 +328,9 @@ def newsletter():
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 	random_book, random_book_image = elasticsearch_access.get_a_random_book()
-	#random_book_image = "E9PKOW_WUAQrV9W.jpeg" #testing
 	random_love_quote = elasticsearch_access.get_a_random_love_quote()
-	photo_id, media_id, image_url = elasticsearch_access.get_a_random_photo()
+	photo_id = elasticsearch_access.get_a_random_photo()
 
-	#media_id_gen = ig_shortcode_to_media_id(photo_id)
-	
 	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
 
 	#prepare email
@@ -516,5 +516,6 @@ def editjournal():
 	return redirect('/journal')
 
 #if __name__ == '__main__':
+	#liveathousandlives()
 	#app.run(port=5001,debug=False)
 	#app.run(host='0.0.0.0',port=80)
