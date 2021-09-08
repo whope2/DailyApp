@@ -1,5 +1,7 @@
 import random
 from elasticsearch import Elasticsearch
+from datetime import datetime
+
 client = Elasticsearch()
 '''
 import requests
@@ -180,15 +182,52 @@ def get_book_statistics():
     max_page_count = 0
     total_page_count = 0
     count = 0
+    books_read_2018 = 0
+    books_read_2019 = 0
+    books_read_2020 = 0
+    books_read_2021 = 0
+    books_published_2000s = 0
+    books_published_1900s = 0
+    books_published_1800s = 0
+    oldest_book = 2021
     for doc in allbooks:
         if( doc["_source"]["Page Count"] != None ) :            
             page_count = int(doc["_source"]["Page Count"])
-            count = count + 1
+            count += 1
             total_page_count = total_page_count + page_count
             if( page_count < min_page_count ):
                 min_page_count = page_count
             if( page_count > max_page_count ):
                 max_page_count = page_count
+
+        if( doc["_source"]["Date Finished"] != None ) :
+            try: 
+                year = datetime.strptime(doc["_source"]["Date Finished"], '%m/%d/%Y').year
+            except: 
+                try :
+                    year = datetime.strptime(doc["_source"]["Date Finished"], '%Y').year
+                except:
+                    print("datetime parse exception %s" % doc["_source"]["Date Finished"])          
+            if( year <= 2018 ) :
+                books_read_2018 += 1
+            elif( year == 2019 ) :
+                books_read_2019 += 1
+            elif( year == 2020 ) :
+                books_read_2020 += 1
+            else :
+                books_read_2021 += 1
+
+        if( doc["_source"]["Year Published"] != None ) :
+            year = int(doc["_source"]["Year Published"])
+            if( year >= 2000 ) :
+                books_published_2000s += 1
+            elif( year >= 1900 ) :
+                books_published_1900s += 1
+            else :
+                books_published_1800s += 1
+            if( year < oldest_book ) :
+                oldest_book = year
+
     avg_page_count = int(total_page_count / count)
     print("min_page_count: %d" % min_page_count)
     print("max_page_count: %d" % max_page_count)
@@ -207,7 +246,15 @@ def get_book_statistics():
         "max page count": max_page_count,
         "total page count": total_page_count,
         "total word count": total_page_count*299, # 250-300 words per page
-        "average page count": avg_page_count
+        "average page count": avg_page_count,
+        "books read in 2018 and prior": books_read_2018,
+        "books read in 2019": books_read_2019,
+        "books read in 2020": books_read_2020,
+        "books read in 2021": books_read_2021,
+        "books published in 2000s": books_published_2000s,
+        "books published in 1900s": books_published_1900s,
+        "books published in 1800s and prior": books_published_1800s,
+        "oldest book in year": oldest_book
     }
     return book_stats
     

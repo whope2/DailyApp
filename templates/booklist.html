@@ -206,29 +206,45 @@
   
   <div class="content">
   <p><b>My Fun Book Statistics</b></p>
-  <i>Shortest book page count: </i><b>{{bookstats["min page count"]}}</b><br>
-  <i>Average book page count: </i><b>{{bookstats["average page count"]}}</b><br>
-  <i>Longest book page count: </i><b>{{bookstats["max page count"]}}</b><br>
-  <i>Total book page count: </i><b>{{bookstats["total page count"]}}</b><br>
-  <i>Total word count: </i><b>{{bookstats["total word count"]}}</b>
+  <i>Shortest book page count:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["min page count"]}}</b><br>
+  <i>Average book page count:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["average page count"]}}</b><br>
+  <i>Longest book page count:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["max page count"]}}</b><br>
+  <i>Total book page count read:&nbsp;</i><b style="color:green">{{bookstats["total page count"]}}</b><br>
+  <i>Total word count estimated:&nbsp;</i><b style="color:green">{{bookstats["total word count"]}}</b>
   <center>
     <p>
     <b>Book Types</b>
     <div id="chart-container" style="width:50%">
       <canvas id="Chart-BookType"></canvas>
     </div>
-    <i style="background: yellow;font-size: 3vw;">Audio Book&nbsp;</i>
-    <i style="background: aqua;font-size: 3vw;">EBook&nbsp;</i>
-    <i style="background: fuchsia;font-size: 3vw;">Book&nbsp;</i>
+    <i style="background: yellow;font-size: 3vw;">Audio Book {{bookstats["audio book count"]}}</i>
+    <i style="background: aqua;font-size: 3vw;">EBook {{bookstats["ebook count"]}}</i>
+    <i style="background: fuchsia;font-size: 3vw;">Book {{bookstats["physical book count"]}}</i>
     </p>
     <p>
     <b>Book Genres</b>
     <div id="chart-container" style="width:50%">
       <canvas id="Chart-Genres"></canvas>
     </div>
-    <i style="background: yellow;font-size: 3vw;">Fiction&nbsp;</i>
-    <i style="background: green;font-size: 3vw;">Nonfiction&nbsp;</i>
-  </p>
+    <i style="background: yellow;font-size: 3vw;">Fiction {{bookstats["fiction count"]}}</i>
+    <i style="background: green;font-size: 3vw;">Nonfiction {{bookstats["nonfiction count"]}}</i>
+    </p>
+    <p>
+      <br>
+      <b>Books Read In Years</b><br>
+      <div id="chart-container" style="width:80%">
+        <canvas id="Chart-Books-Read"></canvas>
+      </div>  
+      <i>Have read </i><b style="color:green">{{bookstats["books read in 2021"]}}</b><i> books so far in 2021!</i><br>
+    </p>
+    <p>
+      <br>
+      <b>Read Books Published In Decades</b><br>
+      <div id="chart-container" style="width:80%">
+        <canvas id="Chart-Books-Published"></canvas>
+      </div>
+      <i>Oldest book was published in </i><b style="color:green">{{bookstats["oldest book in year"]}}</b><br>  
+    </p>
   </center>
   </div>
   
@@ -297,6 +313,67 @@
   Chart.defaults.font.size = 16;
   var myChart = new Chart( document.getElementById('Chart-BookType'), config);
   var myChart2 = new Chart( document.getElementById('Chart-Genres'), config2);
+
+
+const data4 = {
+  labels: ['~2018', '2019', '2020', '2021'],
+  datasets: [{
+    data: [book_stats["books read in 2018 and prior"], book_stats["books read in 2019"], book_stats["books read in 2020"], book_stats["books read in 2021"]],
+    backgroundColor: [
+      'teal',
+      'teal',
+      'teal',
+      'teal'
+    ]
+  }]
+};
+const config4 = {
+    type: 'bar',
+    data: data4,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
+  const data5 = {
+  labels: ['~1800s', '1900s', '2000s'],
+  datasets: [{
+    data: [book_stats["books published in 1800s and prior"], book_stats["books published in 1900s"], book_stats["books published in 2000s"]],
+    backgroundColor: [
+      'maroon',
+      'maroon',
+      'maroon'
+    ]
+  }]
+};
+const config5 = {
+    type: 'bar',
+    data: data5,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
+var myBarChart = new Chart(document.getElementById('Chart-Books-Read'), config4);
+var myBarChart = new Chart(document.getElementById('Chart-Books-Published'), config5);
 
   </script>
 
