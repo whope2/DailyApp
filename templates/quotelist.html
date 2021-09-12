@@ -132,8 +132,9 @@
     var page_end = Math.floor(total_entry_count/page_entry_count_config)+1;
     if( total_entry_count % page_entry_count_config == 0)
       page_end--;
-    document.getElementById("page-indicator-top").innerHTML = page_begin.toString() + "/" + page_end.toString();
-    document.getElementById("page-indicator-bot").innerHTML = page_begin.toString() + "/" + page_end.toString();
+    let page_indicator_str = "Page " + page_begin.toString() + " of " + page_end.toString();
+    document.getElementById("page-indicator-top").innerHTML = page_indicator_str;
+    document.getElementById("page-indicator-bot").innerHTML = page_indicator_str;
 
     page_base_index += page_entry_count_config;
     document.getElementById("load-prev-button").style.visibility = 'hidden';
@@ -156,8 +157,9 @@
       document.getElementById("load-next-button-top").style.visibility = 'visible';
 
       let page_begin = page_base_index/page_entry_count_config;
-      document.getElementById("page-indicator-top").innerHTML = page_begin.toString() + "/" + page_end.toString();
-      document.getElementById("page-indicator-bot").innerHTML = page_begin.toString() + "/" + page_end.toString();
+      let page_indicator_str = "Page " + page_begin.toString() + " of " + page_end.toString();
+      document.getElementById("page-indicator-top").innerHTML = page_indicator_str;
+      document.getElementById("page-indicator-bot").innerHTML = page_indicator_str;
 
       if(page_base_index <= page_entry_count_config)
       {

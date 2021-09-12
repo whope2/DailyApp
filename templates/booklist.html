@@ -103,8 +103,9 @@
     if( photo_count % photo_count_per_page == 0)
       page_end--;
 
-    document.getElementById("page-indicator-top").innerHTML = page_begin.toString() + "/" + page_end.toString();
-    document.getElementById("page-indicator-bot").innerHTML = page_begin.toString() + "/" + page_end.toString();
+    let page_indicator_str = "Page " + page_begin.toString() + " of " + page_end.toString();
+    document.getElementById("page-indicator-top").innerHTML = page_indicator_str;
+    document.getElementById("page-indicator-bot").innerHTML = page_indicator_str;
 
     photo_index += photo_count_per_page;
     ulElementMainPhoto.remove();
@@ -120,8 +121,9 @@
       document.getElementById("load-next-button-top").style.visibility = 'visible';
 
       let page_begin = photo_index/photo_count_per_page;
-      document.getElementById("page-indicator-top").innerHTML = page_begin.toString() + "/" + page_end.toString();
-      document.getElementById("page-indicator-bot").innerHTML = page_begin.toString() + "/" + page_end.toString();
+      let page_indicator_str = "Page " + page_begin.toString() + " of " + page_end.toString();
+      document.getElementById("page-indicator-top").innerHTML = page_indicator_str;
+      document.getElementById("page-indicator-bot").innerHTML = page_indicator_str;
 
       if(photo_index <= photo_count_per_page)
       {
@@ -206,14 +208,16 @@
   
   <div class="content">
   <p><b>My Fun Book Statistics</b></p>
-  <i>Shortest book page count:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["min page count"]}}</b><br>
+  <i>Shortest book page count:&nbsp;&nbsp;&nbsp;&nbsp;</i><b style="color:green">{{bookstats["min page count"]}}</b>
+  <a href=static/books/{{bookstats["shortest book image"]}}><img src=static/books/{{bookstats["shortest book image"]}} alt="" style="width:auto;height:4vw;"></a><br>
   <i>Average book page count:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["average page count"]}}</b><br>
-  <i>Longest book page count:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["max page count"]}}</b><br>
+  <i>Longest book page count:&nbsp;&nbsp;&nbsp;&nbsp;</i><b style="color:green">{{bookstats["max page count"]}}</b>
+  <a href=static/books/{{bookstats["longest book image"]}}><img src=static/books/{{bookstats["longest book image"]}} alt="" style="width:auto;height:4vw;"></a><br>
   <i>Total book page count read:&nbsp;</i><b style="color:green">{{bookstats["total page count"]}}</b><br>
-  <i>Total word count estimated:&nbsp;</i><b style="color:green">{{bookstats["total word count"]}}</b>
+  <i>Total word count estimated:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["total word count"]}}</b>
   <center>
     <p>
-    <b>Book Types</b>
+    <b>Book Formats</b>
     <div id="chart-container" style="width:50%">
       <canvas id="Chart-BookType"></canvas>
     </div>
@@ -243,7 +247,8 @@
       <div id="chart-container" style="width:80%">
         <canvas id="Chart-Books-Published"></canvas>
       </div>
-      <i>Oldest book was published in </i><b style="color:green">{{bookstats["oldest book in year"]}}</b><br>  
+      <i>Oldest book was published in </i><b style="color:green">{{bookstats["oldest book in year"]}}</b>
+      <a href=static/books/{{bookstats["oldest book image"]}}><img src=static/books/{{bookstats["oldest book image"]}} alt="" style="width:auto;height:8vw;"></a><br>
     </p>
   </center>
   </div>

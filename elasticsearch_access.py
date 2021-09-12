@@ -190,6 +190,9 @@ def get_book_statistics():
     books_published_1900s = 0
     books_published_1800s = 0
     oldest_book = 2021
+    shortest_book_image = ""
+    oldest_book_image = ""
+    longest_book_image = ""
     for doc in allbooks:
         if( doc["_source"]["Page Count"] != None ) :            
             page_count = int(doc["_source"]["Page Count"])
@@ -197,8 +200,10 @@ def get_book_statistics():
             total_page_count = total_page_count + page_count
             if( page_count < min_page_count ):
                 min_page_count = page_count
+                shortest_book_image = doc["_source"]["Image File Name"]
             if( page_count > max_page_count ):
                 max_page_count = page_count
+                longest_book_image = doc["_source"]["Image File Name"]
 
         if( doc["_source"]["Date Finished"] != None ) :
             try: 
@@ -227,6 +232,7 @@ def get_book_statistics():
                 books_published_1800s += 1
             if( year < oldest_book ) :
                 oldest_book = year
+                oldest_book_image = doc["_source"]["Image File Name"]
 
     avg_page_count = int(total_page_count / count)
     print("min_page_count: %d" % min_page_count)
@@ -254,7 +260,10 @@ def get_book_statistics():
         "books published in 2000s": books_published_2000s,
         "books published in 1900s": books_published_1900s,
         "books published in 1800s and prior": books_published_1800s,
-        "oldest book in year": oldest_book
+        "oldest book in year": oldest_book,
+        "oldest book image": oldest_book_image,
+        "shortest book image": shortest_book_image,
+        "longest book image": longest_book_image
     }
     return book_stats
     
