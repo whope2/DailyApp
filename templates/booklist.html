@@ -243,13 +243,23 @@
     </p>
     <p>
       <br>
-      <b>Read Books Published In Decades</b><br>
+      <b>Read Books Published In Centuries</b><br>
       <div id="chart-container" style="width:80%">
         <canvas id="Chart-Books-Published"></canvas>
       </div>
       <i>Oldest book was published in </i><b style="color:green">{{bookstats["oldest book in year"]}}</b>
       <a href=static/books/{{bookstats["oldest book image"]}}><img src=static/books/{{bookstats["oldest book image"]}} alt="" style="width:auto;height:8vw;"></a><br>
     </p>
+    <p>
+      <br>
+      <b>Books Ratings</b><br>
+      <div id="chart-container" style="width:80%">
+        <canvas id="Chart-Books-Ratings"></canvas>
+      </div>
+      <i style="background: green;font-size: 3vw;">⭐⭐⭐⭐⭐</i>
+      <i style="background: olive;font-size: 3vw;">⭐⭐⭐⭐</i>
+      <i style="background: purple;font-size: 3vw;">⭐⭐⭐</i>
+      </p>
   </center>
   </div>
   
@@ -377,8 +387,38 @@ const config5 = {
       }
     },
   };
+  const data6 = {
+  labels: ['⭐⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐'],
+  datasets: [{
+    data: [book_stats["books rated 5"], book_stats["books rated 4"], book_stats["books rated 3"]],
+    backgroundColor: [
+      'green',
+      'olive',
+      'purple'
+    ]
+  }]
+};
+const config6 = {
+    type: 'bar',
+    data: data6,
+    options: {
+      responsive: true,
+      indexAxis: 'y',
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
 var myBarChart = new Chart(document.getElementById('Chart-Books-Read'), config4);
 var myBarChart = new Chart(document.getElementById('Chart-Books-Published'), config5);
+var myBarChart = new Chart(document.getElementById('Chart-Books-Ratings'), config6);
 
   </script>
 

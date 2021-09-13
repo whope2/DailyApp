@@ -115,6 +115,12 @@ def get_a_random_book() :
     print(bookinfo)
     return(bookinfo, bookimage)
 
+def get_total_book_count() :
+    index_name = "booklist"
+    docs_count = client.count(index=index_name)['count']
+    print("docs_count = %d" % docs_count)
+    return(docs_count)
+
 def get_all_book() :
     results=client.search(index="booklist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
@@ -193,6 +199,9 @@ def get_book_statistics():
     shortest_book_image = ""
     oldest_book_image = ""
     longest_book_image = ""
+    books_rated_5 = 0
+    books_rated_4 = 0
+    books_rated_3 = 0
     for doc in allbooks:
         if( doc["_source"]["Page Count"] != None ) :            
             page_count = int(doc["_source"]["Page Count"])
@@ -234,11 +243,22 @@ def get_book_statistics():
                 oldest_book = year
                 oldest_book_image = doc["_source"]["Image File Name"]
 
+        if( doc["_source"]["Rating"] != None ) :
+            if( len(doc["_source"]["Rating"]) == 5 ) :
+                books_rated_5 += 1
+            elif( len(doc["_source"]["Rating"]) == 4 ) :
+                books_rated_4 += 1
+            elif( len(doc["_source"]["Rating"]) == 3 ) :
+                books_rated_3 += 1
+
     avg_page_count = int(total_page_count / count)
     print("min_page_count: %d" % min_page_count)
     print("max_page_count: %d" % max_page_count)
     print("total_page_count: %d" % total_page_count)
     print("avg_page_count: %d" % avg_page_count)
+    print("books rated 5: %d" % books_rated_5)
+    print("books rated 4: %d" % books_rated_4)
+    print("books rated 3: %d" % books_rated_3)
 
     book_stats = \
     {
@@ -263,7 +283,10 @@ def get_book_statistics():
         "oldest book in year": oldest_book,
         "oldest book image": oldest_book_image,
         "shortest book image": shortest_book_image,
-        "longest book image": longest_book_image
+        "longest book image": longest_book_image,
+        "books rated 5": books_rated_5,
+        "books rated 4": books_rated_4,
+        "books rated 3": books_rated_3
     }
     return book_stats
     

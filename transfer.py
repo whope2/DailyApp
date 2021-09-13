@@ -207,7 +207,8 @@ def liveathousandlives():
 
 @app.route("/about")
 def about():
-	return render_template('about.html')
+	book_count = elasticsearch_access.get_total_book_count()
+	return render_template('about.html', book_count=book_count)
 
 @app.route("/whatloveis")
 def whatloveis():
