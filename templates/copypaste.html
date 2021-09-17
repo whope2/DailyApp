@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V1LBCV9F1C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-V1LBCV9F1C');
+  </script>
+
   <style>
   * {
     box-sizing: border-box;
@@ -81,7 +91,7 @@
     <a href="https://www.facebook.com/wordsmartword"><img src="static/facebook.png" alt="Facebook" style="width:4vw;height:auto;"></a>
     <a href="https://www.instagram.com/tothemax2050"><img src="static/instagram.png" alt="Instagram" style="width:4vw;height:auto;"></a>
     <a href="https://www.goodreads.com/user/show/65134593-max"><img src="static/goodreads.png" alt="Goodreads" style="width:4vw;height:auto;"></a>
-    <b style="color: white;font-family: Arial"><i>Where Literature Meets Computing!</i></b>
+    <b style="color: white;font-family: Arial;"><i><a href="/" style="float:none">Where Literature Meets Computing!</a></i></b>
   </div>
 </body>
 </html>
