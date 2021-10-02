@@ -65,7 +65,7 @@
 
   </style>
   
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <script sync src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   
 </head>  
   
@@ -80,15 +80,13 @@
   </div>
 
   <div id="main-div" class="content">
-    <p><b>Books I Recommended on Twitter</b></p>
+    <p><b id="twitter-books-title">Books I Recommended on Twitter</b><br>
+      <i style="font-size: 3vw;"><a href="#" onclick="loadAllBooks()">All Books</a>&nbsp;&nbsp;<a href="#" onclick="loadTop10NonfictionBooks()">Nonfictions Only</a></i></p>
     <img id="load-prev-button-top" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
     <i id="page-indicator-top" style="font-size:2vw;">1/5</i>
     <img id="load-next-button-top" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
-  <div id="main-photo-div" class="content">
-    {%- for book in booklist %}
-    <blockquote class="twitter-tweet" data-conversation="none" align="center"><p lang="en" dir="ltr">...<a href="https://twitter.com/tothemax2050/status/{{ book }}">pic.twitter.com/jstcxC4t20</a></p>&mdash; Max (@tothemax2050) <a href="https://twitter.com/tothemax2050/status/{{ book }}?ref_src=twsrc%5Etfw">March 10, 2021</a></blockquote>
-    {%- endfor %}
+  <div id="main-div-twitter-books" class="content">
   </div>
   <div class="content">
     <img id="load-prev-button" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
@@ -97,30 +95,47 @@
   </div>
 
   <script>
-    var ulElementMain = document.getElementById("main-div");
-    var ulElementMainPhoto = document.getElementById("main-photo-div");
-    var photo_index = 0;
-    var photo_count = document.getElementById("main-photo-div").childElementCount;
-    var ulElementMainPhotoClone = ulElementMainPhoto.cloneNode(true);
-    ulElementMainPhoto.remove();
-    var photo_count_per_page =5;
-    for (let i = 0; i < photo_count_per_page; i++) {
-      var clone = ulElementMainPhotoClone.children[i].cloneNode(true);
-      ulElementMain.appendChild(clone);
+  
+    var twitter_books = {{booklist | tojson}}
+    var twitter_books_nonfiction = {{booklist_nonfiction | tojson}}
+    var ulElementMain = document.getElementById("main-div-twitter-books");
+    var tweet_widget_options = {
+          align: 'center',
+          theme: 'light',
+          conversation: 'none'};
+    var mybooklist = twitter_books;
+    initBooks();
+  
+    function initBooks()
+    {
+      //remove all children
+      while(ulElementMain.firstChild) {
+        ulElementMain.lastChild.remove()
+      }
+
+      photo_index = 0;
+      photo_count = mybooklist.length;
+      photo_count_per_page =5;
+      for (let i = 0; i < photo_count_per_page; i++) {
+        twttr.widgets.createTweet(
+          mybooklist[i]["tweet id"],
+          ulElementMain,
+          tweet_widget_options
+        );
+      }
+      let page_begin = photo_index/photo_count_per_page+1;
+      page_end = Math.floor(photo_count/photo_count_per_page)+1;
+      if( photo_count % photo_count_per_page == 0)
+        page_end--;
+
+      let page_indicator_str = "Page " + page_begin.toString() + " of " + page_end.toString();
+      document.getElementById("page-indicator-top").innerHTML = page_indicator_str;
+      document.getElementById("page-indicator-bot").innerHTML = page_indicator_str;
+
+      photo_index += photo_count_per_page;
+      document.getElementById("load-prev-button").style.visibility = 'hidden';
+      document.getElementById("load-prev-button-top").style.visibility = 'hidden';
     }
-    let page_begin = photo_index/photo_count_per_page+1;
-    var page_end = Math.floor(photo_count/photo_count_per_page)+1;
-    if( photo_count % photo_count_per_page == 0)
-      page_end--;
-
-    let page_indicator_str = "Page " + page_begin.toString() + " of " + page_end.toString();
-    document.getElementById("page-indicator-top").innerHTML = page_indicator_str;
-    document.getElementById("page-indicator-bot").innerHTML = page_indicator_str;
-
-    photo_index += photo_count_per_page;
-    ulElementMainPhoto.remove();
-    document.getElementById("load-prev-button").style.visibility = 'hidden';
-    document.getElementById("load-prev-button-top").style.visibility = 'hidden';
   </script>
   <script>
     function positionBackNextButtons()
@@ -149,43 +164,49 @@
       scroll(0,0)
     }
 
-    function appendScript() {
-      var s = document.createElement('script');
-      s.type = 'text/javascript';
-      s.async = true;
-      s.charset = "utf-8"
-      s.src = "https://platform.twitter.com/widgets.js";
-      ulElementMain.appendChild(s);
-    }
-
     function loadNextBooks() {
-      //remove all children except the first one
-      while(ulElementMain.children[4]) {  //bad dependency: 4 due to 3 elements ahead of the table
-        ulElementMain.children[4].remove()
-      }
+      //remove all children
+      while(ulElementMain.firstChild) {
+        ulElementMain.lastChild.remove()
+      }   
       var base = photo_index;
       for (let i = 0; i < photo_count_per_page && (i+photo_index<photo_count); i++) {
-        var clone = ulElementMainPhotoClone.children[base+i].cloneNode(true);
-        ulElementMain.appendChild(clone);
+        twttr.widgets.createTweet(
+          mybooklist[base+i]["tweet id"],
+          ulElementMain,
+          tweet_widget_options
+        );
       }
       photo_index += photo_count_per_page;
-      appendScript();
       positionBackNextButtons();
     }
 
     function loadPrevBooks() {
-      //remove all children except the first one
-      while(ulElementMain.children[4]) { //bad dependency: 4 due to 3 elements ahead of the table
-        ulElementMain.children[4].remove()
+      //remove all children
+      while(ulElementMain.firstChild) {
+        ulElementMain.lastChild.remove()
       }
       var base = photo_index;
       for (let i = 0; i < photo_count_per_page && (base-2*photo_count_per_page)>=0; i++) {
-        var clone = ulElementMainPhotoClone.children[base-2*photo_count_per_page+i].cloneNode(true);
-        ulElementMain.appendChild(clone);
+        twttr.widgets.createTweet(
+          mybooklist[base-2*photo_count_per_page+i]["tweet id"],
+          ulElementMain,
+          tweet_widget_options
+        );
       }
       photo_index -= photo_count_per_page;
-      appendScript();
       positionBackNextButtons();
+  }
+
+  function loadAllBooks() {
+    document.getElementById("twitter-books-title").innerHTML = "Books I Recommended on Twitter";
+    mybooklist = twitter_books;
+    initBooks(twitter_books);
+  }
+  function loadTop10NonfictionBooks() {
+    document.getElementById("twitter-books-title").innerHTML = "Nonfictions I Recommended on Twitter";
+    mybooklist = twitter_books_nonfiction;
+    initBooks();
   }
   </script>
 

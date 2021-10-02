@@ -83,6 +83,7 @@ def quoteoftheday():
 		'Author':"25%"
 	}
 
+	random.shuffle(items)
 	random_i = random.randint(0,count-1)
 	return render_template('quotelist.html', col_names=col_names, col_width=col_width, items=items, count=count, \
 		quote=items[random_i]["Quote"]+ " - " + items[random_i]["Author"])
@@ -167,6 +168,7 @@ def wordoftheday():
 		defi = items[random_i]["Definition"]
 		sens = items[random_i]["Example Sentences"]
 
+	random.shuffle(items)
 	return render_template("wordsmart.html", col_names=col_names, col_width=col_width, items=items, count=count, \
 		word=word, defi=defi, sens=sens)
 
@@ -180,7 +182,24 @@ def searchaword():
 @app.route("/liveathousandlives")
 def liveathousandlives():
 	#get a list of my book posts from Twitter
-	booklist = []
+	allbooks, count = elasticsearch_access.get_all_twitter_books()
+	twitter_booklist = []
+	twitter_booklist_nonfiction = []
+	twitter_bookcount = count
+	for num, doc in enumerate(allbooks):
+		twitter_book = {
+			"tweet id": doc["_source"]["TweetID"],
+			"likes count": doc["_source"]["Likes"]
+		}
+		twitter_booklist.append( twitter_book ) #add to the list
+		
+		if( doc["_source"]["Nonfiction"] ):
+			twitter_book_nonfiction = {
+				"tweet id": doc["_source"]["TweetID"],
+				"likes count": doc["_source"]["Likes"]
+			}
+			twitter_booklist_nonfiction.append( twitter_book_nonfiction )
+
 	allbooks, count = elasticsearch_access.get_all_book()
 	items = [{}] * count
 	oneitem = {}
@@ -192,18 +211,16 @@ def liveathousandlives():
 		oneitem["My Rating"] = doc["_source"]["Rating"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
-		if doc["_source"]["TweetID"] != None :  #if not an empty
-			booklist.append( doc["_source"]["TweetID"] ) #add to the list
-	
-	random.shuffle(booklist)
-	bookcount = len(booklist)
+
 	columns=["Cover Image","Book Title","Author","Year Published","My Rating"]
 	random_i = random.randint(0,count-1)
 
 	book_stats = elasticsearch_access.get_book_statistics()
 
 	return render_template('booklist.html', columns=columns, items=items, count=count,\
-		booklist=booklist, bookcount=bookcount, bookstats=book_stats)
+		booklist=twitter_booklist, bookcount=twitter_bookcount,\
+		booklist_nonfiction=twitter_booklist_nonfiction,\
+		bookcount_nonfiction=len(twitter_booklist_nonfiction),bookstats=book_stats)
 
 @app.route("/about")
 def about():
@@ -222,6 +239,7 @@ def whatloveis():
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 	columns=["Quote"] #,"Author"]
+	random.shuffle(items)
 	return render_template('lovequotelist.html', columns=columns, items=items, count=count, love_quote=items[random_i]["Quote"])
 
 def email_notify_me(subject, content):
@@ -516,7 +534,24 @@ def editjournal():
 		elasticsearch_access.edit_journal(id, title, text, "journal")
 	return redirect('/journal')
 
+@app.route("/generatetwitterbooklist")
+def generatetwitterbooklist():
+	#delete the existing index,and create a new empty one
+	elasticsearch_access.delete_twitter_book_index()
+	elasticsearch_access.create_twitter_book_index()
+	#populate data
+	allbooks, count = elasticsearch_access.get_all_twitter_books_from_booklist()
+	for num, doc in enumerate(allbooks):
+		tweet_id = doc["_source"]["TweetID"]
+		like_count = twitterbot.get_likes(tweet_id)
+		nonfiction = ( doc["_source"]["Genre"] != "Fiction" )
+		#write to ES
+		elasticsearch_access.add_a_twitter_book(tweet_id,like_count,nonfiction)
+	return render_template('echo.html', text="generatetwitterbooklist completed")
+
+#liveathousandlives()
+#generatetwitterbooklist()
+
 #if __name__ == '__main__':
-	#liveathousandlives()
 	#app.run(port=5001,debug=False)
 	#app.run(host='0.0.0.0',port=80)

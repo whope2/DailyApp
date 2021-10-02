@@ -10,6 +10,13 @@ def retweet_book(tweet_id) :
     api.retweet(tweet_id)
     return
 
+def get_likes(tweet_id) : 
+    api = twitter_authorization()
+
+    status = api.get_status(tweet_id)
+    like_count = status.favorite_count + status.retweet_count
+    return like_count
+
 def twitter_authorization() :
 
     twitter_secret_file = "secret/twitter-keys.json"
@@ -21,9 +28,9 @@ def twitter_authorization() :
     auth.set_access_token(keys["accesstoken"], keys["accesstokensecret"])
 
     api = tweepy.API(auth)
-    user = api.get_user("tothemax2050")
-    print(user.name)
-    print(user.description)
+    #user = api.get_user("tothemax2050")
+    #print(user.name)
+    #print(user.description)
     
     return(api)
 

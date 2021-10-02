@@ -213,7 +213,6 @@ def get_book_statistics():
             if( page_count > max_page_count ):
                 max_page_count = page_count
                 longest_book_image = doc["_source"]["Image File Name"]
-
         if( doc["_source"]["Date Finished"] != None ) :
             try: 
                 year = datetime.strptime(doc["_source"]["Date Finished"], '%m/%d/%Y').year
@@ -289,7 +288,51 @@ def get_book_statistics():
         "books rated 3": books_rated_3
     }
     return book_stats
-    
+
+def get_all_twitter_books():
+    index_name = "twitterbooklist"
+    results=client.search(index=index_name, body=\
+    {
+        "size":999,
+        "query":{"match_all":{}},
+        "sort" : [ { "Likes" : "desc" } ]
+    })
+    hit_count = len(results["hits"]["hits"])
+    alldocs = results["hits"]["hits"]
+    return alldocs, hit_count
+
+def get_all_twitter_books_from_booklist():
+    index_name = "booklist"
+    results=client.search(index=index_name, body=\
+    {
+        "size":999,
+        "query": {
+            "exists": {
+                "field": "TweetID"
+            }
+        }
+    })
+    hit_count = len(results["hits"]["hits"])
+    alldocs = results["hits"]["hits"]
+    return alldocs, hit_count
+
+def add_a_twitter_book(tweet_id, likes, nonfiction) :
+    index_name = "twitterbooklist"
+    client.index(index=index_name, doc_type='post', body= \
+    {
+        'TweetID': tweet_id,
+        'Likes': likes,
+        'Nonfiction': nonfiction
+    })
+
+def delete_twitter_book_index():
+    index_name = "twitterbooklist"
+    client.indices.delete(index=index_name, ignore=[400, 404])
+
+def create_twitter_book_index():
+    index_name = "twitterbooklist"
+    client.indices.create(index=index_name)
+
 def get_all_love_quotes() :    
     results=client.search(index="lovequotelist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
@@ -459,3 +502,4 @@ def get_all_blogs():
 #get_a_random_quote_and_author()
 #get_all_journals()
 #get_book_statistics()
+#get_all_twitter_books()
