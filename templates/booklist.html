@@ -242,10 +242,10 @@
   <i>Shortest book page count:&nbsp;&nbsp;&nbsp;&nbsp;</i><b style="color:green">{{bookstats["min page count"]}}</b>
   <a href=static/books/{{bookstats["shortest book image"]}}><img src=static/books/{{bookstats["shortest book image"]}} alt="" style="width:auto;height:4vw;"></a><br>
   <i>Average book page count:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["average page count"]}}</b><br>
-  <i>Longest book page count:&nbsp;&nbsp;&nbsp;&nbsp;</i><b style="color:green">{{bookstats["max page count"]}}</b>
+  <i>Longest book page count:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><b id="html-max-page-count" style="color:green">1234</b>
   <a href=static/books/{{bookstats["longest book image"]}}><img src=static/books/{{bookstats["longest book image"]}} alt="" style="width:auto;height:4vw;"></a><br>
-  <i>Total book page count read:&nbsp;</i><b style="color:green">{{bookstats["total page count"]}}</b><br>
-  <i>Total word count estimated:&nbsp;&nbsp;</i><b style="color:green">{{bookstats["total word count"]}}</b>
+  <i>Total book page count read:&nbsp;</i><b id="html-total-page-count" style="color:green">123456</b><br>
+  <i>Total word count estimated:&nbsp;&nbsp;</i><b id="html-total-word-count" style="color:green">123456789</b>
   <center>
     <p>
     <b>Book Formats</b>
@@ -293,11 +293,26 @@
       </p>
   </center>
   </div>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
-  <script>
 
-  var book_stats = {{bookstats | tojson}}
+  <script>
+    var book_stats = {{bookstats | tojson}}
+
+    let n = book_stats["max page count"];
+    let str = n.toLocaleString("en-US");
+    //console.log(str)
+    document.getElementById("html-max-page-count").innerHTML = str;
+
+    n = book_stats["total page count"];
+    str = n.toLocaleString("en-US");
+    document.getElementById("html-total-page-count").innerHTML = str;
+
+    n = book_stats["total word count"];
+    str = n.toLocaleString("en-US");
+    document.getElementById("html-total-word-count").innerHTML = str;
+  </script>  
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
+  <script>
 
   const data = {
     labels: [
@@ -365,16 +380,16 @@ const data4 = {
   labels: ['~2018', '2019', '2020', '2021'],
   datasets: [{
     data: [book_stats["books read in 2018 and prior"], book_stats["books read in 2019"], book_stats["books read in 2020"], book_stats["books read in 2021"]],
-    backgroundColor: [
-      'teal',
-      'teal',
-      'teal',
-      'teal'
-    ]
+    fill: false,
+    pointBackgroundColor: 'red',
+    pointRadius: 8,
+    borderColor: 'rgb(75, 192, 192)',
+    borderWidth: 6,
+    tension: 0.1
   }]
 };
 const config4 = {
-    type: 'bar',
+    type: 'line',
     data: data4,
     options: {
       responsive: true,

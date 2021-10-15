@@ -1,3 +1,4 @@
+from logging import exception
 import tweepy
 import json
 
@@ -13,9 +14,35 @@ def retweet_book(tweet_id) :
 def get_likes(tweet_id) : 
     api = twitter_authorization()
 
+    tweepy.Cursor()    
+
     status = api.get_status(tweet_id)
     like_count = status.favorite_count + status.retweet_count
     return like_count
+
+def like_tweets(hashtag, num) : 
+    api = twitter_authorization()
+    tweets = tweepy.Cursor(api.search, hashtag, lang="en",tweet_mode='extended').items(3*num)
+    attempt_count = 0 
+    count = 0
+    exception_count = 0
+    authorlist = []
+    for tweet in tweets:
+        if(count>=num):
+            break
+        attempt_count += 1
+        status = api.get_status(tweet.id)
+        if((status.favorited == False) and (status.author.id not in authorlist)):
+            try: 
+                api.create_favorite(tweet.id)
+                authorlist.append(status.author.id)
+                count += 1
+                print(".")
+            except Exception as e:
+                exception_count += 1
+                print("like_tweets create_favorite exception: %s" % e)
+    print("like tweets: hashtag=%s, num=%d, attempt=%d, count=%d, execption_count=%d" % (hashtag,num,attempt_count,count,exception_count))
+    return attempt_count, count, exception_count
 
 def twitter_authorization() :
 
@@ -71,3 +98,9 @@ for tweet in api.search(q="quoteoftheday", lang="en"):
 #gates_tweet_id = 1404841704507674629
 #my_tweet_id = 1402663278036369409
 #retweet_book(my_tweet_id)
+
+#like_tweets("#ebook", 30)
+#like_tweets("#bookrecommendations", 10)
+#like_tweets("#booklovers", 10)
+#like_tweets("#reading", 10)
+#like_tweets("#goodreadswithaview", 10)

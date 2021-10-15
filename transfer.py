@@ -459,11 +459,13 @@ def copy():
 	elasticsearch_access.global_copy(copy_paste_text)
 	return redirect('/copypaste')
 
+@app.route("/cp")
 @app.route("/copypaste")
 def copypaste():
 	copy_paste_text = elasticsearch_access.global_paste()
 	return render_template('copypaste.html', text=copy_paste_text)
 
+@app.route("/tf")
 @app.route("/transferfile")
 def transferfile():
 	filename = elasticsearch_access.file_download()
@@ -483,6 +485,7 @@ def uploadfile():
 	elasticsearch_access.file_upload(file.filename)
 	return render_template('transferfile.html', state=file.filename+" uploaded")
 
+@app.route("/jn")
 @app.route("/journal")
 def journal():
 	try:
@@ -553,5 +556,5 @@ def generatetwitterbooklist():
 #generatetwitterbooklist()
 
 #if __name__ == '__main__':
-	#app.run(port=5001,debug=False)
+	#app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)
