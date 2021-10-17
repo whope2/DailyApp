@@ -13,9 +13,6 @@ def retweet_book(tweet_id) :
 
 def get_likes(tweet_id) : 
     api = twitter_authorization()
-
-    tweepy.Cursor()    
-
     status = api.get_status(tweet_id)
     like_count = status.favorite_count + status.retweet_count
     return like_count

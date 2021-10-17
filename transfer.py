@@ -188,6 +188,7 @@ def liveathousandlives():
 	twitter_bookcount = count
 	for num, doc in enumerate(allbooks):
 		twitter_book = {
+			"title": doc["_source"]["Book Title"],
 			"tweet id": doc["_source"]["TweetID"],
 			"likes count": doc["_source"]["Likes"]
 		}
@@ -545,11 +546,12 @@ def generatetwitterbooklist():
 	#populate data
 	allbooks, count = elasticsearch_access.get_all_twitter_books_from_booklist()
 	for num, doc in enumerate(allbooks):
+		title = doc["_source"]["Book Title"]
 		tweet_id = doc["_source"]["TweetID"]
 		like_count = twitterbot.get_likes(tweet_id)
 		nonfiction = ( doc["_source"]["Genre"] != "Fiction" )
 		#write to ES
-		elasticsearch_access.add_a_twitter_book(tweet_id,like_count,nonfiction)
+		elasticsearch_access.add_a_twitter_book(title,tweet_id,like_count,nonfiction)
 	return render_template('echo.html', text="generatetwitterbooklist completed")
 
 #liveathousandlives()

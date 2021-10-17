@@ -316,10 +316,11 @@ def get_all_twitter_books_from_booklist():
     alldocs = results["hits"]["hits"]
     return alldocs, hit_count
 
-def add_a_twitter_book(tweet_id, likes, nonfiction) :
+def add_a_twitter_book(title, tweet_id, likes, nonfiction) :
     index_name = "twitterbooklist"
     client.index(index=index_name, doc_type='post', body= \
     {
+        'Book Title': title,
         'TweetID': tweet_id,
         'Likes': likes,
         'Nonfiction': nonfiction

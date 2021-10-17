@@ -93,6 +93,14 @@
     <i id="page-indicator-bot" style="font-size:2vw;">1/5</i>
     <img id="load-next-button" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
+  <div class="content">
+    <b>Top 10 Books by Twitter Likes</b><br>
+    <center>
+    <div id="chart-container" style="width:100%">
+      <canvas id="Chart-Books-Ranked"></canvas>
+    </div>
+    </center>
+  </div>
 
   <script>
   
@@ -311,9 +319,9 @@
     document.getElementById("html-total-word-count").innerHTML = str;
   </script>  
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js"></script>
+  
   <script>
-
   const data = {
     labels: [
       'Book',
@@ -375,20 +383,19 @@
   var myChart = new Chart( document.getElementById('Chart-BookType'), config);
   var myChart2 = new Chart( document.getElementById('Chart-Genres'), config2);
 
-
-const data4 = {
-  labels: ['~2018', '2019', '2020', '2021'],
-  datasets: [{
-    data: [book_stats["books read in 2018 and prior"], book_stats["books read in 2019"], book_stats["books read in 2020"], book_stats["books read in 2021"]],
-    fill: false,
-    pointBackgroundColor: 'red',
-    pointRadius: 8,
-    borderColor: 'rgb(75, 192, 192)',
-    borderWidth: 6,
-    tension: 0.1
-  }]
-};
-const config4 = {
+  const data4 = {
+    labels: ['~2018', '2019', '2020', '2021'],
+    datasets: [{
+      data: [book_stats["books read in 2018 and prior"], book_stats["books read in 2019"], book_stats["books read in 2020"], book_stats["books read in 2021"]],
+      fill: false,
+      pointBackgroundColor: 'red',
+      pointRadius: 8,
+      borderColor: 'rgb(75, 192, 192)',
+      borderWidth: 6,
+      tension: 0.1
+    }]
+  };
+  const config4 = {
     type: 'line',
     data: data4,
     options: {
@@ -406,17 +413,17 @@ const config4 = {
     },
   };
   const data5 = {
-  labels: ['~1800s', '1900s', '2000s'],
-  datasets: [{
-    data: [book_stats["books published in 1800s and prior"], book_stats["books published in 1900s"], book_stats["books published in 2000s"]],
-    backgroundColor: [
-      'maroon',
-      'maroon',
-      'maroon'
-    ]
-  }]
-};
-const config5 = {
+    labels: ['~1800s', '1900s', '2000s'],
+    datasets: [{
+      data: [book_stats["books published in 1800s and prior"], book_stats["books published in 1900s"], book_stats["books published in 2000s"]],
+      backgroundColor: [
+        'maroon',
+        'maroon',
+        'maroon'
+      ]
+    }]
+  };
+  const config5 = {
     type: 'bar',
     data: data5,
     options: {
@@ -431,20 +438,20 @@ const config5 = {
           beginAtZero: true
         }
       }
-    },
+    }
   };
   const data6 = {
-  labels: ['⭐⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐'],
-  datasets: [{
-    data: [book_stats["books rated 5"], book_stats["books rated 4"], book_stats["books rated 3"]],
-    backgroundColor: [
-      'green',
-      'olive',
-      'purple'
-    ]
-  }]
-};
-const config6 = {
+    labels: ['⭐⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐'],
+    datasets: [{
+      data: [book_stats["books rated 5"], book_stats["books rated 4"], book_stats["books rated 3"]],
+      backgroundColor: [
+        'green',
+        'olive',
+        'purple'
+      ]
+    }]
+  };
+  const config6 = {
     type: 'bar',
     data: data6,
     options: {
@@ -462,10 +469,63 @@ const config6 = {
       }
     },
   };
-var myBarChart = new Chart(document.getElementById('Chart-Books-Read'), config4);
-var myBarChart = new Chart(document.getElementById('Chart-Books-Published'), config5);
-var myBarChart = new Chart(document.getElementById('Chart-Books-Ratings'), config6);
 
+  var top10_titles = [];
+  var top10_likes = [];
+  for (let i = 0; i < 10; i++) {
+    top10_titles[i] = mybooklist[i]["title"];
+    top10_likes[i] = mybooklist[i]["likes count"];
+  }
+  const data7 = {
+    labels: top10_titles,
+    datasets: [{
+      data: top10_likes,
+      backgroundColor: [
+        'red',
+        'blue',
+        'yellow',
+        'green',
+        'pink',
+        'cyan',
+        'orange',
+        'lime',
+        'grape',
+        'teal'
+      ]
+    }]
+  };
+  const config7 = {
+    type: 'bar',
+    data: data7,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        },
+        x: {
+          ticks: {
+            font: {
+              size: 10,
+            },
+            autoSkip: false,
+            maxRotation: 30,
+            minRotation: 30
+          }
+        }
+      }
+    },
+  };
+  
+  var myBarChart = new Chart(document.getElementById('Chart-Books-Read'), config4);
+  var myBarChart = new Chart(document.getElementById('Chart-Books-Published'), config5);
+  var myBarChart = new Chart(document.getElementById('Chart-Books-Ratings'), config6);
+  var myBarChart = new Chart(document.getElementById('Chart-Books-Ranked'), config7);
   </script>
 
 <div class="content2">
