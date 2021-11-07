@@ -196,6 +196,7 @@ def liveathousandlives():
 		
 		if( doc["_source"]["Nonfiction"] ):
 			twitter_book_nonfiction = {
+				"title": doc["_source"]["Book Title"],
 				"tweet id": doc["_source"]["TweetID"],
 				"likes count": doc["_source"]["Likes"]
 			}
@@ -210,6 +211,7 @@ def liveathousandlives():
 		oneitem["Author"] = doc["_source"]["Author"]
 		oneitem["Year Published"] = doc["_source"]["Year Published"]
 		oneitem["My Rating"] = doc["_source"]["Rating"]
+		oneitem["Review"] = doc["_source"]["Review"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 
@@ -453,6 +455,11 @@ def retweetbook():
 	tweet_id = elasticsearch_access.get_a_random_book_tweet_id()
 	twitterbot.retweet_book(tweet_id)
 	return render_template('echo.html', text="A book retweeted!")
+
+@app.route("/retweet/<tweet_id>")
+def retweet(tweet_id):
+	twitterbot.retweet_book(tweet_id)
+	return render_template('echo.html', text="retweeted!")
 
 @app.route("/copy", methods=['POST'])
 def copy():

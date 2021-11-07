@@ -94,10 +94,15 @@
     <img id="load-next-button" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
   <div class="content">
-    <b>Top 10 Books by Twitter Likes</b><br>
     <center>
+    <b>Top 10 Books by Twitter Likes</b><br>
     <div id="chart-container" style="width:100%">
       <canvas id="Chart-Books-Ranked"></canvas>
+    </div>
+    <br>
+    <b>Top 10 Nonfunctions by Twitter Likes</b><br>
+    <div id="chart-container" style="width:100%">
+      <canvas id="Chart-Books-Ranked-NF"></canvas>
     </div>
     </center>
   </div>
@@ -124,13 +129,19 @@
       photo_index = 0;
       photo_count = mybooklist.length;
       photo_count_per_page =5;
+      console.log("Tweet to be created.")
       for (let i = 0; i < photo_count_per_page; i++) {
         twttr.widgets.createTweet(
           mybooklist[i]["tweet id"],
           ulElementMain,
           tweet_widget_options
-        );
+        )
+        .then(function (el) {
+          console.log("Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
+          loadMyReviewDiv(el, mybooklist[i]["title"]);
+        });;
       }
+
       let page_begin = photo_index/photo_count_per_page+1;
       page_end = Math.floor(photo_count/photo_count_per_page)+1;
       if( photo_count % photo_count_per_page == 0)
@@ -146,6 +157,41 @@
     }
   </script>
   <script>
+    function loadMyReviewDiv(el, title)
+    {
+      let review_lookup = lookup_review_from_items(title);
+      if( review_lookup == null ) //No not insert MyReview box if no review text
+        return;
+      let widget_element = el;
+      let widget_width = widget_element.offsetWidth;
+      let widget_height = widget_element.offsetHeight;
+      console.log("widget width=%s height=%s", widget_width, widget_height);
+      let div = document.createElement("div");
+      div.className = "content"
+      div.style.width = widget_width+"px";
+      div.style.height = Math.floor(widget_height/3) + "px";
+      div.style.background = "#fff";
+      div.style.color = "black";
+      div.style.textAlign = "center";
+      div.style.marginLeft = 'auto';
+      div.style.marginRight = 'auto';
+      div.style.border = "8px inset #683205";
+      div.style.borderRadius = "5px";
+      div.style.boxShadow = "0px 0px 4px 1px";
+      div.style.padding = "0px 2px 0px 8px"; //top,right,bottom,left
+      div.style.overflow = "auto";
+      div.align = "center";
+      my_review = `<b style="font-size:14px">Max\'s Review</b><br>${review_lookup}`;
+      let image_lookup = lookup_image_from_items(title);
+      console.log("title: %s, image lookup file name: %s\nreview: %s", title, image_lookup, review_lookup);
+      let book_image = `static/books/${image_lookup}`;
+      let image_height = Math.floor((widget_height/3)*(2/3)) + "px";
+      let image_style = `width:auto;height:${image_height};float:right`;
+      div.innerHTML = '<p style="line-height:1.1;font-size:12px;text-align:left;margin-top:3px;margin-bottom:0px;">' + `<img src=${book_image} alt="" style=${image_style}></a>` + my_review + '</p>';
+      widget_element.after(div);
+      //let br_element = document.createElement("br");
+      //div.after(br_element);
+    }
     function positionBackNextButtons()
     {
       document.getElementById("load-prev-button").style.visibility = 'visible';
@@ -183,7 +229,11 @@
           mybooklist[base+i]["tweet id"],
           ulElementMain,
           tweet_widget_options
-        );
+        )
+        .then(function (el) {
+          console.log("Tweet displayed.");
+          loadMyReviewDiv(el, mybooklist[base+i]["title"]);
+        });;
       }
       photo_index += photo_count_per_page;
       positionBackNextButtons();
@@ -200,7 +250,11 @@
           mybooklist[base-2*photo_count_per_page+i]["tweet id"],
           ulElementMain,
           tweet_widget_options
-        );
+        )
+        .then(function (el) {
+          console.log("Tweet displayed.");
+          loadMyReviewDiv(el, mybooklist[base-2*photo_count_per_page+i]["title"]);
+        });;
       }
       photo_index -= photo_count_per_page;
       positionBackNextButtons();
@@ -476,22 +530,24 @@
     top10_titles[i] = mybooklist[i]["title"];
     top10_likes[i] = mybooklist[i]["likes count"];
   }
+  //can't share one color_array for two charts, js uses shallow copy for lists
+  var color_array = ['red','blue','yellow','green','pink','cyan','orange','lime','grape','teal'];
+  var color_array2 = ['red','blue','yellow','green','pink','cyan','orange','lime','grape','teal'];
+  let random_i = Math.floor(Math.random()*3);
+  if(random_i==1)
+    color_array.sort();
+  if(random_i==2)
+    color_array.reverse();
+  random_i = Math.floor(Math.random()*3);
+  if(random_i==1)
+    color_array2.sort();
+  if(random_i==2)
+    color_array2.reverse();
   const data7 = {
     labels: top10_titles,
     datasets: [{
       data: top10_likes,
-      backgroundColor: [
-        'red',
-        'blue',
-        'yellow',
-        'green',
-        'pink',
-        'cyan',
-        'orange',
-        'lime',
-        'grape',
-        'teal'
-      ]
+      backgroundColor: color_array
     }]
   };
   const config7 = {
@@ -514,8 +570,49 @@
               size: 10,
             },
             autoSkip: false,
-            maxRotation: 30,
-            minRotation: 30
+            maxRotation: 90,
+            minRotation: 0
+          }
+        }
+      }
+    },
+  };
+
+  var top10_titles_nf = [];
+  var top10_likes_nf = [];
+  for (let i = 0; i < 10; i++) {
+    top10_titles_nf[i] = twitter_books_nonfiction[i]["title"];
+    top10_likes_nf[i] = twitter_books_nonfiction[i]["likes count"];
+  }
+  const data8 = {
+    labels: top10_titles_nf,
+    datasets: [{
+      data: top10_likes_nf,
+      backgroundColor: color_array2
+    }]
+  };
+  const config8 = {
+    type: 'bar',
+    data: data8,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        },
+        x: {
+          ticks: {
+            font: {
+              size: 10,
+            },
+            autoSkip: false,
+            maxRotation: 90,
+            minRotation: 0
           }
         }
       }
@@ -526,6 +623,7 @@
   var myBarChart = new Chart(document.getElementById('Chart-Books-Published'), config5);
   var myBarChart = new Chart(document.getElementById('Chart-Books-Ratings'), config6);
   var myBarChart = new Chart(document.getElementById('Chart-Books-Ranked'), config7);
+  var myBarChart = new Chart(document.getElementById('Chart-Books-Ranked-NF'), config8);
   </script>
 
 <div class="content2">
@@ -533,8 +631,13 @@
   <img src="static/reading.gif" alt="Reading Gif" style="width:30%;height:auto;">
 </div>
 
+<div id="book-review" class="content">
+  <p><b>My Book Review</b>
+  <br><span style="font-size: 3vw;"><i>Click Review Icon <img src="static/book-review.png" alt="Review" style="width:auto;height:3vw;"> from the book table below</i></span>
+  </p>
+</div>
 
-<div class="content">
+<div class="content2">
   <p><b>Books I have read - {{ count }} Books</b></p>
   <table id="booktable" class="center" border=1>
   </table>
@@ -546,6 +649,60 @@
   var columns = {{columns | tojson}}
   var items = {{items | tojson}}
   var count = {{count | tojson}}
+  columns.push("Review");
+</script>
+
+<script>
+  function lookup_image_from_items(title)
+  {
+      for(let i=0; i<count; i++)
+      {
+        if( items[i]["Book Title"] == title )
+          return items[i]["Cover Image"];
+      }
+      return null;
+  }
+  function lookup_review_from_items(title)
+  {
+      for(let i=0; i<count; i++)
+      {
+        if( items[i]["Book Title"] == title )
+          return items[i]["Review"];
+      }
+      return null;
+  }
+  function lookup_tweet_id_from_twitter_books(title)
+  {
+      for(let i=0; i<twitter_books.length; i++)
+      {
+        if( twitter_books[i]["title"] == title )
+          return twitter_books[i]["tweet id"];
+      }
+      return null;
+  }    
+
+  function reviewBook(book_review_title)
+  {
+    console.log("Book review title=%s", book_review_title);
+    var ulElementBookReview = document.getElementById("book-review");
+    while( ulElementBookReview.childElementCount > 1 )
+      ulElementBookReview.lastChild.remove();
+    //let book_title = "The Silent Patient";
+    let tweet_id = lookup_tweet_id_from_twitter_books(book_review_title);
+    console.log("Book review tweet_id=%s", tweet_id);
+    twttr.widgets.createTweet(
+      tweet_id,
+      ulElementBookReview,
+      tweet_widget_options
+    )
+    .then(function (el) {
+      console.log("Book Review Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
+      loadMyReviewDiv(el, book_review_title);
+    });;
+  }
+</script>
+
+<script>
   var table = document.getElementById("booktable");
   // Create an empty <thead> element and add it to the table:
   var header = table.createTHead();
@@ -565,7 +722,7 @@
       // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
       let cell = bodyrow.insertCell(j);
       // Add some text to the new cells:
-      let column = columns[j];
+      column = columns[j];
       cell.innerHTML = items[i][column];
       if( j== 0 ) { //image file 
         let image_file_name = items[i][column];
@@ -574,8 +731,20 @@
         cell.innerHTML = `<a href=${book_url}><img src=${book_url} alt="" style="width:auto;height:5vw;"></a>`;
         //console.log(cell.innerHTML);
       }
+      if( j == (columns.length-1) ) { //last column 
+        title = items[i]["Book Title"];
+        if( lookup_review_from_items(title) || lookup_tweet_id_from_twitter_books(title) )
+          cell.innerHTML = `<a href="#book-review" onclick="reviewBook('${title}')"><img src="static/book-review.png" alt="Review" style="width:auto;height:5vw;"></a>`
+        else
+          cell.innerHTML = "";
+      }
     }
   }
+  </script>
+
+  <script>
+    let title = "A Gentleman In Moscow";
+    reviewBook(title);
   </script>
 
 <div class="botnav">
