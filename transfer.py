@@ -190,7 +190,8 @@ def liveathousandlives():
 		twitter_book = {
 			"title": doc["_source"]["Book Title"],
 			"tweet id": doc["_source"]["TweetID"],
-			"likes count": doc["_source"]["Likes"]
+			"likes count": doc["_source"]["Likes"],
+			"id": doc["_source"]["ID"]
 		}
 		twitter_booklist.append( twitter_book ) #add to the list
 		
@@ -198,7 +199,8 @@ def liveathousandlives():
 			twitter_book_nonfiction = {
 				"title": doc["_source"]["Book Title"],
 				"tweet id": doc["_source"]["TweetID"],
-				"likes count": doc["_source"]["Likes"]
+				"likes count": doc["_source"]["Likes"],
+				"id": doc["_source"]["ID"]
 			}
 			twitter_booklist_nonfiction.append( twitter_book_nonfiction )
 
@@ -212,6 +214,7 @@ def liveathousandlives():
 		oneitem["Year Published"] = doc["_source"]["Year Published"]
 		oneitem["My Rating"] = doc["_source"]["Rating"]
 		oneitem["Review"] = doc["_source"]["Review"]
+		oneitem["ID"] = doc["_source"]["id"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 
@@ -557,8 +560,9 @@ def generatetwitterbooklist():
 		tweet_id = doc["_source"]["TweetID"]
 		like_count = twitterbot.get_likes(tweet_id)
 		nonfiction = ( doc["_source"]["Genre"] != "Fiction" )
+		id = doc["_source"]["id"]
 		#write to ES
-		elasticsearch_access.add_a_twitter_book(title,tweet_id,like_count,nonfiction)
+		elasticsearch_access.add_a_twitter_book(title,tweet_id,like_count,nonfiction,id)
 	return render_template('echo.html', text="generatetwitterbooklist completed")
 
 #liveathousandlives()

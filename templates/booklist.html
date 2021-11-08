@@ -138,7 +138,7 @@
         )
         .then(function (el) {
           console.log("Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
-          loadMyReviewDiv(el, mybooklist[i]["title"]);
+          loadMyReviewDiv(el, mybooklist[i]["id"]);
         });;
       }
 
@@ -157,9 +157,9 @@
     }
   </script>
   <script>
-    function loadMyReviewDiv(el, title)
+    function loadMyReviewDiv(el, id)
     {
-      let review_lookup = lookup_review_from_items(title);
+      let review_lookup = lookup_review_from_items(id);
       if( review_lookup == null ) //No not insert MyReview box if no review text
         return;
       let widget_element = el;
@@ -182,8 +182,8 @@
       div.style.overflow = "auto";
       div.align = "center";
       my_review = `<b style="font-size:14px">Max\'s Review</b><br>${review_lookup}`;
-      let image_lookup = lookup_image_from_items(title);
-      console.log("title: %s, image lookup file name: %s\nreview: %s", title, image_lookup, review_lookup);
+      let image_lookup = lookup_image_from_items(id);
+      console.log("id: %s, image lookup file name: %s\nreview: %s", id, image_lookup, review_lookup);
       let book_image = `static/books/${image_lookup}`;
       let image_height = Math.floor((widget_height/3)*(2/3)) + "px";
       let image_style = `width:auto;height:${image_height};float:right`;
@@ -232,7 +232,7 @@
         )
         .then(function (el) {
           console.log("Tweet displayed.");
-          loadMyReviewDiv(el, mybooklist[base+i]["title"]);
+          loadMyReviewDiv(el, mybooklist[base+i]["id"]);
         });;
       }
       photo_index += photo_count_per_page;
@@ -253,7 +253,7 @@
         )
         .then(function (el) {
           console.log("Tweet displayed.");
-          loadMyReviewDiv(el, mybooklist[base-2*photo_count_per_page+i]["title"]);
+          loadMyReviewDiv(el, mybooklist[base-2*photo_count_per_page+i]["id"]);
         });;
       }
       photo_index -= photo_count_per_page;
@@ -653,42 +653,40 @@
 </script>
 
 <script>
-  function lookup_image_from_items(title)
+  function lookup_image_from_items(id)
   {
       for(let i=0; i<count; i++)
       {
-        if( items[i]["Book Title"] == title )
+        if( items[i]["ID"] == id )
           return items[i]["Cover Image"];
       }
       return null;
   }
-  function lookup_review_from_items(title)
+  function lookup_review_from_items(id)
   {
       for(let i=0; i<count; i++)
       {
-        if( items[i]["Book Title"] == title )
+        if( items[i]["ID"] == id )
           return items[i]["Review"];
       }
       return null;
   }
-  function lookup_tweet_id_from_twitter_books(title)
+  function lookup_tweet_id_from_twitter_books(id)
   {
       for(let i=0; i<twitter_books.length; i++)
       {
-        if( twitter_books[i]["title"] == title )
+        if( twitter_books[i]["id"] == id )
           return twitter_books[i]["tweet id"];
       }
       return null;
   }    
-
-  function reviewBook(book_review_title)
+  function reviewBook(id)
   {
-    console.log("Book review title=%s", book_review_title);
+    console.log("Book review book id=%s", id);
     var ulElementBookReview = document.getElementById("book-review");
     while( ulElementBookReview.childElementCount > 1 )
       ulElementBookReview.lastChild.remove();
-    //let book_title = "The Silent Patient";
-    let tweet_id = lookup_tweet_id_from_twitter_books(book_review_title);
+    let tweet_id = lookup_tweet_id_from_twitter_books(id);
     console.log("Book review tweet_id=%s", tweet_id);
     twttr.widgets.createTweet(
       tweet_id,
@@ -697,7 +695,7 @@
     )
     .then(function (el) {
       console.log("Book Review Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
-      loadMyReviewDiv(el, book_review_title);
+      loadMyReviewDiv(el, id);
     });;
   }
 </script>
@@ -732,9 +730,10 @@
         //console.log(cell.innerHTML);
       }
       if( j == (columns.length-1) ) { //last column 
-        title = items[i]["Book Title"];
-        if( lookup_review_from_items(title) || lookup_tweet_id_from_twitter_books(title) )
-          cell.innerHTML = `<a href="#book-review" onclick="reviewBook('${title}')"><img src="static/book-review.png" alt="Review" style="width:auto;height:5vw;"></a>`
+        let title = items[i]["Book Title"];
+        let id = items[i]["ID"];
+        if( lookup_review_from_items(id) || lookup_tweet_id_from_twitter_books(id) )
+          cell.innerHTML = `<a href="#book-review" onclick="reviewBook('${id}')"><img src="static/book-review.png" alt="Review" style="width:auto;height:5vw;"></a>`
         else
           cell.innerHTML = "";
       }
@@ -743,8 +742,8 @@
   </script>
 
   <script>
-    let title = "A Gentleman In Moscow";
-    reviewBook(title);
+    //let title = "The Glass Castle";
+    reviewBook("221");
   </script>
 
 <div class="botnav">
