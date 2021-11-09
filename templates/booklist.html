@@ -162,6 +162,7 @@
       let review_lookup = lookup_review_from_items(id);
       if( review_lookup == null ) //No not insert MyReview box if no review text
         return;
+      let rating = lookup_rating_from_items(id);
       let widget_element = el;
       let widget_width = widget_element.offsetWidth;
       let widget_height = widget_element.offsetHeight;
@@ -181,7 +182,7 @@
       div.style.padding = "0px 2px 0px 8px"; //top,right,bottom,left
       div.style.overflow = "auto";
       div.align = "center";
-      my_review = `<b style="font-size:14px">Max\'s Review</b><br>${review_lookup}`;
+      my_review = `<b style="font-size:14px">Max\'s Review</b><br>${rating}<br>${review_lookup}`;
       let image_lookup = lookup_image_from_items(id);
       console.log("id: %s, image lookup file name: %s\nreview: %s", id, image_lookup, review_lookup);
       let book_image = `static/books/${image_lookup}`;
@@ -668,6 +669,15 @@
       {
         if( items[i]["ID"] == id )
           return items[i]["Review"];
+      }
+      return null;
+  }
+  function lookup_rating_from_items(id)
+  {
+      for(let i=0; i<count; i++)
+      {
+        if( items[i]["ID"] == id )
+          return items[i]["My Rating"];
       }
       return null;
   }
