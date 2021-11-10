@@ -181,6 +181,7 @@ def searchaword():
 
 @app.route("/liveathousandlives")
 def liveathousandlives():
+	'''
 	#get a list of my book posts from Twitter
 	allbooks, count = elasticsearch_access.get_all_twitter_books()
 	twitter_booklist = []
@@ -203,8 +204,12 @@ def liveathousandlives():
 				"id": doc["_source"]["ID"]
 			}
 			twitter_booklist_nonfiction.append( twitter_book_nonfiction )
+	'''
+	
+	twitter_booklist = []
+	twitter_booklist_nonfiction = []
 
-	allbooks, count = elasticsearch_access.get_all_book()
+	allbooks, count = elasticsearch_access.get_all_book_sorted_by_likes() #elasticsearch_access.get_all_book()
 	items = [{}] * count
 	oneitem = {}
 	for num, doc in enumerate(allbooks):
@@ -215,8 +220,15 @@ def liveathousandlives():
 		oneitem["My Rating"] = doc["_source"]["Rating"]
 		oneitem["Review"] = doc["_source"]["Review"]
 		oneitem["ID"] = doc["_source"]["id"]
+		oneitem["TweetID"] = doc["_source"]["TweetID"]
+		oneitem["Likes"] = doc["_source"]["Likes"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+
+		if (doc["_source"]["TweetID"] != None ):
+			twitter_booklist.append(num)
+			if ( doc["_source"]["Genre"] != "Fiction" ):
+				twitter_booklist_nonfiction.append(num)
 
 	columns=["Cover Image","Book Title","Author","Year Published","My Rating"]
 	random_i = random.randint(0,count-1)
@@ -224,9 +236,9 @@ def liveathousandlives():
 	book_stats = elasticsearch_access.get_book_statistics()
 
 	return render_template('booklist.html', columns=columns, items=items, count=count,\
-		booklist=twitter_booklist, bookcount=twitter_bookcount,\
-		booklist_nonfiction=twitter_booklist_nonfiction,\
-		bookcount_nonfiction=len(twitter_booklist_nonfiction),bookstats=book_stats)
+		booklist=twitter_booklist, bookcount=len(twitter_booklist),\
+		booklist_nonfiction=twitter_booklist_nonfiction,bookcount_nonfiction=len(twitter_booklist_nonfiction),\
+		bookstats=book_stats)
 
 @app.route("/about")
 def about():
@@ -548,7 +560,13 @@ def editjournal():
 		elasticsearch_access.edit_journal(id, title, text, "journal")
 	return redirect('/journal')
 
-@app.route("/generatetwitterbooklist")
+
+@app.route("/generatelikesinbooklist")
+def generatelikesinbooklist():
+	elasticsearch_access.generate_likes_in_booklist()
+	return render_template('echo.html', text="generatelikesinbooklist completed")
+
+#@app.route("/generatetwitterbooklist")
 def generatetwitterbooklist():
 	#delete the existing index,and create a new empty one
 	elasticsearch_access.delete_twitter_book_index()
@@ -569,5 +587,5 @@ def generatetwitterbooklist():
 #generatetwitterbooklist()
 
 #if __name__ == '__main__':
-	#app.run(port=5000,debug=False)
+	#app.run(port=5001,debug=False)
 	#app.run(host='0.0.0.0',port=80)

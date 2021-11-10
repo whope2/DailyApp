@@ -108,7 +108,8 @@
   </div>
 
   <script>
-  
+    var items = {{items | tojson}}
+    var count = {{count | tojson}}
     var twitter_books = {{booklist | tojson}}
     var twitter_books_nonfiction = {{booklist_nonfiction | tojson}}
     var ulElementMain = document.getElementById("main-div-twitter-books");
@@ -132,13 +133,13 @@
       console.log("Tweet to be created.")
       for (let i = 0; i < photo_count_per_page; i++) {
         twttr.widgets.createTweet(
-          mybooklist[i]["tweet id"],
+          items[mybooklist[i]]["TweetID"],
           ulElementMain,
           tweet_widget_options
         )
         .then(function (el) {
-          console.log("Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
-          loadMyReviewDiv(el, mybooklist[i]["id"]);
+          //console.log("Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
+          loadMyReviewDiv(el, mybooklist[i]);
         });;
       }
 
@@ -157,12 +158,12 @@
     }
   </script>
   <script>
-    function loadMyReviewDiv(el, id)
+    function loadMyReviewDiv(el, i)
     {
-      let review_lookup = lookup_review_from_items(id);
+      let review_lookup = items[i]["Review"];//lookup_review_from_items(id);
       if( review_lookup == null ) //No not insert MyReview box if no review text
         return;
-      let rating = lookup_rating_from_items(id);
+      let rating = items[i]["My Rating"]; //lookup_rating_from_items(id);
       let widget_element = el;
       let widget_width = widget_element.offsetWidth;
       let widget_height = widget_element.offsetHeight;
@@ -183,8 +184,8 @@
       div.style.overflow = "auto";
       div.align = "center";
       my_review = `<b style="font-size:14px">Max\'s Review</b><br>${rating}<br>${review_lookup}`;
-      let image_lookup = lookup_image_from_items(id);
-      console.log("id: %s, image lookup file name: %s\nreview: %s", id, image_lookup, review_lookup);
+      let image_lookup = items[i]["Cover Image"];//lookup_image_from_items(id);
+      console.log("i: %s, image lookup file name: %s\nreview: %d", i, image_lookup, review_lookup);
       let book_image = `static/books/${image_lookup}`;
       let image_height = Math.floor((widget_height/3)*(2/3)) + "px";
       let image_style = `width:auto;height:${image_height};float:right`;
@@ -227,13 +228,13 @@
       var base = photo_index;
       for (let i = 0; i < photo_count_per_page && (i+photo_index<photo_count); i++) {
         twttr.widgets.createTweet(
-          mybooklist[base+i]["tweet id"],
+          items[mybooklist[base+i]]["TweetID"],
           ulElementMain,
           tweet_widget_options
         )
         .then(function (el) {
           console.log("Tweet displayed.");
-          loadMyReviewDiv(el, mybooklist[base+i]["id"]);
+          loadMyReviewDiv(el, mybooklist[base+i]);
         });;
       }
       photo_index += photo_count_per_page;
@@ -248,13 +249,13 @@
       var base = photo_index;
       for (let i = 0; i < photo_count_per_page && (base-2*photo_count_per_page)>=0; i++) {
         twttr.widgets.createTweet(
-          mybooklist[base-2*photo_count_per_page+i]["tweet id"],
+          items[[base-2*photo_count_per_page+i]]["tweet id"],
           ulElementMain,
           tweet_widget_options
         )
         .then(function (el) {
           console.log("Tweet displayed.");
-          loadMyReviewDiv(el, mybooklist[base-2*photo_count_per_page+i]["id"]);
+          loadMyReviewDiv(el, mybooklist[base-2*photo_count_per_page+i]);
         });;
       }
       photo_index -= photo_count_per_page;
@@ -528,8 +529,8 @@
   var top10_titles = [];
   var top10_likes = [];
   for (let i = 0; i < 10; i++) {
-    top10_titles[i] = mybooklist[i]["title"];
-    top10_likes[i] = mybooklist[i]["likes count"];
+    top10_titles[i] = items[mybooklist[i]]["Book Title"];
+    top10_likes[i] = items[mybooklist[i]]["Likes"];
   }
   //can't share one color_array for two charts, js uses shallow copy for lists
   var color_array = ['red','blue','yellow','green','pink','cyan','orange','lime','grape','teal'];
@@ -582,8 +583,8 @@
   var top10_titles_nf = [];
   var top10_likes_nf = [];
   for (let i = 0; i < 10; i++) {
-    top10_titles_nf[i] = twitter_books_nonfiction[i]["title"];
-    top10_likes_nf[i] = twitter_books_nonfiction[i]["likes count"];
+    top10_titles_nf[i] = items[twitter_books_nonfiction[i]]["Book Title"];
+    top10_likes_nf[i] = items[twitter_books_nonfiction[i]]["Likes"];
   }
   const data8 = {
     labels: top10_titles_nf,
@@ -648,55 +649,17 @@
   //tojson is a Jinja filter that dumps the structure to a JSON string and marks it safe 
   //so that Jinja does not autoescape it
   var columns = {{columns | tojson}}
-  var items = {{items | tojson}}
-  var count = {{count | tojson}}
   columns.push("Review");
 </script>
 
 <script>
-  function lookup_image_from_items(id)
+  function reviewBook(i)
   {
-      for(let i=0; i<count; i++)
-      {
-        if( items[i]["ID"] == id )
-          return items[i]["Cover Image"];
-      }
-      return null;
-  }
-  function lookup_review_from_items(id)
-  {
-      for(let i=0; i<count; i++)
-      {
-        if( items[i]["ID"] == id )
-          return items[i]["Review"];
-      }
-      return null;
-  }
-  function lookup_rating_from_items(id)
-  {
-      for(let i=0; i<count; i++)
-      {
-        if( items[i]["ID"] == id )
-          return items[i]["My Rating"];
-      }
-      return null;
-  }
-  function lookup_tweet_id_from_twitter_books(id)
-  {
-      for(let i=0; i<twitter_books.length; i++)
-      {
-        if( twitter_books[i]["id"] == id )
-          return twitter_books[i]["tweet id"];
-      }
-      return null;
-  }    
-  function reviewBook(id)
-  {
-    console.log("Book review book id=%s", id);
+    console.log("Book review book i=%d", i);
     var ulElementBookReview = document.getElementById("book-review");
     while( ulElementBookReview.childElementCount > 1 )
       ulElementBookReview.lastChild.remove();
-    let tweet_id = lookup_tweet_id_from_twitter_books(id);
+    let tweet_id = items[i]["TweetID"];
     console.log("Book review tweet_id=%s", tweet_id);
     twttr.widgets.createTweet(
       tweet_id,
@@ -705,7 +668,7 @@
     )
     .then(function (el) {
       console.log("Book Review Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
-      loadMyReviewDiv(el, id);
+      loadMyReviewDiv(el, i);
     });;
   }
 </script>
@@ -742,8 +705,8 @@
       if( j == (columns.length-1) ) { //last column 
         let title = items[i]["Book Title"];
         let id = items[i]["ID"];
-        if( lookup_review_from_items(id) || lookup_tweet_id_from_twitter_books(id) )
-          cell.innerHTML = `<a href="#book-review" onclick="reviewBook('${id}')"><img src="static/book-review.png" alt="Review" style="width:auto;height:5vw;"></a>`
+        if( items[i]["Review"] || items[i]["TweetID"] )
+          cell.innerHTML = `<a href="#book-review" onclick="reviewBook('${i}')"><img src="static/book-review.png" alt="Review" style="width:auto;height:5vw;"></a>`
         else
           cell.innerHTML = "";
       }
@@ -753,7 +716,7 @@
 
   <script>
     //let title = "The Glass Castle";
-    reviewBook("221");
+    reviewBook(1);
   </script>
 
 <div class="botnav">

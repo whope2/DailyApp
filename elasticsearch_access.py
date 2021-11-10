@@ -1,6 +1,7 @@
 import random
 from elasticsearch import Elasticsearch
 from datetime import datetime
+import twitterbot
 
 client = Elasticsearch()
 '''
@@ -127,6 +128,18 @@ def get_all_book() :
     #print("%d hits" % hit_count)
     allbooks = results["hits"]["hits"]
     #print(allbooks)
+    return(allbooks, hit_count)   
+
+def get_all_book_sorted_by_likes() :
+    index_name = "booklist"
+    results=client.search(index=index_name, body=\
+    {
+        "size":999,
+        "query":{"match_all":{}},
+        "sort" : [ { "Likes" : "desc" } ]
+    })    
+    hit_count = len(results["hits"]["hits"])
+    allbooks = results["hits"]["hits"]
     return(allbooks, hit_count)   
 
 def get_book_statistics():
@@ -288,6 +301,23 @@ def get_book_statistics():
         "books rated 3": books_rated_3
     }
     return book_stats
+
+def generate_likes_in_booklist():
+    index_name = "booklist"
+    results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
+    hit_count = len(results["hits"]["hits"])
+    allbooks = results["hits"]["hits"]
+    for doc in allbooks:
+        if(doc["_source"]["TweetID"]):       
+            like_count = twitterbot.get_likes(doc["_source"]["TweetID"])
+        else:
+            like_count = 0    
+        client.update(index=index_name,doc_type='_doc',
+            id=doc["_source"]["id"],
+            body={"doc": {"Likes": like_count} } 
+        )
+    return
+#generate_likes_in_booklist()
 
 def get_all_twitter_books():
     index_name = "twitterbooklist"
