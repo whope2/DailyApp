@@ -249,7 +249,7 @@
       var base = photo_index;
       for (let i = 0; i < photo_count_per_page && (base-2*photo_count_per_page)>=0; i++) {
         twttr.widgets.createTweet(
-          items[[base-2*photo_count_per_page+i]]["tweet id"],
+          items[[base-2*photo_count_per_page+i]]["TweetID"],
           ulElementMain,
           tweet_widget_options
         )
@@ -313,7 +313,7 @@
   <center>
     <p>
     <b>Book Formats</b>
-    <div id="chart-container" style="width:50%">
+    <div id="chart-container" style="width:50%;max-width:500px;">
       <canvas id="Chart-BookType"></canvas>
     </div>
     <i style="background: yellow;font-size: 3vw;">Audio Book {{bookstats["audio book count"]}}</i>
@@ -322,7 +322,7 @@
     </p>
     <p>
     <b>Book Genres</b>
-    <div id="chart-container" style="width:50%">
+    <div id="chart-container" style="width:50%;max-width:500px;">
       <canvas id="Chart-Genres"></canvas>
     </div>
     <i style="background: yellow;font-size: 3vw;">Fiction {{bookstats["fiction count"]}}</i>
