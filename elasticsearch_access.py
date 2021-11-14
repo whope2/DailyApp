@@ -370,7 +370,7 @@ def get_all_love_quotes() :
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
-    print(allrecords)
+    #print(allrecords)
     return(allrecords, hit_count)
 
 def get_all_words() :    
@@ -378,16 +378,47 @@ def get_all_words() :
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
-    print(allrecords)
+    #print(allrecords)
     return(allrecords, hit_count)
-
+'''
 def get_all_quotes() :    
+    results=client.search(index="quotelist",body={"size":999,"query":{"match_all":{}}})
+    print("%d hits" % hit_count)
+    allrecords = results["hits"]["hits"]
+    #print(allrecords)
+    return(allrecords, hit_count)
+'''
+def get_all_quotes() :
+    '''  # aggregation needs to enable fielddata for Category text field, 
+         # which cause performance degradation. 
+         # By default text field fielddata is disabled   
+    results=client.search(index="quotelist",
+        body= {
+          "size": 0, #No need to return any documents
+            "aggs": {
+                "get_categories": {
+                    "terms": {
+                        "field": "Category",
+                        "size": 20  #up to 20 categories
+                    }
+                }
+            }
+        }
+    )
+    '''
     results=client.search(index="quotelist",body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
-    print(allrecords)
-    return(allrecords, hit_count)
+    category_list = []
+    for num, doc in enumerate(allrecords):
+        if(doc["_source"]["Category"] not in category_list):
+            category_list.append(doc["_source"]["Category"])
+    #print(category_list)
+    #print(allrecords)
+    return(allrecords, hit_count, category_list)
+
+#get_all_quotes()
 
 def get_all_subscribers():
     index_name = "subscriptionlist"
@@ -395,7 +426,7 @@ def get_all_subscribers():
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
-    print(allrecords)
+    #print(allrecords)
     return(allrecords, hit_count)
 
 def get_all_subscribers_test():
@@ -404,7 +435,7 @@ def get_all_subscribers_test():
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
-    print(allrecords)
+    #print(allrecords)
     return(allrecords, hit_count)
 
 def add_a_subscription(email, interest) :

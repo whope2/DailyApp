@@ -20,10 +20,13 @@ def get_my_followers() :
     follower_list = []
     followers = tweepy.Cursor(api.followers_ids, user_id=me.id, tweet_mode="extended").items()
     for i in range(0,number_of_followers):
-        user=next(followers)
-        #user_status = api.get_user(user)
-        #print(user)
-        follower_list.append(user)
+        try:
+            user=next(followers)
+            #user_status = api.get_user(user)
+            #print(user)
+            follower_list.append(user)
+        except StopIteration:
+            break
     #print(i)
     return follower_list
 
@@ -145,7 +148,7 @@ for tweet in api.search(q="quoteoftheday", lang="en"):
 #like_tweets("#reading", 10)
 #like_tweets("#goodreadswithaview", 10)
 
-#get_followers()
+#get_my_followers()
 
 #count, exception_count = like_goodreads_replies("1456629378876596229", 100)
 #print("count=%s, exception_count=%s" % (count,exception_count))

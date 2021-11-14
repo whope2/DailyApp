@@ -68,14 +68,15 @@ def pictureoftheday():
 
 @app.route("/quoteoftheday")
 def quoteoftheday():
-	allrecords, count = elasticsearch_access.get_all_quotes()
+	allrecords, count, categories = elasticsearch_access.get_all_quotes()
 	#count=10  #test
 	items = [{}] * count
 	oneitem = {}
 	for num, doc in enumerate(allrecords):
 		oneitem["Quote"] = doc["_source"]["Quote"]
 		oneitem["Author"] = doc["_source"]["Author"]
-		print(oneitem)
+		oneitem["Category"] = doc["_source"]["Category"]
+		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 	col_names=["Quote","Author"]
 	col_width={
@@ -86,7 +87,7 @@ def quoteoftheday():
 	random.shuffle(items)
 	random_i = random.randint(0,count-1)
 	return render_template('quotelist.html', col_names=col_names, col_width=col_width, items=items, count=count, \
-		quote=items[random_i]["Quote"]+ " - " + items[random_i]["Author"])
+		categories=categories, quote=items[random_i]["Quote"]+ "— " + items[random_i]["Author"])
 
 #api: /genwordoftheday/
 #Generate a random word
@@ -458,11 +459,14 @@ def triggernewsletter():
 @app.route("/tweetquote")
 def tweetquote():
 	quote, author, tweet_id = elasticsearch_access.get_a_random_quote_and_author()
+	twitterbot.tweet_quote(quote, author, None)
+	'''	#Reteet previous quotes, no longer necessary
 	quote2, author2, tweet_id2 = elasticsearch_access.get_a_random_quote_and_author()
 	if tweet_id :
 		twitterbot.tweet_quote(quote, author, tweet_id)
 	else:
 		twitterbot.tweet_quote(quote2, author2, tweet_id2)	
+	'''
 	return render_template('echo.html', text="A quote tweeted!")
 
 @app.route("/retweetbook")

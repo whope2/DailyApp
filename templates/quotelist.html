@@ -90,17 +90,12 @@
   </div>
 
   <div class="content">
-    <p><b>{{ count }} Quotes</b></p>
-    <img id="load-prev-button-top" onclick="loadPrev()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
-    <i id="page-indicator-top" style="font-size:2vw;">1/5</i>
-    <img id="load-next-button-top" onclick="loadNext()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
+    <p><b>{{ count }} Quotes</b><br>
+    <i id="quote-category" style="font-size:2vw;">Category1</i></p>
+    <span id="category-name" style="font-size:3vw;"><b>CategoryName</b></span><br>
     <table id="quotetable" class="center" border=1>
     </table>
     <br>
-    <img id="load-prev-button" onclick="loadPrev()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
-    <i id="page-indicator-bot" style="font-size:2vw;">1/5</i>
-    <img id="load-next-button" onclick="loadNext()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
-
   </div>
 
   <script>
@@ -109,6 +104,17 @@
     var columns = {{col_names | tojson}} 
     var items = {{items | tojson}}
     var col_width = {{ col_width | tojson }}
+    var categories = {{ categories | tojson }}
+
+    let category_html = "";
+    for( cat of categories )
+    {
+      category_html += `<a href="#category-name" onclick="loadCategory('${cat}')">`;
+      category_html += cat;
+      category_html += "</a>";
+      category_html += " ";
+    }
+    document.getElementById("quote-category").innerHTML = category_html;
     var table = document.getElementById("quotetable");
     // Create an empty <thead> element and add it to the table:
     var header = table.createTHead();
@@ -124,31 +130,6 @@
     }
     var tablebody = table.createTBody();
     var total_entry_count = items.length;
-    var page_base_index = 0;
-    var page_entry_count_config = 20;
-    for(let i = 0; i < page_entry_count_config; i++){ 
-      // Create an empty <tr> element and add it to the ith position of the table:
-      let bodyrow = tablebody.insertRow(i);
-      for(let j = 0; j < columns.length; j++){ 
-        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-        let cell = bodyrow.insertCell(j);
-        let column = columns[j];
-        // Add some text to the new cells:
-        cell.innerHTML = items[i][column];
-        cell.style.width = col_width[column];
-      }
-    }
-    let page_begin = page_base_index/page_entry_count_config+1;
-    var page_end = Math.floor(total_entry_count/page_entry_count_config)+1;
-    if( total_entry_count % page_entry_count_config == 0)
-      page_end--;
-    let page_indicator_str = "Page " + page_begin.toString() + " of " + page_end.toString();
-    document.getElementById("page-indicator-top").innerHTML = page_indicator_str;
-    document.getElementById("page-indicator-bot").innerHTML = page_indicator_str;
-
-    page_base_index += page_entry_count_config;
-    document.getElementById("load-prev-button").style.visibility = 'hidden';
-    document.getElementById("load-prev-button-top").style.visibility = 'hidden';
   </script>
   <script>
     function emptyTableTbody()
@@ -159,62 +140,28 @@
         tablebody.deleteRow(i);
       }
     }
-    function positionBackNextButtons()
-    {
-      document.getElementById("load-prev-button").style.visibility = 'visible';
-      document.getElementById("load-next-button").style.visibility = 'visible';
-      document.getElementById("load-prev-button-top").style.visibility = 'visible';
-      document.getElementById("load-next-button-top").style.visibility = 'visible';
-
-      let page_begin = page_base_index/page_entry_count_config;
-      let page_indicator_str = "Page " + page_begin.toString() + " of " + page_end.toString();
-      document.getElementById("page-indicator-top").innerHTML = page_indicator_str;
-      document.getElementById("page-indicator-bot").innerHTML = page_indicator_str;
-
-      if(page_base_index <= page_entry_count_config)
-      {
-        document.getElementById("load-prev-button").style.visibility = 'hidden';
-        document.getElementById("load-prev-button-top").style.visibility = 'hidden';
-      }
-
-      if(page_base_index > total_entry_count)
-      {
-        document.getElementById("load-next-button").style.visibility = 'hidden';
-        document.getElementById("load-next-button-top").style.visibility = 'hidden';
-      }
-    }
-    function loadNext() {
+    function loadCategory(cat) {
       emptyTableTbody();
-      for(let i = 0; i < page_entry_count_config && (i+page_base_index<total_entry_count); i++){ 
-        // Create an empty <tr> element and add it to the 1st position of the table:
-        let bodyrow = tablebody.insertRow(i);
-        for(let j = 0; j < columns.length; j++){ 
-          // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-          let cell = bodyrow.insertCell(j);
-          // Add some text to the new cells:
-          let column = columns[j];
-          cell.innerHTML = items[page_base_index+i][column];
-          cell.style.width = col_width[column];
+      let i=0;
+      for( let item of items ) {        
+        if( cat == item["Category"] )
+        {
+          let bodyrow = tablebody.insertRow(i);
+          for(let j = 0; j < columns.length; j++){ 
+            let cell = bodyrow.insertCell(j);
+            let column = columns[j];
+            cell.innerHTML = item[column];
+            cell.style.width = col_width[column];
+          }
+          i++;
         }
       }
-      page_base_index += page_entry_count_config;
-      positionBackNextButtons();
+      document.getElementById("category-name").innerHTML = "Quotes about " + "<b>" + cat + "</b>";
     }
-
-    function loadPrev() {
-      emptyTableTbody();
-      for (let i = 0; i < page_entry_count_config && (page_base_index-2*page_entry_count_config)>=0; i++) {
-        let bodyrow = tablebody.insertRow(i);
-        for(let j = 0; j < columns.length; j++){ 
-          let cell = bodyrow.insertCell(j);
-          let column = columns[j];
-          cell.innerHTML = items[page_base_index-2*page_entry_count_config+i][column];
-          cell.style.width = col_width[column];
-        }
-      }
-      page_base_index -= page_entry_count_config;
-      positionBackNextButtons();
-    }
+  </script>
+  <script>
+    //load initial quotes
+    loadCategory("Love");
   </script>
 
 <div class="botnav">
