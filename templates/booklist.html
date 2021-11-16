@@ -249,7 +249,7 @@
       var base = photo_index;
       for (let i = 0; i < photo_count_per_page && (base-2*photo_count_per_page)>=0; i++) {
         twttr.widgets.createTweet(
-          items[[base-2*photo_count_per_page+i]]["TweetID"],
+          items[mybooklist[base-2*photo_count_per_page+i]]["TweetID"],
           ulElementMain,
           tweet_widget_options
         )
