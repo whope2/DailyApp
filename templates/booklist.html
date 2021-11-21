@@ -138,9 +138,9 @@
           tweet_widget_options
         )
         .then(function (el) {
-          //console.log("Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
+          //console.log("Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName);
           loadMyReviewDiv(el, mybooklist[i]);
-        });;
+        });
       }
 
       let page_begin = photo_index/photo_count_per_page+1;
@@ -158,20 +158,22 @@
     }
   </script>
   <script>
-    function loadMyReviewDiv(el, i)
+    function loadMyReviewDiv(widget_element, i)
     {
       let review_lookup = items[i]["Review"];//lookup_review_from_items(id);
       if( review_lookup == null ) //No not insert MyReview box if no review text
         return;
       let rating = items[i]["My Rating"]; //lookup_rating_from_items(id);
-      let widget_element = el;
-      let widget_width = widget_element.offsetWidth;
-      let widget_height = widget_element.offsetHeight;
-      console.log("widget width=%s height=%s", widget_width, widget_height);
+      if( widget_element ) {
+        //variable width and height with global scope
+        book_widget_width = widget_element.offsetWidth;
+        book_widget_height = widget_element.offsetHeight;
+      }
+      console.log("widget width=%s height=%s", book_widget_width, book_widget_height);
       let div = document.createElement("div");
       div.className = "content"
-      div.style.width = widget_width+"px";
-      div.style.height = Math.floor(widget_height/3) + "px";
+      div.style.width = book_widget_width+"px";
+      div.style.height = Math.floor(book_widget_height/3) + "px";
       div.style.background = "#fff";
       div.style.color = "black";
       div.style.textAlign = "center";
@@ -187,10 +189,14 @@
       let image_lookup = items[i]["Cover Image"];//lookup_image_from_items(id);
       console.log("i: %s, image lookup file name: %s\nreview: %d", i, image_lookup, review_lookup);
       let book_image = `static/books/${image_lookup}`;
-      let image_height = Math.floor((widget_height/3)*(2/3)) + "px";
+      let image_height = Math.floor((book_widget_height/3)*(2/3)) + "px";
       let image_style = `width:auto;height:${image_height};float:right`;
       div.innerHTML = '<p style="line-height:1.1;font-size:12px;text-align:left;margin-top:3px;margin-bottom:0px;">' + `<img src=${book_image} alt="" style=${image_style}></a>` + my_review + '</p>';
-      widget_element.after(div);
+      if( widget_element )
+        widget_element.after(div);
+      else {
+        ulElementBookReview.appendChild(div);
+      }
       //let br_element = document.createElement("br");
       //div.after(br_element);
     }
@@ -235,7 +241,7 @@
         .then(function (el) {
           console.log("Tweet displayed.");
           loadMyReviewDiv(el, mybooklist[base+i]);
-        });;
+        });
       }
       photo_index += photo_count_per_page;
       positionBackNextButtons();
@@ -256,7 +262,7 @@
         .then(function (el) {
           console.log("Tweet displayed.");
           loadMyReviewDiv(el, mybooklist[base-2*photo_count_per_page+i]);
-        });;
+        });
       }
       photo_index -= photo_count_per_page;
       positionBackNextButtons();
@@ -655,21 +661,30 @@
 <script>
   function reviewBook(i)
   {
+    //load twitter teaser
     console.log("Book review book i=%d", i);
-    var ulElementBookReview = document.getElementById("book-review");
+    //variable ulElementBookReview is global scope
+    ulElementBookReview = document.getElementById("book-review");
     while( ulElementBookReview.childElementCount > 1 )
       ulElementBookReview.lastChild.remove();
     let tweet_id = items[i]["TweetID"];
-    console.log("Book review tweet_id=%s", tweet_id);
-    twttr.widgets.createTweet(
-      tweet_id,
-      ulElementBookReview,
-      tweet_widget_options
-    )
-    .then(function (el) {
-      console.log("Book Review Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName)
-      loadMyReviewDiv(el, i);
-    });;
+    if( tweet_id ) {
+      console.log("Book review tweet_id=%s", tweet_id);
+      twttr.widgets.createTweet(
+        tweet_id,
+        ulElementBookReview,
+        tweet_widget_options
+      ).then( function (el){
+          //console.log("Book Review Tweet displayed. element className=%s, tagName=%s", el.className, el.tagName);
+          //and load my review
+          loadMyReviewDiv(el, i);
+        }
+      );
+    }
+    else {
+      //load my review only
+      loadMyReviewDiv(null, i);
+    }
   }
 </script>
 
@@ -716,7 +731,7 @@
 
   <script>
     //let title = "The Glass Castle";
-    reviewBook(1);
+    reviewBook(12);
   </script>
 
 <div class="botnav">
