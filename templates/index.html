@@ -68,7 +68,6 @@
     <a href="/liveathousandlives">Live 1000 Lives<img src="static/books.png" style="width:3vw;height:auto;"></a>
     <a href="/quoteoftheday">Quote</a>
     <a href="/genwordoftheday">Word</a>
-    <a href="/whatloveis">Love<img src="static/heart.png" style="width:3vw;height:auto;"></a>
     <a href="/about">About</a>
   </div>
 
@@ -106,16 +105,6 @@
   </i></p>  
   </div>
   <div class="content">
-    <p><b><a href={{ url_for('whatloveis') }}>What Love Is?</a></b></p>
-    <p style="color: blue;"><i>
-    {% if love_quote %}
-      {{ love_quote }}
-    {% else %}
-      Sorry No Love Quote!
-    {% endif %}
-    </i></p>
-  </div>  
-  <div class="content2">
     <p><b><a href={{ url_for('liveathousandlives') }}>Live 1000 Lives<img src="static/books.png" style="width:4vw;height:auto;"></a></b></p>
     <p style="color: blue;"><i>
     {% if book %}
@@ -126,7 +115,7 @@
     {% endif %}  
   </i></p>
   </div>  
-  <div class="content">
+  <div class="content2">
     <p style="color: black">Subscribe for Daily Update!</p>
     <form id="sub" action="/subscribe" method="post" enctype="multipart/form-data">
       <div class="checkbox-label">
@@ -137,9 +126,7 @@
       <input type="checkbox" id="interest2" name="interest_book" value=1 checked>
       <label for="interest2">Book</label>
       <input type="checkbox" id="interest3" name="interest_word" value=1 checked>
-      <label for="interest3">Word</label>
-      <input type="checkbox" id="interest4" name="interest_lovequote" value=1>
-      <label for="interest4">Love Quote</label><br>
+      <label for="interest3">Word</label><br>
       </div>
       <label for="email">Email: </label>
       <input class="inputtext" type="text" id="email" name="email" value={{ email }}>

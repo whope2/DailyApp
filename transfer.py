@@ -49,8 +49,7 @@ def index():
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 
 	random_book, book_image = elasticsearch_access.get_a_random_book()
-	random_love_quote = elasticsearch_access.get_a_random_love_quote()	
-	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,book=random_book,book_image=book_image,love_quote=random_love_quote,email=email)
+	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,book=random_book,book_image=book_image,email=email)
 	
 @app.route('/echo_search')
 def echo_search():
@@ -246,21 +245,6 @@ def about():
 	book_count = elasticsearch_access.get_total_book_count()
 	return render_template('about.html', book_count=book_count)
 
-@app.route("/whatloveis")
-def whatloveis():
-	allrecords, count = elasticsearch_access.get_all_love_quotes()
-	items = [{}] * count
-	oneitem = {}
-	random_i = random.randint(0,count-1)
-	for num, doc in enumerate(allrecords):
-		oneitem["Quote"] = doc["_source"]["Quote"]
-		#oneitem["Author"] = doc["_source"]["Author"]
-		#print(oneitem)
-		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
-	columns=["Quote"] #,"Author"]
-	random.shuffle(items)
-	return render_template('lovequotelist.html', columns=columns, items=items, count=count, love_quote=items[random_i]["Quote"])
-
 def email_notify_me(subject, content):
 	#email notification
 	message = EmailMessage()
@@ -300,8 +284,6 @@ def subscribe():
 		interest += ",Book"
 	if( "interest_word" in request.form ):
 		interest += ",Word"
-	if( "interest_lovequote" in request.form ):
-		interest += ",Love"
 	#strip the first comma if it exists
 	if( interest[0] == ",") :
 		interest = interest[1:]
@@ -324,14 +306,6 @@ def unsubscribing():
 	elasticsearch_access.remove_a_subscription(email)
 	email_notify_me("TWLMC - Unsubscription", ("from: %s" % email))
 	return render_template('echo.html', text="Sorry to see you leave. Have a great day!")
-
-@app.route("/addlovequote", methods=['POST'])
-def addlovequote():
-	quote = request.form['QuoteText']
-	author = request.form['QuoteAuthor']
-	elasticsearch_access.add_a_love_quote(quote, author)
-	email_notify_me("TWLMC - a love quote added!", "quote: %s, author: %s" % (quote, author))
-	return render_template('echo.html', text="Thanks for your contribution!")
 
 @app.route("/postcomment", methods=['POST'])
 def postcomment():
@@ -366,7 +340,6 @@ def newsletter():
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 	random_book, random_book_image = elasticsearch_access.get_a_random_book()
-	random_love_quote = elasticsearch_access.get_a_random_love_quote()
 	photo_id = elasticsearch_access.get_a_random_photo()
 
 	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
@@ -416,10 +389,6 @@ def newsletter():
 		if( "Word" in interest ):
 			html_content_word = "<br>Daily Word:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (random_word)
 			message.add_attachment(html_content_word, subtype="html")
-
-		if( "Love" in interest ):
-			html_content_love = "<br>Daily Love Quote:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (random_love_quote)
-			message.add_attachment(html_content_love, subtype="html")
 
 		if( "Photo" in interest ):
 			html_content_photo = "<br>Daily Photo:<br>&nbsp;&nbsp;&nbsp;&nbsp;"
