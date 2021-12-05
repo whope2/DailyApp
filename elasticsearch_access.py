@@ -465,15 +465,15 @@ def add_a_comment(comment, author) :
         'Author': author
     })
 
-def global_copy(text) :
-    client.index(index='globalcopypaste', id="1", body= \
+def global_copy(id, text) :
+    client.index(index='globalcopypaste', id=id, body= \
     {
         'Text': text
     })
 
-def global_paste() :
+def global_paste(id) :
     try:
-        doc = client.get(index='globalcopypaste', id="1")
+        doc = client.get(index='globalcopypaste', id=id)
         print(doc)
         return doc["_source"]["Text"]
     except:

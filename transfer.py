@@ -449,17 +449,19 @@ def retweet(tweet_id):
 	twitterbot.retweet_book(tweet_id)
 	return render_template('echo.html', text="retweeted!")
 
-@app.route("/copy", methods=['POST'])
-def copy():
+@app.route("/copy/<id>", methods=['POST'])
+def copy(id):
 	copy_paste_text = request.form['CopyText']
-	elasticsearch_access.global_copy(copy_paste_text)
-	return redirect('/copypaste')
+	elasticsearch_access.global_copy(id, copy_paste_text)
+	url_with_id = '/cp/%s' % (id)
+	return redirect(url_with_id)
 
-@app.route("/cp")
-@app.route("/copypaste")
-def copypaste():
-	copy_paste_text = elasticsearch_access.global_paste()
-	return render_template('copypaste.html', text=copy_paste_text)
+@app.route("/copypaste/<i>")
+@app.route("/cp/<i>")
+def copypaste(i):
+	copy_paste_text = elasticsearch_access.global_paste(i)
+	actionstr='/copy/' + i
+	return render_template('copypaste.html', id=i, actionstr=actionstr,text=copy_paste_text)
 
 @app.route("/tf")
 @app.route("/transferfile")
@@ -559,6 +561,6 @@ def generatetwitterbooklist():
 #liveathousandlives()
 #generatetwitterbooklist()
 
-#if __name__ == '__main__':
-	#app.run(port=5001,debug=False)
+if __name__ == '__main__':
+	app.run(port=5001,debug=False)
 	#app.run(host='0.0.0.0',port=80)
