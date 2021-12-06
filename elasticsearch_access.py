@@ -69,6 +69,16 @@ def get_a_random_photo() :
     print(doc)
     return(doc["_source"]["Photo File Name"])
 
+def get_all_photos() :
+    index_name = "photolist"
+    photolist = []
+    results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
+    allphotos = results["hits"]["hits"]    
+    for num, doc in enumerate(allphotos):
+        photolist.append(doc["_source"]["Photo File Name"])
+        random.shuffle(photolist)
+    return(photolist)
+
 def get_a_random_book_tweet_id() :
     index_name = "booklist"
     #results=client.search(index=index_name, body={"query": { "exists": { "field": "TweetID"} } })

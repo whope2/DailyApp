@@ -558,9 +558,14 @@ def generatetwitterbooklist():
 		elasticsearch_access.add_a_twitter_book(title,tweet_id,like_count,nonfiction,id)
 	return render_template('echo.html', text="generatetwitterbooklist completed")
 
+@app.route("/photo")
+def photo():
+	photolist = elasticsearch_access.get_all_photos()
+	return render_template('photo.html', photolist=photolist, photocount=len(photolist))
+
 #liveathousandlives()
 #generatetwitterbooklist()
 
-if __name__ == '__main__':
-	app.run(port=5001,debug=False)
+#if __name__ == '__main__':
+	#app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)
