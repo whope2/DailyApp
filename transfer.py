@@ -274,37 +274,30 @@ def presubscribe():
 @app.route("/subscribe", methods=['POST'])
 def subscribe():
 	email = request.form['email']
-	#prepare the interest string from the form request (e.g. "Quote,Book,Word")
-	interest = ""
-	if( "interest_photo" in request.form ):
-		interest += ",Photo"
-	if( "interest_quote" in request.form ):
-		interest += ",Quote"
-	if( "interest_book" in request.form ):
-		interest += ",Book"
-	if( "interest_word" in request.form ):
-		interest += ",Word"
-	#strip the first comma if it exists
-	if( interest[0] == ",") :
-		interest = interest[1:]
-
+	interest = request.form['Interest']
 	elasticsearch_access.add_a_subscription(email, interest)
 	email_notify_me("TWLMC - New subscription!", ("from: %s, interest: %s" % (email,interest)))
-
 	return render_template('echo.html', text="Thanks for your subscription!")
 
 @app.route("/unsubscribe")
 def unsubscribe():
 	arg_count = len(request.args)
 	email = request.args.get('email')
-	return render_template('unsubscribe.html', email=email)
+	interest = request.args.get('interest')
+	if(interest == None):
+		interest=""
+	return render_template('unsubscribe.html', email=email, interest=interest)
 
 @app.route("/unsubscribing", methods=['POST'])
 def unsubscribing():
 	email = request.form['email']
-	print("unsubscribe %s" % email)
-	elasticsearch_access.remove_a_subscription(email)
-	email_notify_me("TWLMC - Unsubscription", ("from: %s" % email))
+	try: 
+		interest = request.form['interest']
+	except:
+		interest = ""
+	print("unsubscribe %s, interest: %s" % (email,interest))
+	elasticsearch_access.remove_a_subscription(email, interest)
+	email_notify_me("TWLMC - Unsubscription", ("from: %s, interest: %s" % (email,interest)))
 	return render_template('echo.html', text="Sorry to see you leave. Have a great day!")
 
 @app.route("/postcomment", methods=['POST'])
@@ -336,17 +329,17 @@ def newsletter():
 	print("Produce Newsletter! The time is: %s" % datetime.now())
 	
 	#prepare newsletter content
-	random_quote = elasticsearch_access.get_a_random_quote()
+	quote, author, tweet_id = elasticsearch_access.get_a_random_quote_and_author()
+
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
-	random_book, random_book_image = elasticsearch_access.get_a_random_book()
+	book_title, book_author, book_year, book_image = elasticsearch_access.get_a_random_book_with_detail()
 	photo_id = elasticsearch_access.get_a_random_photo()
 
 	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
 
 	#prepare email
 	message = EmailMessage()
-	message['Subject'] = "Literature Newsletter"
 	message['From'] = sender_email
 	
 	password = file_mgr.get_pw()
@@ -364,42 +357,61 @@ def newsletter():
 
 		email = doc["_source"]["Email"]
 		interest = doc["_source"]["Interest"]
-			
+		#testing
+		#interest = "QuoteOnly"
+		#interest = "BookOnly"
+		#interest = "AllInOne"
+
 		#for testing, only send to my personal email
 		if TESTING_NEWSLETTER == True:
 			email = myemail
 
 		message['To'] = email
 		#WARNING!!! DO NOT SENT DEBUGGING MSG TO CUSTOMERS!!!
+
+		if( interest == "BookOnly" ):
+			message['Subject'] = "Daily Book Recommendation"
+		elif( interest == "QuoteOnly" ):
+			message['Subject'] = "Daily Inspirational Quote"
+		else:
+			message['Subject'] = "Daily Literature Newsletter"
+	
 		#set content and attachment
 		message.clear_content()
-		message.set_content(newsletter_content)	
+		#message.set_content(newsletter_content)	
 
-		if( "Quote" in interest ):
-			html_content_quote = "<br>Daily Quote:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (random_quote)
+		if(interest == "BookOnly" ):
+			html_content_book = '<br><span style="font-size:4vw">Title: %s<br>Author: %s<br>Year Published: %s<br></span>&nbsp;&nbsp;&nbsp;&nbsp;' % (book_title, book_author, book_year)
+			if( book_image ):
+				book_url = "https://whereliteraturemeetscomputing.com/static/books/%s" % book_image
+				html_content_book += '<img src="%s" alt="Book of the Day" style="width:25%%;height:auto;"><br>' % book_url
+			message.add_attachment(html_content_book, subtype="html")
+		elif(interest == "QuoteOnly" ):
+			html_content_quote = '<br><b style="font-size:5vw">%s<br>—%s</b><br>' % (quote, author)
 			message.add_attachment(html_content_quote, subtype="html")
+		else:
 
-		if( "Book" in interest ):
-			html_content_book = "<br>Daily Book:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>&nbsp;&nbsp;&nbsp;&nbsp;" % (random_book)
-			if( random_book_image ):
-				book_url = "https://whereliteraturemeetscomputing.com/static/books/%s" % random_book_image
+			html_content_quote = "<br>Daily Quote:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>&nbsp;&nbsp;&nbsp;&nbsp;—%s</b><br>" % (quote, author)
+			message.add_attachment(html_content_quote, subtype="html")
+			html_content_book = "<br>Daily Book:<br>&nbsp;&nbsp;&nbsp;&nbsp;Title: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;Author: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;Year Published: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;" % (book_title, book_author, book_year)
+			if( book_image ):
+				book_url = "https://whereliteraturemeetscomputing.com/static/books/%s" % book_image
 				html_content_book += '<img src="%s" alt="Book of the Day" style="width:25%%;height:auto;"><br>' % book_url
 			message.add_attachment(html_content_book, subtype="html")
 
-		if( "Word" in interest ):
 			html_content_word = "<br>Daily Word:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (random_word)
 			message.add_attachment(html_content_word, subtype="html")
 
-		if( "Photo" in interest ):
 			html_content_photo = "<br>Daily Photo:<br>&nbsp;&nbsp;&nbsp;&nbsp;"
 			image_url = "https://whereliteraturemeetscomputing.com/static/instagram/%s.jpg" % photo_id
 			html_content_photo += '<img src="%s" alt="Photo of the Day" style="width:50%%;height:auto;"><br>' % image_url
 			message.add_attachment(html_content_photo, subtype="html")
 
-		html_content = "<br>Thanks for your time and have a nice day!<br>https://whereliteraturemeetscomputing.com"
+		#html_content = "<br><br><br><br><br>Thanks for your time and have a nice day!<br>https://whereliteraturemeetscomputing.com"
+		html_content = "<br><br><br><br><br><br>https://whereliteraturemeetscomputing.com"
 		html_content += '\
 <br><a href="https://whereliteraturemeetscomputing.com/presubscribe?email=%s#sub">Modify Subscription</a>  |  \
-<a href="https://whereliteraturemeetscomputing.com/unsubscribe?email=%s">Unsubscribe</a></br>' % (email, email)	
+<a href="https://whereliteraturemeetscomputing.com/unsubscribe?email=%s&interest=%s">Unsubscribe</a></br>' % (email, email, interest)	
 		message.add_attachment(html_content, subtype="html")
 
 		server.send_message(message)

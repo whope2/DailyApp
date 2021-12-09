@@ -78,10 +78,12 @@
   </div>
 
   <div class="content">
-    <p style="color: black">Unsubscribe Newsletter Conformation</p>
+    <span style="color: black">Unsubscribe {{ interest }} Newsletter Conformation</span>
     <form id="sub" action="/unsubscribing" method="post" enctype="multipart/form-data">
+      <label for="type">Type: </label>
+      <input class="inputtext" type="text" id="type" name="interest" value={{ interest }} readonly><br>
       <label for="email">Email: </label>
-      <input class="inputtext" type="text" id="email" name="email" value={{ email }}>
+      <input class="inputtext" type="text" id="email" name="email" value={{ email }} readonly>
       <input type="submit" value="Unsubscribe">
     </form>
     <br>

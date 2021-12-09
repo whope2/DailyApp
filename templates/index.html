@@ -40,11 +40,6 @@
     font-size: 10vw;
   }
 
-  /* Style the content */
-  .checkbox-label {
-    font-size: 3vw;
-  }
-
   .label {
       color: blue;
   }
@@ -116,19 +111,22 @@
     {% endif %}  
   </i></p>
   </div>  
-  <div class="content2">
-    <p style="color: black">Subscribe for Daily Update!</p>
-    <form id="sub" action="/subscribe" method="post" enctype="multipart/form-data">
-      <div class="checkbox-label">
-      <input type="checkbox" id="interest0" name="interest_photo" value=1>
-      <label for="interest0">Photo</label>
-      <input type="checkbox" id="interest1" name="interest_quote" value=1 checked>
-      <label for="interest1">Quote</label>
-      <input type="checkbox" id="interest2" name="interest_book" value=1 checked>
-      <label for="interest2">Book</label>
-      <input type="checkbox" id="interest3" name="interest_word" value=1 checked>
-      <label for="interest3">Word</label><br>
+  <div id="sub" class="content2">
+    <b style="color: black">Subscribe for Daily Newsletter!</b>
+    <form action="/subscribe" method="post" enctype="multipart/form-data">
+      <center>
+      <div style="text-align:left;font-size:3vw;width:70%;">
+        <input type="radio" id="radio1" name="Interest" value="QuoteOnly">
+        <label for="radio1">Inspirational Quote Only</label><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="static/newsletter-quote.png"><img src="static/newsletter-quote.png" alt="QuoteOnly" style="width:50%;height:auto;"></a><br>
+        <input type="radio" id="radio2" name="Interest" value="BookOnly">
+        <label for="radio2">Book Recommendation Only</label><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="static/newsletter-book.png"><img src="static/newsletter-book.png" alt="BookOnly" style="width:50%;height:auto;"></a><br>
+        <input type="radio" id="radio3" name="Interest" value="AllInOne" checked>
+        <label for="radio3">All-In-One Literature Newsletter</label><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="static/newsletter-all.png"><img src="static/newsletter-all.png" alt="AllInOne" style="width:50%;height:auto;"></a><br>
       </div>
+      </center>
       <label for="email">Email: </label>
       <input class="inputtext" type="text" id="email" name="email" value={{ email }}>
       <input type="submit" value="Subscribe">
