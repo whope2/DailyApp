@@ -366,9 +366,11 @@ def newsletter():
 		if TESTING_NEWSLETTER == True:
 			email = myemail
 
+		del message['To']
+		del message['Subject']
+
 		message['To'] = email
 		#WARNING!!! DO NOT SENT DEBUGGING MSG TO CUSTOMERS!!!
-
 		if( interest == "BookOnly" ):
 			message['Subject'] = "Daily Book Recommendation"
 		elif( interest == "QuoteOnly" ):
@@ -415,7 +417,6 @@ def newsletter():
 		message.add_attachment(html_content, subtype="html")
 
 		server.send_message(message)
-		del message['To']
 		
 	server.quit()
 	email_notify_me("WLMC - newsletter sent!", "")
