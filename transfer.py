@@ -65,6 +65,20 @@ def hello_name(name):
 def pictureoftheday():
 	return redirect('/')
 
+#api - v1 - quote & author
+@app.route("/api/getquote")
+def getquote():
+	quote, author, tweetid = elasticsearch_access.get_a_random_quote_and_author()
+	quote_dict = {
+        "quote": quote,
+        "author": author
+	}
+	#Dictionary to JSON Object
+	return json.dumps(quote_dict)
+
+#test
+#quote_ret = getquote()
+
 @app.route("/quoteoftheday")
 def quoteoftheday():
 	allrecords, count, categories = elasticsearch_access.get_all_quotes()
