@@ -33,6 +33,11 @@ def get_a_random_word() :
     doc = client.get(index=index_name, id=str(random_doc_id))
     return(doc["_source"])
 
+def get_a_quote_and_author_by_id(id) :
+    index_name = "quotelist"
+    doc = client.get(index=index_name, id=str(id))
+    return(doc["_source"]["Quote"], doc["_source"]["Author"])
+
 def get_a_random_quote() :
     index_name = "quotelist"
     docs_count = client.count(index=index_name)['count']
@@ -40,7 +45,7 @@ def get_a_random_quote() :
     random_doc_id = random.randint(1,docs_count)
     print("generate random doc_id = %d" % random_doc_id)
     doc = client.get(index=index_name, id=str(random_doc_id))
-    return(doc["_source"]["Quote"] + " - " + doc["_source"]["Author"])
+    return(doc["_source"]["Quote"] + " —" + doc["_source"]["Author"])
 
 def get_a_random_quote_and_author() :
     index_name = "quotelist"
@@ -81,7 +86,8 @@ def get_all_photos() :
 
 def get_a_random_book_tweet_id() :
     index_name = "booklist"
-    #results=client.search(index=index_name, body={"query": { "exists": { "field": "TweetID"} } })
+    results=client.search(index=index_name, body={"size":999,"query": { "exists": { "field": "TweetID"} } })
+    ''' #No longer need to retweet external tweets
     results=client.search(index=index_name, body=\
         {
             "size":999,
@@ -102,7 +108,7 @@ def get_a_random_book_tweet_id() :
             }
         }
     )
-        
+    '''        
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     random_doc_index = random.randint(1,hit_count)

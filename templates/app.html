@@ -20,7 +20,7 @@
     box-sizing: border-box;
   }
 
-	<title>Where Literature Meets Computing Word Page</title>	
+	<title>Where Literature Meets Computing App Page</title>	
 
 	<style type="text/css">    
 
@@ -32,11 +32,8 @@
     margin-left: auto; 
     margin-right: auto;
     font-size: 2vw;
-  }
-  th {
-    border: 1px solid black;
-  }
- 
+  }  
+
   body
   {
     text-align: center;
@@ -80,66 +77,14 @@
     <a href="/apps">App</a>
     <a href="/about" style="float:right">About</a>
   </div>
-  
-  <div class="content">
-    <form action="/searchaword" method="post" enctype="multipart/form-data">
-      <input class="inputtext" type="text" name="searchaword" value="">
-      <input type="submit" value="Search A Word">
-    </form>
-  </div> 
 
-  <div class="content2">
-    <p><b><a href={{ url_for('genwordoftheday') }}>Word of The Day</a></b></p>
-    <p style="color: blue;"><i>
-    {% if word %}
-      {{ word }}
-    {% endif %}
-    </i></p>
-    <p style="color: blue;">
-      {% if defi %}
-        {{ defi }}
-      {% endif %}
+  <div id="main-div" class="content">
+    <p>Under Construction...</p>
+    <!--
+    <p><a href="https://apps.apple.com/us/app/quote-that-makes-you-think/id1601858676?itscg=30200&amp;itsct=apps_box_appicon" style="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle;"><img src="https://is2-ssl.mzstatic.com/image/thumb/Purple116/v4/a4/35/8c/a4358cb0-cb83-98b6-1cbe-53fdf592e867/AppIcon-1x_U007emarketing-0-7-0-85-220.png/540x540bb.jpg&h=ab8d4ab5ee718cdf4e115f90185e4d1e" alt="Quote That Makes You Think" style="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle;"></a>
+    <br>  <a href="https://apps.apple.com/us/app/goodreads-book-reviews/id355833469?itscg=30200&amp;itsct=apps_box_appicon" style="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle;"><img src="https://is4-ssl.mzstatic.com/image/thumb/Purple116/v4/95/6f/10/956f10a0-01c0-357e-0361-a141859edafb/AppIcon-1x_U007emarketing-0-7-0-85-220.png/540x540bb.jpg&h=d34ea5b5552b3b2df36c72e5ceda33e1" alt="Goodreads: Book Reviews" style="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle;"></a>
     </p>
-    <p style="color: blue;"><i>
-      {% if sens %}
-        {{ sens }}
-      {% endif %}
-    </i></p>
-  </div>
-
-  <script async src="https://cse.google.com/cse.js?cx=9e3cd1b0a2f319a1b"></script>
-  <div class="gcse-search" data-queryParameterName="word"></div>
-
-  <div class="content1">
-
-    <a id="yg-widget-0" class="youglish-widget" data-query="{{ word }}" data-lang="english" data-accent="us" data-components="8415" data-bkg-color="#" data-link-color="#" data-ttl-color="#" data-cap-color="#" data-marker-color="#" data-panels-bkg-color="#" data-text-color="#" data-keyword-color="#"  rel="nofollow" href="https://youglish.com">Visit YouGlish.com</a>
-    <script async src="https://youglish.com/public/emb/widget.js" charset="utf-8"></script>
-
-  </div>
- 
-  <div class="content">
-    <p><b>Word Smart - {{ count }} Smart Words</b></p>
-    <table class="center" border=1>
-      <thead>
-       {% for col_name in col_names %}
-          <th style="width: {{col_width[col_name]}}">{{ col_name }}</th>
-       {% endfor %}
-      </thead>
-      <tbody>
-      {% for row in items %}
-         <tr>
-         {% for col_name in col_names %}
-            {% if col_name == "Word" %}
-              <td style="width: {{col_width[col_name]}}"><a href={{ row["URL"] }}>{{ row[col_name] }}</a></td>
-            {% else %} 
-              <td style="width: {{col_width[col_name]}}">{{ row[col_name] }}</td>
-            {% endif %}
-         {% endfor %}
-         </tr>
-      {% endfor %}
-      </tbody>
-      </table>
-    
+    -->
   </div>
 
   <div class="botnav">

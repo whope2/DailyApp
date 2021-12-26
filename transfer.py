@@ -50,7 +50,15 @@ def index():
 
 	random_book, book_image = elasticsearch_access.get_a_random_book()
 	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,book=random_book,book_image=book_image,email=email)
-	
+
+@app.route('/privacy')
+def privacy():
+	return render_template('privacy.html')
+
+@app.route('/apps')
+def apps():
+	return render_template('app.html')
+
 @app.route('/echo_search')
 def echo_search():
 	return render_template('echo_search.html')
@@ -451,6 +459,12 @@ def triggernewsletter():
 	TESTING_NEWSLETTER = False
 	newsletter()
 	return render_template('echo.html', text="Newsletter sent!")
+
+@app.route("/tweetquotebyid/<id>")
+def tweetquotebyid(id):
+	quote, author = elasticsearch_access.get_a_quote_and_author_by_id(id)
+	twitterbot.tweet_quote(quote, author, None)
+	return render_template('echo.html', text="A quote (id=%s) tweeted!" % id )
 
 @app.route("/tweetquote")
 def tweetquote():
