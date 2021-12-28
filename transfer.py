@@ -12,6 +12,8 @@ import elasticsearch_access
 import random
 import requests
 
+from operator import itemgetter #for sorting
+
 #from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 
@@ -201,38 +203,23 @@ def searchaword():
 	print(url)
 	return redirect(url)
 
+@app.route("/reviewbook")
 @app.route("/liveathousandlives")
 def liveathousandlives():
-	'''
-	#get a list of my book posts from Twitter
-	allbooks, count = elasticsearch_access.get_all_twitter_books()
-	twitter_booklist = []
-	twitter_booklist_nonfiction = []
-	twitter_bookcount = count
-	for num, doc in enumerate(allbooks):
-		twitter_book = {
-			"title": doc["_source"]["Book Title"],
-			"tweet id": doc["_source"]["TweetID"],
-			"likes count": doc["_source"]["Likes"],
-			"id": doc["_source"]["ID"]
-		}
-		twitter_booklist.append( twitter_book ) #add to the list
-		
-		if( doc["_source"]["Nonfiction"] ):
-			twitter_book_nonfiction = {
-				"title": doc["_source"]["Book Title"],
-				"tweet id": doc["_source"]["TweetID"],
-				"likes count": doc["_source"]["Likes"],
-				"id": doc["_source"]["ID"]
-			}
-			twitter_booklist_nonfiction.append( twitter_book_nonfiction )
-	'''
-	
+
+	bookreview = False	
+	arg_count = len(request.args)
+	if arg_count > 0 :
+		bookid = request.args.get('bookid')
+		if bookid != None :
+			bookreview = True
+
 	twitter_booklist = []
 	twitter_booklist_nonfiction = []
 
 	allbooks, count = elasticsearch_access.get_all_book_sorted_by_likes() #elasticsearch_access.get_all_book()
 	items = [{}] * count
+	items_sorted = [{}] * count
 	oneitem = {}
 	for num, doc in enumerate(allbooks):
 		oneitem["Cover Image"] = doc["_source"]["Image File Name"]
@@ -246,19 +233,25 @@ def liveathousandlives():
 		oneitem["Likes"] = doc["_source"]["Likes"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+		items_sorted[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 
 		if (doc["_source"]["TweetID"] != None ):
-			twitter_booklist.append(num)
+			twitter_booklist.append(oneitem["ID"])
 			if ( doc["_source"]["Genre"] != "Fiction" ):
-				twitter_booklist_nonfiction.append(num)
+				twitter_booklist_nonfiction.append(oneitem["ID"])
+
+	#Prepare the sorted list in python instead javascript because js does not easier provide an easy for deep copy of the original list 
+	items_sorted.sort(key=itemgetter('Book Title')) 
 
 	columns=["Cover Image","Book Title","Author","Year Published","My Rating"]
-	random_i = random.randint(0,count-1)
 
 	book_stats = elasticsearch_access.get_book_statistics()
 
-	return render_template('booklist.html', columns=columns, items=items, count=count,\
-		booklist=twitter_booklist, bookcount=len(twitter_booklist),\
+	if bookreview == False:
+		bookid = random.choice(twitter_booklist)
+
+	return render_template('booklist.html', columns=columns, items=items, items_sorted=items_sorted, count=count,\
+		booklist=twitter_booklist, bookcount=len(twitter_booklist), bookreview=bookreview, bookid=bookid,\
 		booklist_nonfiction=twitter_booklist_nonfiction,bookcount_nonfiction=len(twitter_booklist_nonfiction),\
 		bookstats=book_stats)
 
