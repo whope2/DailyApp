@@ -517,6 +517,34 @@ def file_download() :
     except:
         return ""
 
+def apittracking_get_callcount(api_name) :
+    index_name = "apitracking"
+    doc = client.get(index=index_name, id=api_name)
+    return doc["_source"]["callcount"]
+
+#api_name is document id
+def apittracking_increment_callcount(api_name) :
+    index_name = "apitracking"
+
+    if client.exists(index=index_name, id=api_name) == False :
+        print("es apittracking_increment_callcount, index or id does not exist, create the first entry")
+        count = 0
+        client.index(index=index_name, id=api_name, body= \
+        {
+            'api_name': api_name,
+            'callcount' : count
+        })
+
+    doc = client.get(index=index_name, id=api_name)
+    count = doc["_source"]["callcount"]
+    count += 1
+
+    client.update(index=index_name,doc_type='_doc',
+            id=api_name,
+            body={"doc": {"callcount": count} } )
+
+    return count
+
 def save_journal(date, title, text, type) :
     index_name = "journal"
     if client.indices.exists(index_name) == False:

@@ -75,9 +75,19 @@ def hello_name(name):
 def pictureoftheday():
 	return redirect('/')
 
+@app.route("/getapicallcount")
+def getapicallcount():
+	count = elasticsearch_access.apittracking_get_callcount("getquote")
+	api_callcount_dict = {
+        "api": "getquote",
+        "callcount": count
+	}
+	return json.dumps(api_callcount_dict)
+
 #api - v1 - quote & author
 @app.route("/api/getquote")
 def getquote():
+	elasticsearch_access.apittracking_increment_callcount("getquote")
 	quote, author, tweetid = elasticsearch_access.get_a_random_quote_and_author()
 	quote_dict = {
         "quote": quote,
