@@ -120,7 +120,7 @@ def quoteoftheday():
 	random.shuffle(items)
 	random_i = random.randint(0,count-1)
 	return render_template('quotelist.html', col_names=col_names, col_width=col_width, items=items, count=count, \
-		categories=categories, quote=items[random_i]["Quote"]+ "— " + items[random_i]["Author"])
+		categories=categories, quote=items[random_i]["Quote"]+ " —" + items[random_i]["Author"])
 
 #api: /genwordoftheday/
 #Generate a random word
