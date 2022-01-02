@@ -72,6 +72,7 @@
   <div class="content2">
   <p>New Journal or Blog
   <form action="/savejournal" method="post" enctype="multipart/form-data">
+      <label style="font-size:12px">Title </label>
       <input class="inputtext" type="text" name="BlogTitle" value="{{ title }}">
       <textarea id="textcontent" class="inputtextarea" rows = "12" name = "BlogText">{{ text }}</textarea><br>
       <label for="isblog">Blog</label>
@@ -96,9 +97,10 @@
 
   <div class="content">
     {%- for blog in blogs %}
-    <p>{{ blog["Type"] }} - {{ blog["Title"] }} - {{ blog["Date"] }} - {{ blog["ID"] }}<br>
+    <p>{{ blog["Type"] }} - {{ blog["Date"] }} - {{ blog["ID"] }}<br>
       {% if journaling %}
       <form action="{{ url_for('editjournal', id=blog["ID"]) }}" method="post" enctype="multipart/form-data">
+        <label style="font-size:12px">Title </label>
         <input class="inputtext" type="text" name="BlogTitle" value="{{ blog["Title"] }}">  
         <textarea class="inputtextarea" rows = "12" name = "BlogText">{{ blog["Text"] }}</textarea></p>
         <label for="isblog">Blog</label>
