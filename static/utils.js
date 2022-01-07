@@ -1,8 +1,8 @@
 function newquote(element_id)
 {
   let xmlHttpReq = new XMLHttpRequest();
-  //let url = "https://whereliteraturemeetscomputing.com/api/getquote"
-  let url = "http://localhost:5000/api/getquote"
+  let url = "https://whereliteraturemeetscomputing.com/api/getquote"
+  //let url = "http://localhost:5000/api/getquote"
   xmlHttpReq.open("GET", url, false); 
   xmlHttpReq.send();
   //console.log(xmlHttpReq.responseText);
@@ -19,8 +19,8 @@ function copy(element_id)
 function updatebook(element_book_text, element_book_image)
 {
   let xmlHttpReq = new XMLHttpRequest();
-  //let url = "https://whereliteraturemeetscomputing.com/api/getbook"
-  let url = "http://localhost:5000/api/getbook"
+  let url = "https://whereliteraturemeetscomputing.com/api/getbook"
+  //let url = "http://localhost:5000/api/getbook"
   xmlHttpReq.open("GET", url, false); 
   xmlHttpReq.send();
   //console.log(xmlHttpReq.responseText);
