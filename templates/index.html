@@ -54,6 +54,8 @@
 
   </style>
 
+<script src="{{ url_for('static', filename='utils.js') }}"></script>
+
 </head>  
   
 <body>
@@ -69,10 +71,6 @@
   </div>
 
   <div id="main-div" class="content2">
-    <a href="/"><img src="static/refresh.png" style="width:3vw;height:auto;"></a>
-    <b style="font-size:3vw;color:darkolivegreen">Refresh for New Update!</b>
-    <a href="/"><img src="static/refresh.png" style="width:3vw;height:auto;"></a>
-
     <p><b><a href="/">Photo of The Day</a></b></p>
     {% if photolink %}
       <center>
@@ -83,34 +81,36 @@
 
   <div class="content">
     <p><b><a href={{ url_for('quoteoftheday') }}>Quote of The Day</a></b></p>
-    <p style="color: blue;"><i>
-    {% if quote %}
-      {{ quote }}
-    {% else %}
-      Sorry No Quote!
-    {% endif %}  
-  </i></p>     
+    <p style="color: blue;">
+      <i id="quote-text">
+      {% if quote %}
+        {{ quote }}
+      {% endif %}  
+      </i><br>
+      <button onclick="newquote('quote-text')">New Quote</button>
+      <button onclick="copy('quote-text')">copy</button>
+    </p>     
   </div>
   <div class="content2">
     <p><b><a href={{ url_for('genwordoftheday') }}>Word of The Day</a></b></p>
     <p style="color: blue;"><i>
     {% if word %}
       {{ word }}
-    {% else %}
-      Sorry No Word!
     {% endif %}
   </i></p>  
   </div>
   <div class="content">
     <p><b><a href={{ url_for('liveathousandlives') }}>Live 1000 Lives<img src="static/books.png" style="width:4vw;height:auto;"></a></b></p>
-    <p style="color: blue;"><i>
-    {% if book %}
-      {{ book }}
-      <br><br><a href=static/books/{{book_image}}><img src=static/books/{{book_image}} alt="" style="width:50%;height:auto;max-width:500px;"></a>
-    {% else %}
-      Sorry No Book!
-    {% endif %}  
-  </i></p>
+    <p style="color: blue;">
+      <i id="book-text">
+      {% if book %}
+        {{ book }}
+      </i><br>
+      <a href=static/books/{{book_image}}><img id="book-image" src=static/books/{{book_image}} alt="" style="width:50%;height:auto;max-width:500px;"></a>
+      {% endif %}  
+      <br>
+      <button onclick="updatebook('book-text','book-image')">New Book</button>
+    </p>
   </div>  
   <div id="sub" class="content2">
     <p>

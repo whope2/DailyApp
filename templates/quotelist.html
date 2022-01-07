@@ -68,6 +68,8 @@
 
   </style>
 
+  <script src="{{ url_for('static', filename='utils.js') }}"></script>
+
 </head>  
   
 <body>
@@ -89,7 +91,8 @@
         {{ quote }}
       {% endif %}
       </i><br>
-      <button onclick="copy()">copy</button>
+      <button onclick="newquote('quote-text')">New Quote</button>
+      <button onclick="copy('quote-text')">copy</button>
     </p>
   </div>
 
@@ -101,14 +104,7 @@
     </table>
     <br>
   </div>
-  <script>
-    function copy()
-    {
-      var quote_text = document.getElementById("quote-text").innerHTML;
-      navigator.clipboard.writeText(quote_text);
-      //alert("copied: " + quote_text);
-    }  
-  </script>
+
   <script>
     //tojson is a Jinja filter that dumps the structure to a JSON string and marks it safe 
     //so that Jinja does not autoescape it

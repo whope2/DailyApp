@@ -75,11 +75,11 @@ def hello_name(name):
 def pictureoftheday():
 	return redirect('/')
 
-@app.route("/getapicallcount")
-def getapicallcount():
-	count = elasticsearch_access.apittracking_get_callcount("getquote")
+@app.route("/getapicallcount/<api>")
+def getapicallcount(api):
+	count = elasticsearch_access.apittracking_get_callcount(api)
 	api_callcount_dict = {
-        "api": "getquote",
+        "api": api,
         "callcount": count
 	}
 	return json.dumps(api_callcount_dict)
@@ -98,6 +98,23 @@ def getquote():
 
 #test
 #quote_ret = getquote()
+
+#api - v1 - book & author
+@app.route("/api/getbook")
+def getbook():
+	elasticsearch_access.apittracking_increment_callcount("getbook")
+	book_title, book_author, book_year, book_image = elasticsearch_access.get_a_random_book_with_detail()
+	dict = {
+        "title": book_title,
+        "author": book_author,
+		"year": book_year,
+		"image": book_image
+	}
+	#Dictionary to JSON Object
+	return json.dumps(dict)
+
+#test
+#quote_ret = getbook()
 
 @app.route("/quoteoftheday")
 def quoteoftheday():
@@ -337,7 +354,8 @@ def postcomment():
 def add_header(response):
 	response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate" # HTTP 1.1.
 	response.headers["Pragma"] = "no-cache" # HTTP 1.0.
-	response.headers["Expires"] = "0" # Proxies.	
+	response.headers["Expires"] = "0" # Proxies.
+	response.headers["Access-Control-Allow-Origin"] = "*"	
 	return response
 
 def ig_shortcode_to_media_id(short_code):
