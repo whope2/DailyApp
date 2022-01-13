@@ -228,6 +228,7 @@ def get_book_statistics():
     books_read_2019 = 0
     books_read_2020 = 0
     books_read_2021 = 0
+    books_read_2022 = 0
     books_published_2000s = 0
     books_published_1900s = 0
     books_published_1800s = 0
@@ -263,8 +264,10 @@ def get_book_statistics():
                 books_read_2019 += 1
             elif( year == 2020 ) :
                 books_read_2020 += 1
-            else :
+            elif( year == 2021 ) :
                 books_read_2021 += 1
+            else :
+                books_read_2022 += 1
 
         if( doc["_source"]["Year Published"] != None ) :
             year = int(doc["_source"]["Year Published"])
@@ -312,6 +315,7 @@ def get_book_statistics():
         "books read in 2019": books_read_2019,
         "books read in 2020": books_read_2020,
         "books read in 2021": books_read_2021,
+        "books read in 2022": books_read_2022,
         "books published in 2000s": books_published_2000s,
         "books published in 1900s": books_published_1900s,
         "books published in 1800s and prior": books_published_1800s,
