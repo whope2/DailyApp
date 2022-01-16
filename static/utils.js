@@ -1,8 +1,13 @@
-function newquote(element_id)
+function newquote(element_id, category)
 {
   let xmlHttpReq = new XMLHttpRequest();
+
   let url = "https://whereliteraturemeetscomputing.com/api/getquote"
   //let url = "http://localhost:5000/api/getquote"
+
+  if( category != undefined )
+    url = url + "?cat=" + category;
+
   xmlHttpReq.open("GET", url, false); 
   xmlHttpReq.send();
   //console.log(xmlHttpReq.responseText);

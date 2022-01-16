@@ -65,6 +65,8 @@
 
   </style>
 
+  <script src="{{ url_for('static', filename='utils.js') }}"></script>
+
 </head>  
   
 <body>
@@ -83,11 +85,13 @@
     <p style="color: navy;"><b>Welcome to my personal website ─ Where Literature Meets Computing!</b>
     </p>
     <p style="color: blue;">
-    Let me begin with two of my favorite quotes:
+    Let me begin with my favorite book quotes:
     <br><br>
+    <span id="book-quote">
     "A reader lives a thousand lives before he dies. The man who never reads lives only one."—George R.R. Martin
-    <br><br>
-    "A truly good book teaches me better than to read it. I must soon lay it down, and commence living on its hint. What I began by reading, I must finish by acting."—Henry David Thoreau
+    </span>
+    <br>
+    <button onclick="newquote('book-quote', 'Reading')">Next Book Quote</button>
     <br><br>
     I started my reading journey in 2017. It is never too late😀️. I have read so far about {{book_count}} books since, on a pace of 1~2 books per week. I started with nonfictions only (business, productivity, self-help, etc.) and soon I fell in love with fictions (historical, fantasy, science, etc.).  In truth, I am reading books of all genres and savor each one I read.  
     <br><br>
