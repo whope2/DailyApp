@@ -54,6 +54,32 @@ def get_a_random_quote_and_author() :
     doc = client.get(index=index_name, id=str(random_doc_id))
     return(doc["_source"]["Quote"], doc["_source"]["Author"], doc["_source"]["TweetID"])
 
+def get_all_quotes_by_category(category):
+    index_name = "quotelist"
+    results=client.search(index=index_name, body=\
+    {
+        "query": {
+            "match": {
+                "Category": {
+                    "query": category
+                }
+            }
+        }
+    })
+    hit_count = len(results["hits"]["hits"])
+    quotes = results["hits"]["hits"]
+    return quotes, hit_count
+
+def get_a_random_quote_by_category(category):
+
+    quotes, count = get_all_quotes_by_category(category)
+    i = random.randint(1,count) - 1
+    return(quotes[i]["_source"]["Quote"], quotes[i]["_source"]["Author"])
+
+#test
+#get_all_quotes_by_category("Action")
+#get_a_random_quote_by_category("Action")
+
 def get_a_random_love_quote() :
     index_name = "lovequotelist"
     docs_count = client.count(index=index_name)['count']

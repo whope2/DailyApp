@@ -84,11 +84,22 @@ def getapicallcount(api):
 	}
 	return json.dumps(api_callcount_dict)
 
-#api - v1 - quote & author
+#api - v1 - getquote, get quote & author
+#api - v2 - getquote?cat="...", get a quote by category, e.g. Action, Love
 @app.route("/api/getquote")
 def getquote():
+
+	arg_count = len(request.args)
+	arg_cat = request.args.get('cat')
+	print("api/getquote", arg_count, arg_cat)
+
 	elasticsearch_access.apittracking_increment_callcount("getquote")
-	quote, author, tweetid = elasticsearch_access.get_a_random_quote_and_author()
+
+	if(arg_cat != None) :
+		quote, author = elasticsearch_access.get_a_random_quote_by_category(arg_cat)
+	else:
+		quote, author, tweetid = elasticsearch_access.get_a_random_quote_and_author()
+	
 	quote_dict = {
         "quote": quote,
         "author": author
