@@ -36,3 +36,13 @@ function updatebook(element_book_text, element_book_image)
   + "Year Published: " + quote_json["year"] + "<br>";
   document.getElementById(element_book_image).src=`static/books/${quote_json["image"]}`;
 }
+
+function quote_to_speech(element_id)
+{
+  let utter = new SpeechSynthesisUtterance();
+  utter.lang = 'en-US';
+  utter.text = document.getElementById(element_id).innerHTML;
+  utter.volume = 0.5;
+  // speak
+  window.speechSynthesis.speak(utter); 
+}
