@@ -98,7 +98,7 @@ def get_a_random_photo() :
     print("generate random doc_id = %d" % random_doc_id)
     doc = client.get(index=index_name, id=str(random_doc_id))
     print(doc)
-    return(doc["_source"]["Photo File Name"])
+    return(doc["_source"]["Photo File Name"], doc["_source"]["Media ID"])
 
 def get_all_photos() :
     index_name = "photolist"
@@ -106,7 +106,11 @@ def get_all_photos() :
     results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
     allphotos = results["hits"]["hits"]    
     for num, doc in enumerate(allphotos):
-        photolist.append(doc["_source"]["Photo File Name"])
+        photo_dict = {
+            "Photo File Name": doc["_source"]["Photo File Name"],
+            "Media ID": doc["_source"]["Media ID"]
+        }
+        photolist.append(photo_dict)
         random.shuffle(photolist)
     return(photolist)
 

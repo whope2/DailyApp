@@ -44,14 +44,14 @@ def index():
 		email = request.args.get('email')
 		print("index %s" % email)
 
-	photo_id = elasticsearch_access.get_a_random_photo()
+	photo_id, insta_id = elasticsearch_access.get_a_random_photo()
 	random_quote = elasticsearch_access.get_a_random_quote()
 
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 
 	random_book, book_image = elasticsearch_access.get_a_random_book()
-	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,book=random_book,book_image=book_image,email=email)
+	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,photomedia=insta_id,book=random_book,book_image=book_image,email=email)
 
 @app.route('/privacy')
 def privacy():
@@ -388,7 +388,7 @@ def newsletter():
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 	book_title, book_author, book_year, book_image = elasticsearch_access.get_a_random_book_with_detail()
-	photo_id = elasticsearch_access.get_a_random_photo()
+	photo_id, insta_id = elasticsearch_access.get_a_random_photo()
 
 	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
 
