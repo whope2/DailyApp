@@ -72,6 +72,7 @@
 
   <div id="main-div" class="content2">
     <p><b><a href="/">Photo of The Day</a></b></p>
+    <span id="element-photo">
     {% if photolink %}
       {% if photomedia %}
       <center>
@@ -81,6 +82,9 @@
       <a href="static/instagram/{{ photolink }}.jpg"><img src="static/instagram/{{ photolink }}.jpg" alt="" style="width:100%;height:auto;max-width:538px;"></a>
       {% endif %}
     {% endif %}
+    </span>
+    <br>
+    <button onclick="updatephoto('element-photo')">New Photo</button>
   </div>
 
   <div class="content">
@@ -111,10 +115,10 @@
       {% if book %}
         {{ book }}
       </i><br>
-      <a href=static/books/{{book_image}}><img id="book-image" src=static/books/{{book_image}} alt="" style="width:50%;height:auto;max-width:500px;"></a>
+      <a id="book-image-href" href=static/books/{{book_image}}><img id="book-image" src=static/books/{{book_image}} alt="" style="width:50%;height:auto;max-width:500px;"></a>
       {% endif %}  
       <br>
-      <button onclick="updatebook('book-text','book-image')">New Book</button>
+      <button onclick="updatebook('book-text','book-image-href','book-image')">New Book</button>
     </p>
   </div>  
   <div id="sub" class="content2">

@@ -127,6 +127,21 @@ def getbook():
 #test
 #quote_ret = getbook()
 
+#api - v1 - photo
+@app.route("/api/getphoto")
+def getphoto():
+	elasticsearch_access.apittracking_increment_callcount("getphoto")
+	image_name, media = elasticsearch_access.get_a_random_photo()
+	dict = {
+        "image": image_name + ".jpg"
+	}
+	#Dictionary to JSON Object
+	return json.dumps(dict)
+
+#test
+#quote_ret = getbook()
+
+
 @app.route("/quoteoftheday")
 def quoteoftheday():
 	allrecords, count, categories = elasticsearch_access.get_all_quotes()

@@ -21,7 +21,7 @@ function copy(element_id)
   //alert("copied: " + quote_text);
 } 
 
-function updatebook(element_book_text, element_book_image)
+function updatebook(element_book_text, element_book_image_href, element_book_image)
 {
   let xmlHttpReq = new XMLHttpRequest();
   let url = "https://whereliteraturemeetscomputing.com/api/getbook"
@@ -29,12 +29,29 @@ function updatebook(element_book_text, element_book_image)
   xmlHttpReq.open("GET", url, false); 
   xmlHttpReq.send();
   //console.log(xmlHttpReq.responseText);
-  let quote_json = JSON.parse(xmlHttpReq.responseText);
+  let json = JSON.parse(xmlHttpReq.responseText);
   document.getElementById(element_book_text).innerHTML = 
-    "Title: " + quote_json["title"] + ". " 
-  + "Author: " + quote_json["author"] + ". " 
-  + "Year Published: " + quote_json["year"] + "<br>";
-  document.getElementById(element_book_image).src=`static/books/${quote_json["image"]}`;
+    "Title: " + json["title"] + ". " 
+  + "Author: " + json["author"] + ". " 
+  + "Year Published: " + json["year"] + "<br>";
+  document.getElementById(element_book_image).src=`static/books/${json["image"]}`;
+  document.getElementById(element_book_image_href).href=`static/books/${json["image"]}`;
+}
+
+//Update entire innerHTML replacing instagram embedded view
+function updatephoto(element_photo)
+{
+  let xmlHttpReq = new XMLHttpRequest();
+  let url = "https://whereliteraturemeetscomputing.com/api/getphoto"
+  //testing
+  //let url = "http://localhost:5001/api/getphoto"
+  xmlHttpReq.open("GET", url, false); 
+  xmlHttpReq.send();
+  //console.log(xmlHttpReq.responseText);
+  let json = JSON.parse(xmlHttpReq.responseText);
+  let src=`static/instagram/${json["image"]}`;
+  document.getElementById(element_photo).innerHTML = 
+    `<a href=${src}><img src=${src} alt="" style="width:100%;height:auto;max-width:538px;"></a>`;
 }
 
 function quote_to_speech(element_id)
