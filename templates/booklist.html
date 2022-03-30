@@ -101,6 +101,11 @@
       <canvas id="Chart-Books-Ranked"></canvas>
     </div>
     <br>
+    <b>Top 11-20 Books by Twitter Likes</b><br>
+    <div id="chart-container" style="width:100%">
+      <canvas id="Chart-Books-Ranked_2"></canvas>
+    </div>
+    <br>
     <b>Top 10 Nonfunctions by Twitter Likes</b><br>
     <div id="chart-container" style="width:100%">
       <canvas id="Chart-Books-Ranked-NF"></canvas>
@@ -577,6 +582,14 @@
     top10_titles[i] = item_entry["Book Title"];
     top10_likes[i] = item_entry["Likes"];
   }
+  var top11to20_titles = [];
+  var top11to20_likes = [];
+  for (let i = 0; i < 10; i++) {
+    let item_entry = find_item_entry_by_id(mybooklist[10+i])
+    //console.log("i=%d,title=%s, like=%d",i,item_entry["Book Title"],item_entry["Likes"])
+    top11to20_titles[i] = item_entry["Book Title"];
+    top11to20_likes[i] = item_entry["Likes"];
+  }
   //can't share one color_array for two charts, js uses shallow copy for lists
   var color_array = ['red','blue','yellow','green','pink','cyan','orange','lime','grape','teal'];
   var color_array2 = ['red','blue','yellow','green','pink','cyan','orange','lime','grape','teal'];
@@ -597,9 +610,43 @@
       backgroundColor: color_array
     }]
   };
+  const data7_2 = {
+    labels: top11to20_titles,
+    datasets: [{
+      data: top11to20_likes,
+      backgroundColor: color_array2
+    }]
+  };
   const config7 = {
     type: 'bar',
     data: data7,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        },
+        x: {
+          ticks: {
+            font: {
+              size: 10,
+            },
+            autoSkip: false,
+            maxRotation: 90,
+            minRotation: 0
+          }
+        }
+      }
+    },
+  };
+  const config7_2 = {
+    type: 'bar',
+    data: data7_2,
     options: {
       responsive: true,
       plugins: {
@@ -637,7 +684,7 @@
     labels: top10_titles_nf,
     datasets: [{
       data: top10_likes_nf,
-      backgroundColor: color_array2
+      backgroundColor: color_array
     }]
   };
   const config8 = {
@@ -672,6 +719,7 @@
   var myBarChart = new Chart(document.getElementById('Chart-Books-Published'), config5);
   var myBarChart = new Chart(document.getElementById('Chart-Books-Ratings'), config6);
   var myBarChart = new Chart(document.getElementById('Chart-Books-Ranked'), config7);
+  var myBarChart = new Chart(document.getElementById('Chart-Books-Ranked_2'), config7_2);
   var myBarChart = new Chart(document.getElementById('Chart-Books-Ranked-NF'), config8);
   </script>
 
