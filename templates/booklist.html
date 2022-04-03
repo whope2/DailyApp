@@ -94,7 +94,7 @@
     <i id="page-indicator-bot" style="font-size:2vw;">1/5</i>
     <img id="load-next-button" onclick="loadNextBooks()" src="static/next-button.png" style="width:4vw;height:auto;"></a>
   </div>
-  <div class="content">
+  <div class="content3">
     <center>
     <b>Top 10 Books by Twitter Likes</b><br>
     <div id="chart-container" style="width:100%">
@@ -617,10 +617,11 @@
       backgroundColor: color_array2
     }]
   };
-  const config7 = {
+  var config7 = {
     type: 'bar',
     data: data7,
     options: {
+      indexAxis: 'y',
       responsive: true,
       plugins: {
         legend: {
@@ -644,10 +645,11 @@
       }
     },
   };
-  const config7_2 = {
+  var config7_2 = {
     type: 'bar',
     data: data7_2,
     options: {
+      indexAxis: 'y',
       responsive: true,
       plugins: {
         legend: {
@@ -687,10 +689,11 @@
       backgroundColor: color_array
     }]
   };
-  const config8 = {
+  var config8 = {
     type: 'bar',
     data: data8,
     options: {
+      indexAxis: 'y',
       responsive: true,
       plugins: {
         legend: {
@@ -714,6 +717,15 @@
       }
     },
   };
+  
+  if (window.matchMedia("(orientation: portrait)").matches) {
+    // PORTRAIT mode
+    config7.options.indexAxis = "x"
+    config7_2.options.indexAxis = "x"
+    config8.options.indexAxis = "x"
+  }
+  //if (window.matchMedia("(orientation: landscape)").matches)
+  // LANDSCAPE mode
   
   var myBarChart = new Chart(document.getElementById('Chart-Books-Read'), config4);
   var myBarChart = new Chart(document.getElementById('Chart-Books-Published'), config5);
