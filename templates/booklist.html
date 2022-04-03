@@ -630,7 +630,12 @@
       },
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            font: {
+              weight: 900 /*scale: 100-900; normal=400; bold=700*/
+            }
+          }
         },
         x: {
           ticks: {
@@ -658,7 +663,12 @@
       },
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            font: {
+              weight: 900 /*scale: 100-900; normal=400; bold=700*/
+            }
+          }
         },
         x: {
           ticks: {
@@ -702,7 +712,12 @@
       },
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            font: {
+              weight: 900 /*scale: 100-900; normal=400; bold=700*/
+            }
+          }
         },
         x: {
           ticks: {
@@ -726,7 +741,7 @@
   }
   //if (window.matchMedia("(orientation: landscape)").matches)
   // LANDSCAPE mode
-  
+
   var myBarChart = new Chart(document.getElementById('Chart-Books-Read'), config4);
   var myBarChart = new Chart(document.getElementById('Chart-Books-Published'), config5);
   var myBarChart = new Chart(document.getElementById('Chart-Books-Ratings'), config6);
