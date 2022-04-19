@@ -144,7 +144,16 @@ def getphoto():
 
 @app.route("/quoteoftheday")
 def quoteoftheday():
+	arg_count = len(request.args)
+	cat = request.args.get('cat')
+
 	allrecords, count, categories = elasticsearch_access.get_all_quotes()
+
+	if cat == None or cat not in categories :
+		cat = "Love"
+
+	cat_quote, cat_author = elasticsearch_access.get_a_random_quote_by_category(cat)
+
 	#count=10  #test
 	items = [{}] * count
 	oneitem = {}
@@ -160,10 +169,10 @@ def quoteoftheday():
 		'Author':"25%"
 	}
 
-	random.shuffle(items)
-	random_i = random.randint(0,count-1)
+	#random.shuffle(items)
+	#random_i = random.randint(0,count-1)
 	return render_template('quotelist.html', col_names=col_names, col_width=col_width, items=items, count=count, \
-		categories=categories, quote=items[random_i]["Quote"]+ " —" + items[random_i]["Author"])
+		categories=categories, cat=cat, quote=cat_quote+ " —" + cat_author)
 
 #api: /genwordoftheday/
 #Generate a random word
@@ -307,6 +316,26 @@ def liveathousandlives():
 		booklist=twitter_booklist, bookcount=len(twitter_booklist), bookreview=bookreview, bookid=bookid,\
 		booklist_nonfiction=twitter_booklist_nonfiction,bookcount_nonfiction=len(twitter_booklist_nonfiction),\
 		bookstats=book_stats)
+
+@app.route("/bettereads")
+def bettereads():
+
+	allbookchats, count = elasticsearch_access.get_all_bookchat()
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allbookchats):
+		oneitem["Text"] = doc["_source"]["Text"]
+		oneitem["Date"] = doc["_source"]["Date"]
+		oneitem["ID"] = doc["_source"]["id"]
+		oneitem["ID-Int"] = int(doc["_source"]["id"])
+		oneitem["TweetID"] = doc["_source"]["TweetID"]
+		oneitem["Type"] = doc["_source"]["Type"]
+		#print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+
+	items.sort(key=itemgetter('ID-Int'), reverse=True) 
+
+	return render_template('bookchat.html', items=items, count=count)
 
 @app.route("/about")
 def about():

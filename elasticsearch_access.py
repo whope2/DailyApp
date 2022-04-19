@@ -195,6 +195,17 @@ def get_all_book_sorted_by_likes() :
     allbooks = results["hits"]["hits"]
     return(allbooks, hit_count)   
 
+def get_all_bookchat() :
+    index_name = "bookchat"
+    results=client.search(index=index_name, body=\
+    {
+        "size":999,
+        "query":{"match_all":{}}
+    })    
+    hit_count = len(results["hits"]["hits"])
+    allbooks = results["hits"]["hits"]
+    return(allbooks, hit_count)   
+
 def get_book_statistics():
     index_name = "booklist"
     #total_count = client.count(index=index_name)['count']
