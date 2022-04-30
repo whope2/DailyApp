@@ -82,7 +82,7 @@
 
   <div id="main-div" class="content">
     <b id="twitter-bookchat-title">Reading Polls on Twitter</b><br>
-    <i style="font-size: 3vw;"><a href="#" onclick="loadPoll()">Reading Polls</a>&nbsp;&nbsp;<a href="#" onclick="loadBookRecom()">Book Recommendations</a>&nbsp;&nbsp;<a href="#" onclick="loadBookChat()">Book Chats</a>&nbsp;&nbsp;<a href="#" onclick="loadAll()">All</a></i>
+    <i style="font-size: 3vw;"><a href="#" onclick="loadPoll()">Reading Polls</a>&nbsp;&nbsp;<a href="#" onclick="loadBookRecom()">Book Recommendations</a>&nbsp;&nbsp;<a href="#" onclick="loadBookReview()">Book Reviews</a>&nbsp;&nbsp;<a href="#" onclick="loadAll()">All</a></i>
   </div>
   <div id="main-div-twitter-books" class="content">
   </div>
@@ -135,6 +135,10 @@
     function loadBookChat() {
       document.getElementById("twitter-bookchat-title").innerHTML = "Book Chats on Twitter";
       initBooks("Book Chat");
+    }
+    function loadBookReview() {
+      document.getElementById("twitter-bookchat-title").innerHTML = "Book Reviews on Twitter";
+      initBooks("Book Review");
     }
     function loadAll() {
       document.getElementById("twitter-bookchat-title").innerHTML = "Bettereads Twitter Archive";
