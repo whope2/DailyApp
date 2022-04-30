@@ -81,7 +81,8 @@
   </div>
 
   <div id="main-div" class="content">
-    <b id="twitter-books-title">Bettereads Book Chat Twitter Archive</b><br>
+    <b id="twitter-bookchat-title">Reading Polls on Twitter</b><br>
+    <i style="font-size: 3vw;"><a href="#" onclick="loadPoll()">Reading Polls</a>&nbsp;&nbsp;<a href="#" onclick="loadBookRecom()">Book Recommendations</a>&nbsp;&nbsp;<a href="#" onclick="loadBookChat()">Book Chats</a>&nbsp;&nbsp;<a href="#" onclick="loadAll()">All</a></i>
   </div>
   <div id="main-div-twitter-books" class="content">
   </div>
@@ -94,11 +95,17 @@
           align: 'center',
           theme: 'light',
           conversation: 'none'};
-    initBooks();
+    initBooks("Poll");
     
-    function initBooks()
+    function initBooks(type)
     {
+      //remove all children
+      while(ulElementMain.firstChild) {
+        ulElementMain.lastChild.remove()
+      }
+
       for (let i = 0; i < count; i++) { 
+        if( items[i]["Type"] == type || type == "All") {
         console.log("Tweet #%d, TweetID=%s, to be created.", i, items[i]["TweetID"])
         twttr.widgets.createTweet(
           items[i]["TweetID"],
@@ -112,7 +119,26 @@
           //date_node.innerText = items[i]["Date"];
           //parentDiv.insertBefore(date_node, el)
         });
+        }
       }
+    }
+  </script>
+  <script>
+    function loadPoll() {
+      document.getElementById("twitter-bookchat-title").innerHTML = "Reading Polls on Twitter";
+      initBooks("Poll");
+    }
+    function loadBookRecom() {
+      document.getElementById("twitter-bookchat-title").innerHTML = "Book Recommendations on Twitter";
+      initBooks("Book Recommendation");
+    }
+    function loadBookChat() {
+      document.getElementById("twitter-bookchat-title").innerHTML = "Book Chats on Twitter";
+      initBooks("Book Chat");
+    }
+    function loadAll() {
+      document.getElementById("twitter-bookchat-title").innerHTML = "Bettereads Twitter Archive";
+      initBooks("All");
     }
   </script>
 
