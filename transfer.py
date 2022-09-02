@@ -51,7 +51,9 @@ def index():
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 
 	random_book, book_image = elasticsearch_access.get_a_random_book()
-	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,photomedia=insta_id,book=random_book,book_image=book_image,email=email)
+
+	sub_count = elasticsearch_access.get_subscriber_count()
+	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,photomedia=insta_id,book=random_book,book_image=book_image,email=email,sub_count=sub_count)
 
 @app.route('/privacy')
 def privacy():

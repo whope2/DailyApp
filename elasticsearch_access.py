@@ -488,6 +488,11 @@ def get_all_quotes() :
 
 #get_all_quotes()
 
+def get_subscriber_count():    
+    index_name = "subscriptionlist"
+    count = client.count(index=index_name)['count']
+    return count
+
 def get_all_subscribers():
     index_name = "subscriptionlist"
     results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
