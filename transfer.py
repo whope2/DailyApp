@@ -403,6 +403,8 @@ def unsubscribing():
 def postcomment():
 	comment = request.form['CommentText']
 	author = request.form['CommentAuthor']
+	email = request.form['CommentEmail']
+	comment = comment + ", email: " + email
 	elasticsearch_access.add_a_comment(comment, author)
 	email_notify_me("WLMC - a comment added!", "comment: %s, author: %s" % (comment, author))
 	return render_template('echo.html', text="Thanks for your comment!")
