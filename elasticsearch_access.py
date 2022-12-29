@@ -80,6 +80,18 @@ def get_a_random_quote_by_category(category):
 #get_all_quotes_by_category("Action")
 #get_a_random_quote_by_category("Action")
 
+def get_a_random_fact() :
+    index_name = "factlist"
+    docs_count = client.count(index=index_name)['count']
+    print("docs_count = %d" % docs_count)
+    random_doc_id = random.randint(1,docs_count)
+    print("generate random doc_id = %d" % random_doc_id)
+    doc = client.get(index=index_name, id=str(random_doc_id))
+    #print("generate random fact = %s" % doc["_source"]["Fact"])
+    return(doc["_source"]["Fact"])
+#test
+#get_a_random_fact()
+
 def get_a_random_love_quote() :
     index_name = "lovequotelist"
     docs_count = client.count(index=index_name)['count']

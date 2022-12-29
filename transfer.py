@@ -559,6 +559,12 @@ def tweetquote():
 	'''
 	return render_template('echo.html', text="A quote tweeted!")
 
+@app.route("/tweetbookishfact")
+def tweetbookishfact():
+	fact = elasticsearch_access.get_a_random_fact()
+	twitterbot.tweet(fact)
+	return render_template('echo.html', text="A bookish fact is tweeted!")
+
 @app.route("/retweetbook")
 def retweetbook():
 	tweet_id = elasticsearch_access.get_a_random_book_tweet_id()
