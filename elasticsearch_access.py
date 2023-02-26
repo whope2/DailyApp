@@ -3,6 +3,8 @@ from elasticsearch import Elasticsearch
 from datetime import datetime
 import twitterbot
 
+from operator import itemgetter #for sorting
+
 client = Elasticsearch()
 '''
 import requests
@@ -201,11 +203,18 @@ def get_all_book_sorted_by_likes() :
     {
         "size":999,
         "query":{"match_all":{}},
-        "sort" : [ { "Likes" : "desc" } ]
-    })    
+        #"sort" : [ { "Likes" : "desc" } ] #ES does not allow sorting texts, only numbers
+    })
     hit_count = len(results["hits"]["hits"])
     allbooks = results["hits"]["hits"]
-    return(allbooks, hit_count)   
+    # Sorting the array by Likes
+    items = [{}] * hit_count
+    oneitem = {}
+    for num, doc in enumerate(allbooks):
+        oneitem = doc["_source"]
+        items[num] = oneitem.copy()
+    items.sort(key=itemgetter('Likes'),reverse=True) 
+    return(items, hit_count)   
 
 def get_all_bookchat() :
     index_name = "bookchat"
@@ -282,6 +291,7 @@ def get_book_statistics():
     books_read_2020 = 0
     books_read_2021 = 0
     books_read_2022 = 0
+    books_read_2023 = 0
     books_published_2000s = 0
     books_published_1900s = 0
     books_published_1800s = 0
@@ -319,8 +329,10 @@ def get_book_statistics():
                 books_read_2020 += 1
             elif( year == 2021 ) :
                 books_read_2021 += 1
+            elif( year == 2022 ) :
+                books_read_2022 += 1    
             else :
-                books_read_2022 += 1
+                books_read_2023 += 1
 
         if( doc["_source"]["Year Published"] != None ) :
             year = int(doc["_source"]["Year Published"])
@@ -369,6 +381,7 @@ def get_book_statistics():
         "books read in 2020": books_read_2020,
         "books read in 2021": books_read_2021,
         "books read in 2022": books_read_2022,
+        "books read in 2023": books_read_2023,
         "books published in 2000s": books_published_2000s,
         "books published in 1900s": books_published_1900s,
         "books published in 1800s and prior": books_published_1800s,
@@ -382,19 +395,22 @@ def get_book_statistics():
     }
     return book_stats
 
+# code no longer used
 def generate_likes_in_booklist():
     index_name = "booklist"
     results=client.search(index=index_name,body={"size":999,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     allbooks = results["hits"]["hits"]
     for doc in allbooks:
-        if(doc["_source"]["TweetID"]):       
-            like_count = twitterbot.get_likes(doc["_source"]["TweetID"])
-        else:
-            like_count = 0    
+        #if(doc["_source"]["TweetID"]):       
+        #    like_count = twitterbot.get_likes(doc["_source"]["TweetID"])
+        #else:
+        #    like_count = 0    
+        like_count = int(doc["_source"]["Likes"])
         client.update(index=index_name,doc_type='_doc',
             id=doc["_source"]["id"],
-            body={"doc": {"Likes": like_count} } 
+            #body={"doc": {"Likes": like_count} }
+            body={"doc": {"Likes_": like_count} }  #Likes_ is a number not string
         )
     return
 #generate_likes_in_booklist()
@@ -425,7 +441,7 @@ def get_all_twitter_books_from_booklist():
     hit_count = len(results["hits"]["hits"])
     alldocs = results["hits"]["hits"]
     return alldocs, hit_count
-
+'''
 def add_a_twitter_book(title, tweet_id, likes, nonfiction,id) :
     index_name = "twitterbooklist"
     client.index(index=index_name, doc_type='post', body= \
@@ -436,7 +452,7 @@ def add_a_twitter_book(title, tweet_id, likes, nonfiction,id) :
         'Nonfiction': nonfiction,
         'ID': id
     })
-
+'''
 def delete_twitter_book_index():
     index_name = "twitterbooklist"
     client.indices.delete(index=index_name, ignore=[400, 404])

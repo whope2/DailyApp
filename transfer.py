@@ -285,23 +285,26 @@ def liveathousandlives():
 	items = [{}] * count
 	items_sorted = [{}] * count
 	oneitem = {}
+	#print(count)
 	for num, doc in enumerate(allbooks):
-		oneitem["Cover Image"] = doc["_source"]["Image File Name"]
-		oneitem["Book Title"] = doc["_source"]["Book Title"]
-		oneitem["Author"] = doc["_source"]["Author"]
-		oneitem["Year Published"] = doc["_source"]["Year Published"]
-		oneitem["My Rating"] = doc["_source"]["Rating"]
-		oneitem["Review"] = doc["_source"]["Review"]
-		oneitem["ID"] = doc["_source"]["id"]
-		oneitem["TweetID"] = doc["_source"]["TweetID"]
-		oneitem["Likes"] = doc["_source"]["Likes"]
+		#print(num)
+		#print(doc["_source"]["id"])
+		oneitem["Cover Image"] = doc["Image File Name"]
+		oneitem["Book Title"] = doc["Book Title"]
+		oneitem["Author"] = doc["Author"]
+		oneitem["Year Published"] = doc["Year Published"]
+		oneitem["My Rating"] = doc["Rating"]
+		oneitem["Review"] = doc["Review"]
+		oneitem["ID"] = doc["id"]
+		oneitem["TweetID"] = doc["TweetID"]
+		oneitem["Likes"] = doc["Likes"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 		items_sorted[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 
-		if (doc["_source"]["TweetID"] != None ):
+		if (doc["TweetID"] != None ):
 			twitter_booklist.append(oneitem["ID"])
-			if ( doc["_source"]["Genre"] != "Fiction" ):
+			if ( doc["Genre"] != "Fiction" ):
 				twitter_booklist_nonfiction.append(oneitem["ID"])
 
 	#Prepare the sorted list in python instead javascript because js does not easier provide an easy for deep copy of the original list 
@@ -662,7 +665,7 @@ def editjournal():
 		elasticsearch_access.edit_journal(id, title, text, "journal")
 	return redirect('/journal')
 
-
+'''
 @app.route("/generatelikesinbooklist")
 def generatelikesinbooklist():
 	elasticsearch_access.generate_likes_in_booklist()
@@ -684,7 +687,7 @@ def generatetwitterbooklist():
 		#write to ES
 		elasticsearch_access.add_a_twitter_book(title,tweet_id,like_count,nonfiction,id)
 	return render_template('echo.html', text="generatetwitterbooklist completed")
-
+'''
 @app.route("/photo")
 def photo():
 	photolist = elasticsearch_access.get_all_photos()
@@ -693,6 +696,6 @@ def photo():
 #liveathousandlives()
 #generatetwitterbooklist()
 
-#if __name__ == '__main__':
-	#app.run(port=5000,debug=False)
+if __name__ == '__main__':
+	app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)

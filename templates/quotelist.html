@@ -113,6 +113,7 @@
     var items = {{items | tojson}}
     var col_width = {{ col_width | tojson }}
     var categories = {{ categories | tojson }}
+    var init_cat = {{ cat | tojson }}
 
     let category_html = "";
     for( cat of categories )
@@ -169,7 +170,7 @@
   </script>
   <script>
     //load initial quotes
-    loadCategory("Love");
+    loadCategory(init_cat);
   </script>
 
 <div class="botnav">

@@ -81,6 +81,7 @@
   </div>
 
   <div id="main-div" class="content">
+    <p style="font-size: 3vw;"><a href="/bettereads">Twitter Daily Book Chat Archive</a></p>
     <p><b id="twitter-books-title">Books I Recommended on Twitter</b><br>
       <i style="font-size: 3vw;"><a href="#" onclick="loadAllBooks()">All Books</a>&nbsp;&nbsp;<a href="#" onclick="loadTop10NonfictionBooks()">Nonfictions Only</a></i></p>
     <img id="load-prev-button-top" onclick="loadPrevBooks()" src="static/back-button.png" style="width:4vw;height:auto;"></a>
@@ -383,7 +384,7 @@
       <div id="chart-container" style="width:80%">
         <canvas id="Chart-Books-Read"></canvas>
       </div>  
-      <i>Have read </i><b style="color:green">{{bookstats["books read in 2022"]}}</b><i> books so far in 2022!</i><br>
+      <i>Have read </i><b style="color:green">{{bookstats["books read in 2023"]}}</b><i> books so far in 2023!</i><br>
     </p>
     <p>
       <br>
@@ -489,9 +490,9 @@
   var myChart2 = new Chart( document.getElementById('Chart-Genres'), config2);
 
   const data4 = {
-    labels: ['~2018', '2019', '2020', '2021', '2022'],
+    labels: ['~2018', '2019', '2020', '2021', '2022', '2023'],
     datasets: [{
-      data: [book_stats["books read in 2018 and prior"], book_stats["books read in 2019"], book_stats["books read in 2020"], book_stats["books read in 2021"], book_stats["books read in 2022"]],
+      data: [book_stats["books read in 2018 and prior"], book_stats["books read in 2019"], book_stats["books read in 2020"], book_stats["books read in 2021"], book_stats["books read in 2022"], book_stats["books read in 2023"]],
       fill: false,
       pointBackgroundColor: 'red',
       pointRadius: 8,
