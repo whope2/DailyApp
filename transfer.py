@@ -564,8 +564,11 @@ def tweetquote():
 
 @app.route("/tweetbookishfact")
 def tweetbookishfact():
-	fact = elasticsearch_access.get_a_random_fact()
-	twitterbot.tweet(fact)
+	fact,image = elasticsearch_access.get_a_random_fact()	
+	if image == None:
+		twitterbot.tweet(fact)
+	else:
+		twitterbot.tweet_with_media(fact, "static/facts/" + image)
 	return render_template('echo.html', text="A bookish fact is tweeted!")
 
 @app.route("/retweetbook")
@@ -696,6 +699,6 @@ def photo():
 #liveathousandlives()
 #generatetwitterbooklist()
 
-if __name__ == '__main__':
-	app.run(port=5000,debug=False)
+#if __name__ == '__main__':
+	#app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)

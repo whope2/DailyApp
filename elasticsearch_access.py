@@ -90,7 +90,7 @@ def get_a_random_fact() :
     print("generate random doc_id = %d" % random_doc_id)
     doc = client.get(index=index_name, id=str(random_doc_id))
     #print("generate random fact = %s" % doc["_source"]["Fact"])
-    return(doc["_source"]["Fact"])
+    return(doc["_source"]["Fact"], doc["_source"]["Image File Name"])
 #test
 #get_a_random_fact()
 
