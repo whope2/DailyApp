@@ -116,7 +116,7 @@ def getquote():
 @app.route("/api/getbook")
 def getbook():
 	elasticsearch_access.apittracking_increment_callcount("getbook")
-	book_title, book_author, book_year, book_image = elasticsearch_access.get_a_random_book_with_detail()
+	book_title, book_author, book_year, book_image, tweet_id = elasticsearch_access.get_a_random_book_with_detail()
 	dict = {
         "title": book_title,
         "author": book_author,
@@ -438,7 +438,7 @@ def newsletter():
 
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
-	book_title, book_author, book_year, book_image = elasticsearch_access.get_a_random_book_with_detail()
+	book_title, book_author, book_year, book_image, tweet_id = elasticsearch_access.get_a_random_book_with_detail()
 	photo_id, insta_id = elasticsearch_access.get_a_random_photo()
 
 	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
@@ -570,6 +570,13 @@ def tweetbookishfact():
 	else:
 		twitterbot.tweet_with_media(fact, "static/facts/" + image)
 	return render_template('echo.html', text="A bookish fact is tweeted!")
+
+@app.route("/tweetbook")
+def tweetbook():
+	book_title, book_author, book_year, image, tweet_id = elasticsearch_access.get_a_random_book_with_detail()
+	text = "Book Recommendation: " + book_title + " by " + book_author + "\n" + "https://twitter.com/tothemax2050/status/" + tweet_id
+	twitterbot.tweet_with_media(text, "static/books/" + image)
+	return render_template('echo.html', text="A book recommendation tweeted!")
 
 @app.route("/retweetbook")
 def retweetbook():
