@@ -574,8 +574,11 @@ def tweetbookishfact():
 @app.route("/tweetbook")
 def tweetbook():
 	book_title, book_author, book_year, image, tweet_id = elasticsearch_access.get_a_random_book_with_detail()
-	text = "Book Recommendation: " + book_title + " by " + book_author + "\n" + "https://twitter.com/tothemax2050/status/" + tweet_id
-	twitterbot.tweet_with_media(text, "static/books/" + image)
+	text = "Book Recommendation: " + book_title + " by " + book_author# + "\n" + "https://twitter.com/tothemax2050/status/" + tweet_id
+	if image == None:
+		twitterbot.tweet(text)
+	else:
+		twitterbot.tweet_with_media(text, "static/books/" + image)
 	return render_template('echo.html', text="A book recommendation tweeted!")
 
 @app.route("/retweetbook")
@@ -706,6 +709,6 @@ def photo():
 #liveathousandlives()
 #generatetwitterbooklist()
 
-#if __name__ == '__main__':
-	#app.run(port=5000,debug=False)
+if __name__ == '__main__':
+	app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)
