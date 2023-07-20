@@ -67,6 +67,14 @@ def apps():
 def echo_search():
 	return render_template('echo_search.html')
 
+@app.route('/readingisalifestyle')
+def readingisalifestyle():
+	return render_template('index2.html')
+
+@app.route('/<reader>')
+def readers(reader):
+	return render_template('readers.html', reader=reader)
+
 @app.route("/<name>")
 def hello_name(name):
 	text = '"Every one of us is losing something precious to us. Lost opportunities, lost possibilities, feelings we can never get back again. That’s part of what it means to be alive."—Haruki Murakami, Kafka on the Shore'
@@ -116,7 +124,7 @@ def getquote():
 @app.route("/api/getbook")
 def getbook():
 	elasticsearch_access.apittracking_increment_callcount("getbook")
-	book_title, book_author, book_year, book_image, tweet_id = elasticsearch_access.get_a_random_book_with_detail()
+	book_title, book_author, book_year, book_image, tweet_id, rating = elasticsearch_access.get_a_random_book_with_detail()
 	dict = {
         "title": book_title,
         "author": book_author,
@@ -438,7 +446,7 @@ def newsletter():
 
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
-	book_title, book_author, book_year, book_image, tweet_id = elasticsearch_access.get_a_random_book_with_detail()
+	book_title, book_author, book_year, book_image, tweet_id, rating = elasticsearch_access.get_a_random_book_with_detail()
 	photo_id, insta_id = elasticsearch_access.get_a_random_photo()
 
 	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
@@ -573,7 +581,14 @@ def tweetbookishfact():
 
 @app.route("/tweetbook")
 def tweetbook():
-	book_title, book_author, book_year, image, tweet_id = elasticsearch_access.get_a_random_book_with_detail()
+	while True:
+		book_title, book_author, book_year, image, tweet_id, rating = elasticsearch_access.get_a_random_book_with_detail()
+		if rating == None:
+			stars = 0
+		else:
+			stars = len(rating)
+		if stars >= 4:
+			break
 	text = "Book Recommendation: " + book_title + " by " + book_author# + "\n" + "https://twitter.com/tothemax2050/status/" + tweet_id
 	if image == None:
 		twitterbot.tweet(text)
@@ -709,6 +724,6 @@ def photo():
 #liveathousandlives()
 #generatetwitterbooklist()
 
-if __name__ == '__main__':
-	app.run(port=5000,debug=False)
+#if __name__ == '__main__':
+	#app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)
