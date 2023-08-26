@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V1LBCV9F1C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-V1LBCV9F1C');
+  </script>
+ 
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+	<title>Reading Is A Lifestyle</title>	
+
+	<style type="text/css">    
+
+  img {
+    width: 60%;
+    height: auto;
+    max-width: 600;
+    min-width: 400;
+  }
+  body
+  {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 10vw;
+  }
+  .label {
+      color: blue;
+  }
+
+  /* Style the footer */
+  .footer {
+    background-color: #f1f1f1;
+    padding:2vw;
+    text-align: right;
+    font-size: 4vw;
+  }
+
+  <! -- 
+  .star {
+      font-size: x-large;
+      width: 10px;
+      display: inline-block;
+      color: gray;
+  }
+  .star:last-child {
+      margin-right: 0;
+  }
+  .star:before {
+      content:'\2605';
+  }
+  .star.on {
+      color: gold;
+  }
+  .star.half:after {
+      content:'\2605';
+      color: gold;
+      position: absolute;
+      margin-left: -20px;
+      width: 10px;
+      overflow: hidden;
+  }
+  //add below code in HTML
+  <div class="content2"> 
+      <span class="star on"></span>
+      <span class="star half"></span>
+      <span class="star"></span>
+      Rating
+  </div>
+  -->
+  
+  </style>
+  
+  <script sync src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</head>  
+  
+<body>
+    <div class="topnav">
+        <a href=""><img src="static/home.png" alt="Home" style="width:4vw;height:auto;"></a>
+        <a href="">Readers</a>
+        <a href="https://twitter.com/{{reader}}">@{{reader}}</a>
+        <a href="" style="float:right">About</a>
+    </div>
+
+    <div id="main-div" class="content2">
+        <h2 class="title">Reading Is A Lifestyle<br> for <a href="https://twitter.com/{{reader}}">@{{reader}}</a></h2>
+    </div>
+    <div class="content">
+      <p><b>My Current Read<img src="static/books.png" style="width:4vw;height:auto;"></b></p>      
+      <p style="color: blue;">
+        <i id="book-text">
+          11/22/63 by Stephen King<br>Published in 2011
+        </i><br>
+        <a id="book-image-href" href=static/books/F4ZHAS8XQAoDFFD.jpeg><img id="book-image" src=static/books/F4ZHAS8XQAoDFFD.jpeg alt="" style="width:50%;height:auto;max-width:500px;"></a>
+    </div> 
+    <div id="main-div-top-tweets" class="content2">
+      <p><b>My Top 3 Tweets<img src="static/twitter.png" style="width:4vw;height:auto;"></b></p>
+    </div>
+
+    <script>
+      var ulElementMain = document.getElementById("main-div-top-tweets");
+      var tweet_widget_options = {
+          align: 'center',
+          theme: 'light',
+          conversation: 'none'};
+      var top_tweets = ["1423438207568449536","1667228226580631553","1428117756075986948"];
+      for(let i = 0; i < top_tweets.length; i++){
+        twttr.widgets.createTweet(
+          top_tweets[i],
+          ulElementMain,
+          tweet_widget_options
+        )
+        .then(function (el) {
+        });
+      }
+    </script>
+
+    <div class="content">
+      <p><b>Remaining Site <br>Still Under Construction<br></b></p>
+      <p><a href="https://twitter.com/tothemax2050">PM me on Twitter</a></p>
+    </div>
+    <div class="botnav">
+        <a href=""><img src="static/information.png" alt="About" style="width:4vw;height:auto;"></a>
+    </div>
+</body>
+</html>
+
+
+

@@ -55,6 +55,78 @@ def index():
 	sub_count = elasticsearch_access.get_subscriber_count()
 	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,photomedia=insta_id,book=random_book,book_image=book_image,email=email,sub_count=sub_count)
 
+@app.route("/tweetdailybookishquestion")
+def tweetdailybookishquestion():
+	
+	question_list = [
+		#Monday: weekend wrap-up
+		[
+			"Have you finished a book over the weekend?",
+			"How was your bookish weekend?",
+			"Did your weekend go according to the reading plan?",
+			"How many hours (or pages) did you read last weekend?",
+			"What's a bookish thing you did last weekend?",
+		],
+		#Tuesday: book properties
+		[
+			"What genre is your current read?",
+			"Post a GIF/Image that best describes your emotional state with your current read!",
+			"Use one word to describe your current read!",
+			"where are you being transported to by your current read?",
+			"What's the main message of your current read?",
+			"Describe the book you're currently reading in five words or fewer!",
+			"describe your current read with only emojis!",
+
+		],
+		#Wednesday: character
+		[
+			"Name a woman character from your current read!",
+			"Off the top of your head, could you name a fictional book character?",
+			"What's the age of the main character from your current read?",
+			"Name two characters from the book you’re currently reading!",
+			"What is the job of the main character from your current read?",
+			"which character from your current read would you like to meet?",
+			"Who's the MC in your current read?",
+			"Name a nonhuman character from your current read?",
+			"What's a character from your current read that you want to befriend?",
+			"Name a supporting character in your current read!",
+
+		],
+		#Thursday
+		[
+			"How did you like the book you just finished?",
+			"Share a quote from your current read!",
+			"Describe a scene from the book you’re currently reading!"
+		],
+		#Friday
+		[
+			"What are you planning on reading this weekend?"
+		],
+		#Saturday: Author
+		[
+			"If you could spend a day with an author, who would you spend it with?",
+			"Who is your new favorite author?",
+			"If you could interview one author, living or dead, who would it be and what would you ask?",
+			"Which author is on your mind right now?",
+			"Who's the last author that made you cry, or tear up?",
+
+		],
+		#Sunday
+		[
+			"Any thoughts on your current read?",
+			"what have you learned so far from your current read?",
+		]
+	]
+	
+	dt = datetime.now()
+	i = dt.weekday()
+	q_num = len(question_list[i])
+
+	question = question_list[i][random.randint(1,q_num) - 1]
+	twitterbot.tweet(question)
+
+	return render_template('echo.html', text="A daily bookish question is tweeted!")
+
 @app.route('/privacy')
 def privacy():
 	return render_template('privacy.html')
