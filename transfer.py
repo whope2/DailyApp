@@ -72,10 +72,10 @@ def tweetdailybookishquestion():
 			"What genre is your current read?",
 			"Post a GIF/Image that best describes your emotional state with your current read!",
 			"Use one word to describe your current read!",
-			"where are you being transported to by your current read?",
+			"Where are you being transported to by your current read?",
 			"What's the main message of your current read?",
 			"Describe the book you're currently reading in five words or fewer!",
-			"describe your current read with only emojis!",
+			"Describe your current read with only emojis!",
 
 		],
 		#Wednesday: character
@@ -85,7 +85,7 @@ def tweetdailybookishquestion():
 			"What's the age of the main character from your current read?",
 			"Name two characters from the book you’re currently reading!",
 			"What is the job of the main character from your current read?",
-			"which character from your current read would you like to meet?",
+			"Which character from your current read would you like to meet?",
 			"Who's the MC in your current read?",
 			"Name a nonhuman character from your current read?",
 			"What's a character from your current read that you want to befriend?",
@@ -109,12 +109,12 @@ def tweetdailybookishquestion():
 			"If you could interview one author, living or dead, who would it be and what would you ask?",
 			"Which author is on your mind right now?",
 			"Who's the last author that made you cry, or tear up?",
-
+			"If you could bring one author back from the dead, who would it be?"
 		],
 		#Sunday
 		[
 			"Any thoughts on your current read?",
-			"what have you learned so far from your current read?",
+			"What have you learned so far from your current read?"
 		]
 	]
 	
@@ -146,6 +146,11 @@ def readingisalifestyle():
 @app.route('/<reader>')
 def readers(reader):
 	return render_template('readers.html', reader=reader)
+
+@app.route('/littlefreelibrary')
+def littlefreelibrary():
+	lflbooklist = ["IMG_1672.jpg","IMG_1673.jpg","IMG_1674.jpeg"]
+	return render_template('littlefreelibrary.html', lflbooklist=lflbooklist, lflbooklistcount=len(lflbooklist))
 
 @app.route("/<name>")
 def hello_name(name):
