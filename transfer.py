@@ -147,9 +147,11 @@ def readingisalifestyle():
 def readers(reader):
 	return render_template('readers.html', reader=reader)
 
+@app.route('/lfl')
 @app.route('/littlefreelibrary')
 def littlefreelibrary():
-	lflbooklist = ["IMG_1672.jpg","IMG_1673.jpg","IMG_1674.jpeg"]
+	lflbooklist = ["IMG_1672.jpg","IMG_1673.jpg","IMG_1674.jpeg",\
+				"IMG_1739.jpg","IMG_1741.jpg","IMG_1742.jpg","IMG_1743.jpg","IMG_1744.jpg","IMG_1745.jpg","IMG_1746.jpeg"]
 	return render_template('littlefreelibrary.html', lflbooklist=lflbooklist, lflbooklistcount=len(lflbooklist))
 
 @app.route("/<name>")
