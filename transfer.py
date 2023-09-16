@@ -145,7 +145,37 @@ def readingisalifestyle():
 
 @app.route('/<reader>')
 def readers(reader):
-	return render_template('readers.html', reader=reader)
+		
+	allbooks, count = elasticsearch_access.get_all_book_sorted_by_finished_date()
+	items = [{}] * count
+	oneitem = {}
+	current_read_list = []
+	#print(count)
+	for num, doc in enumerate(allbooks):
+		#print(num)
+		#print(doc["_source"]["id"])
+		oneitem["Cover Image"] = doc["Image File Name"]
+		oneitem["Book Title"] = doc["Book Title"]
+		oneitem["Author"] = doc["Author"]
+		oneitem["Year Published"] = doc["Year Published"]
+		oneitem["My Rating"] = doc["Rating"]
+		oneitem["Review"] = doc["Review"]
+		oneitem["ID"] = doc["id"]
+		oneitem["TweetID"] = doc["TweetID"]
+		oneitem["Likes"] = doc["Likes"]
+		oneitem["Date Finished"] = doc["Date Finished"]
+		oneitem["Date Started"] = doc["Date Started"]
+		#print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+
+		if( doc["Date Finished"] == "4/15/1976" and doc["Date Started"] != None ):
+			current_read_list.append(oneitem.copy())
+			print("current_list: ", oneitem)
+
+	print("current list count: ",len(current_read_list))
+	#print(current_read_list)
+
+	return render_template('readers.html', reader=reader, items=items, count=count, current_read_list=current_read_list, current_read_count=len(current_read_list))
 
 @app.route('/lfl')
 @app.route('/littlefreelibrary')
@@ -385,6 +415,7 @@ def liveathousandlives():
 		oneitem["ID"] = doc["id"]
 		oneitem["TweetID"] = doc["TweetID"]
 		oneitem["Likes"] = doc["Likes"]
+		oneitem["Date Finished"] = doc["Date Finished"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
 		items_sorted[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
@@ -395,7 +426,10 @@ def liveathousandlives():
 				twitter_booklist_nonfiction.append(oneitem["ID"])
 
 	#Prepare the sorted list in python instead javascript because js does not easier provide an easy for deep copy of the original list 
-	items_sorted.sort(key=itemgetter('Book Title')) 
+	#items_sorted.sort(key=itemgetter('Book Title')) 
+	
+	#Sort by "Date Finished"
+	items_sorted.sort(key=lambda x: datetime.strptime(x["Date Finished"],'%m/%d/%Y'), reverse=True)
 
 	columns=["Cover Image","Book Title","Author","Year Published","My Rating"]
 

@@ -213,7 +213,33 @@ def get_all_book_sorted_by_likes() :
     for num, doc in enumerate(allbooks):
         oneitem = doc["_source"]
         items[num] = oneitem.copy()
-    items.sort(key=itemgetter('Likes'),reverse=True) 
+        #replace None with birthday representing current read
+        items[num]["Date Finished"] = items[num]["Date Finished"] or "4/15/1976" 
+    #items.sort(key=itemgetter('Likes'),reverse=True) #incorrect sorting of multiple digits
+    items.sort(key=lambda x: int(x['Likes']),reverse=True)
+    return(items, hit_count)   
+
+def get_all_book_sorted_by_finished_date() :
+    index_name = "booklist"
+    results=client.search(index=index_name, body=\
+    {
+        "size":999,
+        "query":{"match_all":{}},
+        #"sort" : [ { "Likes" : "desc" } ] #ES does not allow sorting texts, only numbers
+    })
+    hit_count = len(results["hits"]["hits"])
+    allbooks = results["hits"]["hits"]
+    # Sorting the array by Likes
+    items = [{}] * hit_count
+    oneitem = {}
+    for num, doc in enumerate(allbooks):
+        oneitem = doc["_source"]
+        items[num] = oneitem.copy()
+        #replace None with birthday representing current read
+        items[num]["Date Finished"] = items[num]["Date Finished"] or "4/15/1976" 
+
+	#Sort by "Date Finished"
+    items.sort(key=lambda x: datetime.strptime(x["Date Finished"],'%m/%d/%Y'), reverse=True)
     return(items, hit_count)   
 
 def get_all_bookchat() :

@@ -99,14 +99,42 @@
         <h2 class="title">Reading Is A Lifestyle<br> for <a href="https://twitter.com/{{reader}}">@{{reader}}</a></h2>
     </div>
     <div class="content">
-      <p><b>My Current Read<img src="static/books.png" style="width:4vw;height:auto;"></b></p>      
-      <p style="color: blue;">
-        <i id="book-text">
-          11/22/63 by Stephen King<br>Published in 2011
-        </i><br>
-        <a id="book-image-href" href=static/books/F4ZHAS8XQAoDFFD.jpeg><img id="book-image" src=static/books/F4ZHAS8XQAoDFFD.jpeg alt="" style="width:50%;height:auto;max-width:500px;"></a>
+      <p><b>Current Reads - {{current_read_count}} Books <img src="static/books.png" style="width:4vw;height:auto;"></b></p>      
+      {% for item in current_read_list %}
+        <i style="color: blue;">
+          {{item["Book Title"]}}<br>
+          <span style="color:darkgreen;">by {{item["Author"]}}</span><br>
+          <span style="color:limegreen;font-size: 3vw;">Published in {{item["Year Published"]}}
+        </span></i>
+        <br>
+        <a href="static/books/{{ item["Cover Image"] }}"><img src="static/books/{{ item["Cover Image"] }}" alt="" style="width:100%;height:auto;max-width:538px;"></a>
+        <br>
+        <span style="color:chocolate;font-size: 3vw;">({{loop.index}})</span>
+        <hr>
+      {% endfor %}
+
     </div> 
-    <div id="main-div-top-tweets" class="content2">
+    <div class="content2">
+      <p><b>Past Reads - {{count}} Books <img src="static/books.png" style="width:4vw;height:auto;"></b><br>
+      <i style="font-size: 3vw;">In reverse chronological order by finished date</i>
+      </p>
+      {% for item in items %}
+        <i style="color: blue;">
+          {{item["Book Title"]}}<br>
+          <span style="color:darkgreen;">by {{item["Author"]}}</span><br>
+          <span style="color:limegreen;font-size: 3vw;">Published in {{item["Year Published"]}}
+          {% if item["My Rating"] %}
+            <br>{{item["My Rating"]}}
+          {% endif %}  
+        </span></i>
+        <br>
+        <a href="static/books/{{ item["Cover Image"] }}"><img src="static/books/{{ item["Cover Image"] }}" alt="" style="width:100%;height:auto;max-width:538px;"></a>
+        <br>
+        <span style="color:chocolate;font-size: 3vw;">({{loop.index}})</span>
+        <hr>
+      {% endfor %}
+    </div> 
+    <div id="main-div-top-tweets" class="content">
       <p><b>My Top 3 Tweets<img src="static/twitter.png" style="width:4vw;height:auto;"></b></p>
     </div>
 
@@ -129,7 +157,6 @@
     </script>
 
     <div class="content">
-      <p><b>Remaining Site <br>Still Under Construction<br></b></p>
       <p><a href="https://twitter.com/tothemax2050">PM me on Twitter</a></p>
     </div>
     <div class="botnav">
