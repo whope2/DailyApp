@@ -181,7 +181,18 @@ def get_a_random_book_with_detail() :
     docs_count = client.count(index=index_name)['count']
     random_doc_id = random.randint(1,docs_count)
     doc = client.get(index=index_name, id=str(random_doc_id))
-    return(doc["_source"]["Book Title"], doc["_source"]["Author"], doc["_source"]["Year Published"], doc["_source"]["Image File Name"], doc["_source"]["TweetID"], doc["_source"]["Rating"])
+    return(doc["_source"]["Book Title"], doc["_source"]["Author"], doc["_source"]["Year Published"], doc["_source"]["Image File Name"], doc["_source"]["Rating"])
+
+def get_a_random_book_rec_with_detail() :
+    index_name = "booklist"
+    docs_count = client.count(index=index_name)['count']
+    while True: #get a 4 or 5-star
+        random_doc_id = random.randint(1,docs_count)
+        doc = client.get(index=index_name, id=str(random_doc_id))
+        stars = len(doc["_source"]["Rating"]) if doc["_source"]["Rating"] else 0
+        if stars >= 4:
+            break   
+    return(doc["_source"]["Book Title"], doc["_source"]["Author"], doc["_source"]["Year Published"], doc["_source"]["Image File Name"], doc["_source"]["Rating"])
 
 def get_total_book_count() :
     index_name = "booklist"

@@ -233,12 +233,24 @@ def getquote():
 @app.route("/api/getbook")
 def getbook():
 	elasticsearch_access.apittracking_increment_callcount("getbook")
-	book_title, book_author, book_year, book_image, tweet_id, rating = elasticsearch_access.get_a_random_book_with_detail()
+	book_title, book_author, book_year, book_image, rating = elasticsearch_access.get_a_random_book_rec_with_detail()
 	dict = {
         "title": book_title,
         "author": book_author,
 		"year": book_year,
-		"image": book_image
+		"image": book_image,
+		"rating": rating
+	}
+	#Dictionary to JSON Object
+	return json.dumps(dict)
+
+#api - v1 - fact & [image]
+@app.route("/api/getfact")
+def getfact():
+	fact,image = elasticsearch_access.get_a_random_fact()
+	dict = {
+        "fact": fact,
+		"image": image
 	}
 	#Dictionary to JSON Object
 	return json.dumps(dict)
@@ -559,7 +571,7 @@ def newsletter():
 
 	doc_word = elasticsearch_access.get_a_random_word()
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
-	book_title, book_author, book_year, book_image, tweet_id, rating = elasticsearch_access.get_a_random_book_with_detail()
+	book_title, book_author, book_year, book_image, rating = elasticsearch_access.get_a_random_book_with_detail()
 	photo_id, insta_id = elasticsearch_access.get_a_random_photo()
 
 	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
@@ -694,15 +706,8 @@ def tweetbookishfact():
 
 @app.route("/tweetbook")
 def tweetbook():
-	while True:
-		book_title, book_author, book_year, image, tweet_id, rating = elasticsearch_access.get_a_random_book_with_detail()
-		if rating == None:
-			stars = 0
-		else:
-			stars = len(rating)
-		if stars >= 4:
-			break
-	text = "Book Recommendation: " + book_title + " by " + book_author# + "\n" + "https://twitter.com/tothemax2050/status/" + tweet_id
+	book_title, book_author, book_year, image, rating = elasticsearch_access.get_a_random_book_rec_with_detail()
+	text = "Book Recommendation: " + book_title + " by " + book_author		
 	if image == None:
 		twitterbot.tweet(text)
 	else:
