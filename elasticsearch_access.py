@@ -5,7 +5,7 @@ import twitterbot
 
 from operator import itemgetter #for sorting
 
-client = Elasticsearch()
+client = Elasticsearch("http://localhost:9200")
 '''
 import requests
 
@@ -577,28 +577,28 @@ def get_all_subscribers_test():
     return(allrecords, hit_count)
 
 def add_a_subscription(email, interest) :
-    client.index(index='ingestsubscriptionlist', doc_type='post', body= \
+    client.index(index='ingestsubscriptionlist', body= \
     {
         'Email': email,
         'Interest': interest
     })
 
 def remove_a_subscription(email, interest) :
-    client.index(index='unsubscriptionlist', doc_type='post', body= \
+    client.index(index='unsubscriptionlist', body= \
     {
         'Email': email,
         'Interest': interest
     })
 
 def add_a_love_quote(quote, author) :
-    client.index(index='lovequotelist_new', doc_type='post', body= \
+    client.index(index='lovequotelist_new', body= \
     {
         'Quote': quote,
         'Author': author
     })
 
 def add_a_comment(comment, author) :
-    client.index(index='commentlist', doc_type='post', body= \
+    client.index(index='commentlist', body= \
     {
         'Comment': comment,
         'Author': author
@@ -654,7 +654,7 @@ def apittracking_increment_callcount(api_name) :
     count = doc["_source"]["callcount"]
     count += 1
 
-    client.update(index=index_name,doc_type='_doc',
+    client.update(index=index_name,
             id=api_name,
             body={"doc": {"callcount": count} } )
 

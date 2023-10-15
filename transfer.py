@@ -212,7 +212,7 @@ def getquote():
 	arg_cat = request.args.get('cat')
 	print("api/getquote", arg_count, arg_cat)
 
-	elasticsearch_access.apittracking_increment_callcount("getquote")
+	#elasticsearch_access.apittracking_increment_callcount("getquote")
 
 	if(arg_cat != None) :
 		quote, author = elasticsearch_access.get_a_random_quote_by_category(arg_cat)
@@ -232,7 +232,7 @@ def getquote():
 #api - v1 - book & author
 @app.route("/api/getbook")
 def getbook():
-	elasticsearch_access.apittracking_increment_callcount("getbook")
+	#elasticsearch_access.apittracking_increment_callcount("getbook")
 	book_title, book_author, book_year, book_image, rating = elasticsearch_access.get_a_random_book_rec_with_detail()
 	dict = {
         "title": book_title,
@@ -261,7 +261,7 @@ def getfact():
 #api - v1 - photo
 @app.route("/api/getphoto")
 def getphoto():
-	elasticsearch_access.apittracking_increment_callcount("getphoto")
+	#elasticsearch_access.apittracking_increment_callcount("getphoto")
 	image_name, media = elasticsearch_access.get_a_random_photo()
 	dict = {
         "image": image_name + ".jpg"
@@ -842,6 +842,6 @@ def photo():
 #liveathousandlives()
 #generatetwitterbooklist()
 
-#if __name__ == '__main__':
-	#app.run(port=5000,debug=False)
+if __name__ == '__main__':
+	app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)
