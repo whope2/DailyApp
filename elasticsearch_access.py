@@ -82,6 +82,40 @@ def get_a_random_quote_by_category(category):
 #get_all_quotes_by_category("Action")
 #get_a_random_quote_by_category("Action")
 
+def get_a_random_question() :
+    index_name = "questionlist"
+    docs_count = client.count(index=index_name)['count']
+    random_doc_id = random.randint(1,docs_count)
+    doc = client.get(index=index_name, id=str(random_doc_id))
+    return(doc["_source"]["Question"])
+
+def get_all_questions_by_category(category):
+    index_name = "questionlist"
+    results=client.search(index=index_name, body=\
+    {
+        "query": {
+            "match": {
+                "Category": {
+                    "query": category
+                }
+            }
+        }
+    })
+    hit_count = len(results["hits"]["hits"])
+    hits = results["hits"]["hits"]
+    return hits, hit_count
+
+def get_a_random_question_by_category(category):
+
+    questions, count = get_all_questions_by_category(category)
+    i = random.randint(1,count) - 1
+    return(questions[i]["_source"]["Question"])
+
+#test
+#get_a_random_question()
+#get_all_questions_by_category("Monday")
+#get_a_random_question_by_category("Monday")
+
 def get_a_random_fact() :
     index_name = "factlist"
     docs_count = client.count(index=index_name)['count']

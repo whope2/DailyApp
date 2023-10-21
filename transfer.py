@@ -272,6 +272,23 @@ def getphoto():
 #test
 #quote_ret = getbook()
 
+#api - v1 - get booksih question
+@app.route("/api/getquestion")
+def getquestioin():
+	arg_count = len(request.args)
+	arg_cat = request.args.get('cat')
+	print("api/getquote", arg_count, arg_cat)
+
+	if(arg_cat != None):
+		question = elasticsearch_access.get_a_random_question_by_category(arg_cat)
+	else:
+		question = elasticsearch_access.get_a_random_question()
+
+	quote_dict = {
+        "question": question
+	}
+	#Dictionary to JSON Object
+	return json.dumps(quote_dict)
 
 @app.route("/quoteoftheday")
 def quoteoftheday():
@@ -842,6 +859,6 @@ def photo():
 #liveathousandlives()
 #generatetwitterbooklist()
 
-if __name__ == '__main__':
-	app.run(port=5000,debug=False)
+#if __name__ == '__main__':
+	#app.run(port=5000,debug=False)
 	#app.run(host='0.0.0.0',port=80)
