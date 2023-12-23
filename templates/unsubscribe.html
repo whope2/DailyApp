@@ -70,7 +70,7 @@
 <body>
   <div class="topnav">
     <a href="/"><img src="static/home.png" alt="Home" style="width:4vw;height:auto;"></a>
-    <a href="/liveathousandlives">Books<img src="static/books.png" style="width:3vw;height:auto;"></a>
+    <a href="/liveathousandlives">Book<img src="static/books.png" style="width:3vw;height:auto;"></a>
     <a href="/tothemax2050">tothemax2050<img src="static/books.png" style="width:3vw;height:auto;"></a>
     <a href="/quoteoftheday">Quote</a>
     <a href="/genwordoftheday">Word</a>
@@ -79,12 +79,10 @@
   </div>
 
   <div class="content">
-    <span style="color: black">Unsubscribe {{ interest }} Newsletter Conformation</span>
+    <p>Unsubscribing <i style="color: blue;">Reading Is A Lifestyle</i> Newsletter</p>
     <form id="sub" action="/unsubscribing" method="post" enctype="multipart/form-data">
-      <label for="type">Type: </label>
-      <input class="inputtext" type="text" id="type" name="interest" value={{ interest }} readonly><br>
       <label for="email">Email: </label>
-      <input class="inputtext" type="text" id="email" name="email" value={{ email }} readonly>
+      <input class="inputtext" type="text" id="email" name="email" value={{ email }}>
       <input type="submit" value="Unsubscribe">
     </form>
     <br>

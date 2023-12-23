@@ -610,18 +610,16 @@ def get_all_subscribers_test():
     #print(allrecords)
     return(allrecords, hit_count)
 
-def add_a_subscription(email, interest) :
+def add_a_subscription(email) :
     client.index(index='ingestsubscriptionlist', body= \
     {
-        'Email': email,
-        'Interest': interest
+        'Email': email
     })
 
-def remove_a_subscription(email, interest) :
+def remove_a_subscription(email) :
     client.index(index='unsubscriptionlist', body= \
     {
-        'Email': email,
-        'Interest': interest
+        'Email': email
     })
 
 def add_a_love_quote(quote, author) :

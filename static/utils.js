@@ -2,7 +2,7 @@ function newquote(element_id, category)
 {
   let xmlHttpReq = new XMLHttpRequest();
 
-  let url = "https://whereliteraturemeetscomputing.com/api/getquote"
+  let url = "https://readingisalifestyle.com/api/getquote"
   //let url = "http://localhost:5000/api/getquote"
 
   if( category != undefined )
@@ -24,7 +24,7 @@ function copy(element_id)
 function updatebook(element_book_text, element_book_image_href, element_book_image)
 {
   let xmlHttpReq = new XMLHttpRequest();
-  let url = "https://whereliteraturemeetscomputing.com/api/getbook"
+  let url = "https://readingisalifestyle.com/api/getbook"
   //let url = "http://localhost:5000/api/getbook"
   xmlHttpReq.open("GET", url, false); 
   xmlHttpReq.send();
@@ -42,7 +42,7 @@ function updatebook(element_book_text, element_book_image_href, element_book_ima
 function updatephoto(element_photo)
 {
   let xmlHttpReq = new XMLHttpRequest();
-  let url = "https://whereliteraturemeetscomputing.com/api/getphoto"
+  let url = "https://readingisalifestyle.com/api/getphoto"
   //testing
   //let url = "http://localhost:5001/api/getphoto"
   xmlHttpReq.open("GET", url, false); 

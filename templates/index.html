@@ -123,21 +123,11 @@
   </div>  
   <div id="sub" class="content2">
     <p>
-    <b style="color: black">Subscribe to Daily Newsletter</b><br>
-    <i style="color: black">(No. of subscribers: {{sub_count}})</i>
+    Subscribe to <i style="color: blue;">Reading Is A Lifestyle</i> Newsletter<br>
+    (No. of subscribers: {{sub_count}})
     <form action="/subscribe" method="post" enctype="multipart/form-data">
-      <center>
-      <div style="text-align:left;font-size:3vw;width:70%;">
-        <input type="radio" id="radio1" name="Interest" value="QuoteOnly">
-        <label for="radio1">Inspirational Quote Only</label><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="static/newsletter-quote.png"><img src="static/newsletter-quote.png" alt="QuoteOnly" style="width:50%;height:auto;"></a><br>
-        <input type="radio" id="radio2" name="Interest" value="BookOnly">
-        <label for="radio2">Book Recommendation Only</label><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="static/newsletter-book.png"><img src="static/newsletter-book.png" alt="BookOnly" style="width:50%;height:auto;"></a><br>
-        <input type="radio" id="radio3" name="Interest" value="AllInOne" checked>
-        <label for="radio3">All-In-One Literature Newsletter</label><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="static/newsletter-all.png"><img src="static/newsletter-all.png" alt="AllInOne" style="width:50%;height:auto;"></a><br>
-      </div>
+      <center>        
+      <p><a href="static/newsletter.jpeg"><img src="static/newsletter.jpeg" alt="Newsletter" style="width:50%;height:auto;"></a><br></p>
       </center>
       <label for="email">Email: </label>
       <input class="inputtext" type="text" id="email" name="email" value={{ email }}>

@@ -19,7 +19,8 @@ from datetime import datetime
 
 import smtplib, ssl	
 from email.message import EmailMessage
-sender_email = "whereliteraturemeetscomputing@gmail.com"
+#sender_email = "whereliteraturemeetscomputing@gmail.com"
+sender_email = "max.readingisalifestyle@gmail.com"
 myemail = "whope2@gmail.com"
 port = 465  # For SSL
 
@@ -526,30 +527,25 @@ def presubscribe():
 @app.route("/subscribe", methods=['POST'])
 def subscribe():
 	email = request.form['email']
-	interest = request.form['Interest']
-	elasticsearch_access.add_a_subscription(email, interest)
-	email_notify_me("TWLMC - New subscription!", ("from: %s, interest: %s" % (email,interest)))
+	elasticsearch_access.add_a_subscription(email)
+	email_notify_me("Newsletter - New subscription!", ("from: %s" % (email)))
 	return render_template('echo.html', text="Thanks for your subscription!")
 
 @app.route("/unsubscribe")
 def unsubscribe():
+
 	arg_count = len(request.args)
 	email = request.args.get('email')
-	interest = request.args.get('interest')
-	if(interest == None):
-		interest=""
-	return render_template('unsubscribe.html', email=email, interest=interest)
+	if email == None:
+		email = "..."
+	return render_template('unsubscribe.html', email=email)
 
 @app.route("/unsubscribing", methods=['POST'])
 def unsubscribing():
 	email = request.form['email']
-	try: 
-		interest = request.form['interest']
-	except:
-		interest = ""
-	print("unsubscribe %s, interest: %s" % (email,interest))
-	elasticsearch_access.remove_a_subscription(email, interest)
-	email_notify_me("TWLMC - Unsubscription", ("from: %s, interest: %s" % (email,interest)))
+	print("unsubscribe %s" % (email))
+	elasticsearch_access.remove_a_subscription(email)
+	email_notify_me("Newsletter - Unsubscription", ("from: %s" % (email)))
 	return render_template('echo.html', text="Sorry to see you leave. Have a great day!")
 
 @app.route("/postcomment", methods=['POST'])
@@ -586,12 +582,18 @@ def newsletter():
 	#prepare newsletter content
 	quote, author, tweet_id = elasticsearch_access.get_a_random_quote_and_author()
 
-	doc_word = elasticsearch_access.get_a_random_word()
-	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
-	book_title, book_author, book_year, book_image, rating = elasticsearch_access.get_a_random_book_with_detail()
+	#doc_word = elasticsearch_access.get_a_random_word()
+	#random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
+	
+	fact, fact_image = elasticsearch_access.get_a_random_fact()
+
+	book_title, book_author, book_year, book_image, rating = elasticsearch_access.get_a_random_book_rec_with_detail()
+	
 	photo_id, insta_id = elasticsearch_access.get_a_random_photo()
 
-	newsletter_prefix = "Welcome to our nascent Literature Newsletter!\n"
+	question = elasticsearch_access.get_a_random_question()
+
+	newsletter_prefix = "Welcome to Reading Is A Lifesytle Daily Newsletter!\n"
 
 	#prepare email
 	message = EmailMessage()
@@ -611,11 +613,6 @@ def newsletter():
 		newsletter_content = newsletter_prefix
 
 		email = doc["_source"]["Email"]
-		interest = doc["_source"]["Interest"]
-		#testing
-		#interest = "QuoteOnly"
-		#interest = "BookOnly"
-		#interest = "AllInOne"
 
 		#for testing, only send to my personal email
 		if TESTING_NEWSLETTER == True:
@@ -626,55 +623,47 @@ def newsletter():
 
 		message['To'] = email
 		#WARNING!!! DO NOT SENT DEBUGGING MSG TO CUSTOMERS!!!
-		if( interest == "BookOnly" ):
-			message['Subject'] = "Daily Book Recommendation"
-		elif( interest == "QuoteOnly" ):
-			message['Subject'] = "Daily Inspirational Quote"
-		else:
-			message['Subject'] = "Daily Literature Newsletter"
+		message['Subject'] = "Reading Is A Lifestyle — Daily Newsletter"
 	
 		#set content and attachment
 		message.clear_content()
 		#message.set_content(newsletter_content)	
 
-		if(interest == "BookOnly" ):
-			html_content_book = '<br><span style="font-size:4vw">Title: %s<br>Author: %s<br>Year Published: %s<br></span>&nbsp;&nbsp;&nbsp;&nbsp;' % (book_title, book_author, book_year)
-			if( book_image ):
-				book_url = "https://whereliteraturemeetscomputing.com/static/books/%s" % book_image
-				html_content_book += '<img src="%s" alt="Book of the Day" style="width:25%%;height:auto;"><br>' % book_url
-			message.add_attachment(html_content_book, subtype="html")
-		elif(interest == "QuoteOnly" ):
-			html_content_quote = '<br><b style="font-size:5vw">%s<br>—%s</b><br>' % (quote, author)
-			message.add_attachment(html_content_quote, subtype="html")
-		else:
+		html_content_book = "<br><b>Book Recommendation</b><br>&nbsp;&nbsp;&nbsp;&nbsp;Title: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;Author: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;Year Published: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;" % (book_title, book_author, book_year)
+		if( book_image ):
+			book_url = "https://readingisalifestyle.com/static/books/%s" % book_image
+			html_content_book += '<img src="%s" alt="Book of the Day" style="width:50%%;height:auto;"><br>' % book_url
+		message.add_attachment(html_content_book, subtype="html")
 
-			html_content_quote = "<br>Daily Quote:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>&nbsp;&nbsp;&nbsp;&nbsp;—%s</b><br>" % (quote, author)
-			message.add_attachment(html_content_quote, subtype="html")
-			html_content_book = "<br>Daily Book:<br>&nbsp;&nbsp;&nbsp;&nbsp;Title: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;Author: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;Year Published: %s<br>&nbsp;&nbsp;&nbsp;&nbsp;" % (book_title, book_author, book_year)
-			if( book_image ):
-				book_url = "https://whereliteraturemeetscomputing.com/static/books/%s" % book_image
-				html_content_book += '<img src="%s" alt="Book of the Day" style="width:25%%;height:auto;"><br>' % book_url
-			message.add_attachment(html_content_book, subtype="html")
+		html_content_fact = "<br><b>Bookish Fact</b><br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>&nbsp;&nbsp;&nbsp;&nbsp;" % (fact)
+		if( fact_image ):
+			book_url = "https://readingisalifestyle.com/static/facts/%s" % fact_image
+			html_content_fact += '<img src="%s" alt="Bookish Fact" style="width:25%%;height:auto;"><br>' % book_url
+		message.add_attachment(html_content_fact, subtype="html")
 
-			html_content_word = "<br>Daily Word:<br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (random_word)
-			message.add_attachment(html_content_word, subtype="html")
+		html_content_quote = "<br><b>Inspirational Quote</b><br>&nbsp;&nbsp;&nbsp;&nbsp;%s&nbsp;—%s<br>" % (quote, author)
+		message.add_attachment(html_content_quote, subtype="html")
 
-			html_content_photo = "<br>Daily Photo:<br>&nbsp;&nbsp;&nbsp;&nbsp;"
-			image_url = "https://whereliteraturemeetscomputing.com/static/instagram/%s.jpg" % photo_id
-			html_content_photo += '<img src="%s" alt="Photo of the Day" style="width:50%%;height:auto;"><br>' % image_url
-			message.add_attachment(html_content_photo, subtype="html")
+		html_content_photo = "<br><b>Photo of the Day</b><br>&nbsp;&nbsp;&nbsp;&nbsp;"
+		image_url = "https://readingisalifestyle.com/static/instagram/%s.jpg" % photo_id
+		html_content_photo += '<img src="%s" alt="Photo of the Day" style="width:50%%;height:auto;"><br>' % image_url
+		message.add_attachment(html_content_photo, subtype="html")
 
-		#html_content = "<br><br><br><br><br>Thanks for your time and have a nice day!<br>https://whereliteraturemeetscomputing.com"
-		html_content = "<br><br><br><br><br><br>https://whereliteraturemeetscomputing.com"
-		html_content += '\
-<br><a href="https://whereliteraturemeetscomputing.com/presubscribe?email=%s#sub">Modify Subscription</a>  |  \
-<a href="https://whereliteraturemeetscomputing.com/unsubscribe?email=%s&interest=%s">Unsubscribe</a></br>' % (email, email, interest)	
+		html_content_question = "<br><b>A Bookish Question For You</b><br>&nbsp;&nbsp;&nbsp;&nbsp;%s<br>" % (question)
+		message.add_attachment(html_content_question, subtype="html")
+
+		html_content = "<br><br>---------------------------------------<br>Visit our website: https://readingisalifestyle.com"
+		html_content += '<br><a href="https://readingisalifestyle.com/#sub">Subscribe</a>&nbsp;|&nbsp;'
+		html_content += '<a href="https://readingisalifestyle.com/unsubscribe?email=%s">Unsubscribe</a></br>' % (email)	
 		message.add_attachment(html_content, subtype="html")
 
 		server.send_message(message)
+
+		if TESTING_NEWSLETTER == True:
+			break;
 		
 	server.quit()
-	email_notify_me("WLMC - newsletter sent!", "")
+	email_notify_me("Newsletter sent!", "")
 
 #Testing trigger newsletter
 @app.route("/testtriggernewsletter")
