@@ -610,6 +610,8 @@ def newsletter():
 	
 	for num, doc in enumerate(all_subscribers):
 
+		print("newsletter, Loop_count = %d" % num)
+
 		newsletter_content = newsletter_prefix
 
 		email = doc["_source"]["Email"]
