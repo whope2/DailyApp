@@ -35,6 +35,15 @@ def get_a_random_word() :
     doc = client.get(index=index_name, id=str(random_doc_id))
     return(doc["_source"])
 
+def get_a_random_jphrase() :
+    index_name = "noahlist"
+    docs_count = client.count(index=index_name)['count']
+    print("jphrase docs_count = %d" % docs_count)
+    random_doc_id = random.randint(1,docs_count)
+    print("generate random jphrase doc_id = %d" % random_doc_id)
+    doc = client.get(index=index_name, id=str(random_doc_id))
+    return(doc["_source"]["Phrase"])
+
 def get_a_quote_and_author_by_id(id) :
     index_name = "quotelist"
     doc = client.get(index=index_name, id=str(id))

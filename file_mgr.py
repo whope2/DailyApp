@@ -217,8 +217,8 @@ def save_plot_data(x,y):
 
 
 def get_pw() :
-    #myfile = "pw"
-    myfile = "pw2"
+    myfile = "pw"
+    #myfile = "pw2"
     with open(myfile, "r") as file_hdl:
         pwn = file_hdl.readline()
         pw = pwn.replace("\n", "")

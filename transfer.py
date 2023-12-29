@@ -19,8 +19,8 @@ from datetime import datetime
 
 import smtplib, ssl	
 from email.message import EmailMessage
-#sender_email = "whereliteraturemeetscomputing@gmail.com"
-sender_email = "max.readingisalifestyle@gmail.com"
+sender_email = "whereliteraturemeetscomputing@gmail.com"
+#sender_email = "max.readingisalifestyle@gmail.com"
 myemail = "whope2@gmail.com"
 port = 465  # For SSL
 
@@ -285,11 +285,26 @@ def getquestioin():
 	else:
 		question = elasticsearch_access.get_a_random_question()
 
-	quote_dict = {
+	dict = {
         "question": question
 	}
 	#Dictionary to JSON Object
-	return json.dumps(quote_dict)
+	return json.dumps(dict)
+
+@app.route("/api/getjphrase")
+def getjphrase():
+	arg_count = len(request.args)
+	print("api/getjphrase", arg_count)
+
+	jphrase = elasticsearch_access.get_a_random_jphrase()
+
+	#dict = {
+    #    "phrase": jphrase
+	#}
+	#Dictionary to JSON Object
+	#return json.dumps(dict)
+	
+	return '<center><span style="font-size: 8vw;">%s</span></center>' % jphrase
 
 @app.route("/quoteoftheday")
 def quoteoftheday():
@@ -610,8 +625,6 @@ def newsletter():
 	
 	for num, doc in enumerate(all_subscribers):
 
-		print("newsletter, Loop_count = %d" % num)
-
 		newsletter_content = newsletter_prefix
 
 		email = doc["_source"]["Email"]
@@ -619,6 +632,8 @@ def newsletter():
 		#for testing, only send to my personal email
 		if TESTING_NEWSLETTER == True:
 			email = myemail
+
+		print("newsletter, Loop_count = %d, email = %s" % (num,email) )
 
 		del message['To']
 		del message['Subject']
