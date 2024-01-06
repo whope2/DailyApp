@@ -379,11 +379,11 @@
     </p>
     <p>
       <br>
-      <b>Books Read In Years</b><br>
+      <b>Books Read By Year</b><br>
       <div id="chart-container" style="width:80%">
         <canvas id="Chart-Books-Read"></canvas>
       </div>  
-      <i>Have read </i><b style="color:green">{{bookstats["books read in 2023"]}}</b><i> books so far in 2023!</i><br>
+      <i>Have read </i><b style="color:green">{{bookstats["books read in 2024"]}}</b><i> books so far in 2024!</i><br>
     </p>
     <p>
       <br>
@@ -489,19 +489,28 @@
   var myChart2 = new Chart( document.getElementById('Chart-Genres'), config2);
 
   const data4 = {
-    labels: ['~2018', '2019', '2020', '2021', '2022', '2023'],
+    labels: ['~2018', '2019', '2020', '2021', '2022', '2023', '2024'],
     datasets: [{
-      data: [book_stats["books read in 2018 and prior"], book_stats["books read in 2019"], book_stats["books read in 2020"], book_stats["books read in 2021"], book_stats["books read in 2022"], book_stats["books read in 2023"]],
-      fill: false,
-      pointBackgroundColor: 'red',
-      pointRadius: 8,
-      borderColor: 'rgb(75, 192, 192)',
-      borderWidth: 6,
-      tension: 0.1
+      data: [book_stats["books read in 2018 and prior"], book_stats["books read in 2019"], book_stats["books read in 2020"], book_stats["books read in 2021"], book_stats["books read in 2022"], book_stats["books read in 2023"], book_stats["books read in 2024"]],
+      //fill: false,
+      //pointBackgroundColor: 'red',
+      //pointRadius: 8,
+      //borderColor: 'rgb(75, 192, 192)',
+      //borderWidth: 6,
+      //tension: 0.1,
+      backgroundColor: [
+        '#6082B6', //Glaucous blue
+        '#6082B6',
+        '#6082B6',
+        '#6082B6',
+        '#6082B6',
+        '#6082B6',
+        '#6082B6'
+      ]
     }]
   };
   const config4 = {
-    type: 'line',
+    type: 'bar', //type: 'line',
     data: data4,
     options: {
       responsive: true,
