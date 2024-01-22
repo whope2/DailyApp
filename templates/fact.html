@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+ 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V1LBCV9F1C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-V1LBCV9F1C');
+  </script>
+
+  <style>
+  * {
+    box-sizing: border-box;
+  }
+
+	<title>Reading Is A Lifestyle Fact Page</title>	
+
+	<style type="text/css">    
+
+  table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  }
+  table.center {
+    margin-left: auto; 
+    margin-right: auto;
+    font-size: 2vw;
+  }  
+
+  body
+  {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 10vw;
+  }
+
+
+  /* Style the footer */
+  .footer {
+    background-color: #f1f1f1;
+    padding:2vw;
+    text-align: right;
+    font-size: 4vw;
+  }
+
+  h1
+  {
+    font-size:10vw;
+    color:rgb(20, 3, 104);
+  }
+
+  h2
+  {
+    font-size:8vw;
+    font-style: italic;
+    color:rgb(31, 4, 161);
+  }
+
+  </style>
+
+  <script src="{{ url_for('static', filename='utils.js') }}"></script>
+
+</head>  
+  
+<body>
+  <div class="topnav">
+    <a href="/"><img src="static/home.png" alt="Home" style="width:4vw;height:auto;"></a>
+    <a href="/liveathousandlives">Book<img src="static/books.png" style="width:3vw;height:auto;"></a>
+    <a href="/tothemax2050">tothemax2050<img src="static/books.png" style="width:3vw;height:auto;"></a>
+    <a href="/quoteoftheday">Quote</a>
+    <a href="/genwordoftheday">Word</a>
+    <a href="/photo">Photo</a>
+    <a href="/about" style="float:right">About</a>
+  </div>
+
+  <div class="content2">
+    <p><b>Bookish Fact of The Day</b></p>
+    <p style="color: blue;">
+      <i id="fact-text">
+      {% if fact %}
+        {{ fact }}
+      {% endif %}
+      </i><br>
+      {% if fact_image %}
+      <a id="fact-image-href" href=static/facts/{{fact_image}}><img id="fact-image" src=static/facts/{{fact_image}} alt="" style="width:50%;height:auto;max-width:500px;"></a>
+      {% else %}
+      <a id="fact-image-href" href=""><img id="fact-image" src="" alt="" style="width:50%;height:auto;max-width:500px;"></a>
+      {% endif %}  
+      <br>
+      <button onclick="updatefact('fact-text','fact-image-href','fact-image')">New Bookish Fact</button>
+    </p>
+  </div>
+
+  <div id="main-div" class="content">
+    <p><b>{{ count }} Facts</b><br>
+      <table id="facttable" class="center" border=1>
+      </table>
+      <br>
+  </div>
+
+  <script>
+    //tojson is a Jinja filter that dumps the structure to a JSON string and marks it safe 
+    //so that Jinja does not autoescape it
+    var columns = {{col_names | tojson}} 
+    var items = {{items | tojson}}
+    var col_width = {{ col_width | tojson }}
+
+    var table = document.getElementById("facttable");
+    // Create an empty <thead> element and add it to the table:
+    var header = table.createTHead();
+    // Create an empty <tr> element and add it to the first position of <thead>:
+    var headrow = header.insertRow(0);    
+    for(let i = 0; i < columns.length; i++){ 
+    // Insert a new cell (<td>) at the first position of the "new" <tr> element:
+      let cell = headrow.insertCell(i);
+      // Add some bold text in the new cell:
+      let column = columns[i];
+      cell.innerHTML = "<b>" + column + "</b>"; 
+      cell.style.width = col_width[column];
+    }
+    var tablebody = table.createTBody();
+    
+    var total_entry_count = items.length;
+    let i=0;
+    for( let item of items ) {
+      let bodyrow = tablebody.insertRow(i);
+      for(let j = 0; j < columns.length; j++){ 
+        let cell = bodyrow.insertCell(j);
+        let column = columns[j];
+        cell.innerHTML = item[column];
+        cell.style.width = col_width[column];
+        if( j== 1 ) { //image file 
+          let image_file_name = item[column];
+          //use backtics ` ` for formating a string (like %s in C)
+          if( image_file_name != null ) {
+            let url = `static/facts/${image_file_name}`;
+            cell.innerHTML = `<a href=${url}><img src=${url} alt="" style="width:auto;height:5vw;"></a>`;
+            //console.log(cell.innerHTML);
+          }
+        }
+      }
+      i++;
+    }
+  </script>
+
+  <div class="botnav">
+    <a href="/about"><img src="static/information.png" alt="About" style="width:4vw;height:auto;"></a>
+    <a href="/#sub"><img src="static/subscribe.png" alt="Subscribe" style="width:4vw;height:auto;"></a>
+    <a href="https://twitter.com/tothemax2050"><img src="static/twitter.png" alt="Twitter" style="width:4vw;height:auto;"></a>
+    <a href="https://www.threads.net/@tothemax2050"><img src="static/threads.png" alt="Threads" style="width:4vw;height:auto;"></a>
+    <a href="/" style="float:left"><img src="static/books.png" alt="Books" style="width:4vw;height:auto;"></a>
+  </div>
+</body>
+</html>

@@ -38,6 +38,26 @@ function updatebook(element_book_text, element_book_image_href, element_book_ima
   document.getElementById(element_book_image_href).href=`static/books/${json["image"]}`;
 }
 
+function updatefact(element_fact_text, element_fact_image_href, element_fact_image)
+{
+  let xmlHttpReq = new XMLHttpRequest();
+  let url = "https://readingisalifestyle.com/api/getfact"
+  //let url = "http://localhost:5000/api/getfact"
+  xmlHttpReq.open("GET", url, false); 
+  xmlHttpReq.send();
+  //console.log(xmlHttpReq.responseText);
+  let json = JSON.parse(xmlHttpReq.responseText);
+  image = json["image"];
+  document.getElementById(element_fact_text).innerHTML = json["fact"] + "<br>";
+  if( image != null ) { 
+    document.getElementById(element_fact_image).src=`static/facts/${json["image"]}`;
+    document.getElementById(element_fact_image_href).href=`static/facts/${json["image"]}`;
+    document.getElementById(element_fact_image).style.display = "inline-block";
+  } else {
+    document.getElementById(element_fact_image).style.display = "none"; 
+  }
+}
+
 //Update entire innerHTML replacing instagram embedded view
 function updatephoto(element_photo)
 {

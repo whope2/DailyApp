@@ -52,9 +52,12 @@ def index():
 	random_word = doc_word["Word"] + ": " + doc_word["Definition"] + ".  " + doc_word["Example Sentences"]
 
 	random_book, book_image = elasticsearch_access.get_a_random_book()
+	
+	fact, fact_image = elasticsearch_access.get_a_random_fact()
 
 	sub_count = elasticsearch_access.get_subscriber_count()
-	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,photomedia=insta_id,book=random_book,book_image=book_image,email=email,sub_count=sub_count)
+	return render_template('index.html',word=random_word,quote=random_quote,photolink=photo_id,photomedia=insta_id,
+		book=random_book,book_image=book_image,email=email,sub_count=sub_count,fact=fact,fact_image=fact_image)
 
 @app.route("/tweetdailybookishquestion")
 def tweetdailybookishquestion():
@@ -305,6 +308,29 @@ def getjphrase():
 	#return json.dumps(dict)
 	
 	return '<center><span style="font-size: 8vw;">%s</span></center>' % jphrase
+
+@app.route("/bookishfacts")
+def bookishfacts():
+	arg_count = len(request.args)
+
+	allrecords, count = elasticsearch_access.get_all_facts()
+
+	fact, image = elasticsearch_access.get_a_random_fact()
+
+	#count=10  #test
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allrecords):
+		oneitem["Fact"] = doc["_source"]["Fact"]
+		oneitem["Image"] = doc["_source"]["Image File Name"]
+		#print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+	col_names=["Fact","Image"]
+	col_width={
+		'Fact':"90%",
+		'Image':"10%"
+	}
+	return render_template('fact.html', col_names=col_names, col_width=col_width, items=items, count=count, fact=fact, fact_image=image)
 
 @app.route("/quoteoftheday")
 def quoteoftheday():

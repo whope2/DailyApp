@@ -100,14 +100,25 @@
       <button onclick="copy('quote-text')">copy</button>
     </p>     
   </div>
+
   <div class="content2">
-    <p><b><a href={{ url_for('genwordoftheday') }}>Word of The Day</a></b></p>
-    <p style="color: blue;"><i>
-    {% if word %}
-      {{ word }}
-    {% endif %}
-  </i></p>  
+    <p><b><a href={{ url_for('bookishfacts') }}>Bookish Fact of The Day</a></b></p>
+    <p style="color: blue;">
+      <i id="fact-text">
+      {% if fact %}
+        {{ fact }}
+      {% endif %}
+      </i><br>
+      {% if fact_image %}
+      <a id="fact-image-href" href=static/facts/{{fact_image}}><img id="fact-image" src=static/facts/{{fact_image}} alt="" style="width:50%;height:auto;max-width:500px;"></a>
+      {% else %}
+      <a id="fact-image-href" href=""><img id="fact-image" src="" alt="" style="width:50%;height:auto;max-width:500px;"></a>
+      {% endif %}  
+      <br>
+      <button onclick="updatefact('fact-text','fact-image-href','fact-image')">New Bookish Fact</button>
+    </p>
   </div>
+
   <div class="content">
     <p><b><a href={{ url_for('liveathousandlives') }}>Live 1000 Lives<img src="static/books.png" style="width:4vw;height:auto;"></a></b></p>
     <p style="color: blue;">
@@ -120,8 +131,18 @@
       <br>
       <button onclick="updatebook('book-text','book-image-href','book-image')">New Book</button>
     </p>
-  </div>  
-  <div id="sub" class="content2">
+  </div>
+  
+  <div class="content2">
+    <p><b><a href={{ url_for('genwordoftheday') }}>Word of The Day</a></b></p>
+    <p style="color: blue;"><i>
+    {% if word %}
+      {{ word }}
+    {% endif %}
+  </i></p>  
+  </div>
+
+  <div id="sub" class="content">
     <p>
     Subscribe to <i style="color: blue;">Reading Is A Lifestyle</i> Newsletter<br>
     (No. of subscribers: {{sub_count}})
@@ -136,10 +157,12 @@
     <button onclick="window.location.href='unsubscribe';">Unsubscribe</button>
     </p>
   </div>
-  <div class="content">
+  
+  <div class="content2">
     <p style="color:black;"><a href="https://www.paypal.com/donate/?hosted_button_id=UADH5B3CZUVZL">Make reading a lifestyle for everyone!<br>
       Donate to support!!&nbsp;&nbsp;<img src="static/paypal.png" alt="PayPal Donate" style="width:auto;height:6vw;"></a></p>
   </div>
+
 <div class="botnav">
   <a href="/about"><img src="static/information.png" alt="About" style="width:4vw;height:auto;"></a>
   <a href="/#sub"><img src="static/subscribe.png" alt="Subscribe" style="width:4vw;height:auto;"></a>
