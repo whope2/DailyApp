@@ -122,14 +122,16 @@
         <i style="color: blue;">
           {{item["Book Title"]}}<br>
           <span style="color:darkgreen;">by {{item["Author"]}}</span><br>
-          <span style="color:limegreen;font-size: 3vw;">Published in {{item["Year Published"]}}
-          {% if item["My Rating"] %}
-            <br>{{item["My Rating"]}}
-          {% endif %}  
-        </span></i>
+          <span style="color:limegreen;font-size: 3vw;">Published in {{item["Year Published"]}}</span>
+        </i>
         <br>
         <a href="static/books/{{ item["Cover Image"] }}"><img src="static/books/{{ item["Cover Image"] }}" alt="" style="width:100%;height:auto;max-width:538px;"></a>
-        <br>
+        {% if item["My Rating"] %}
+          <br><span>{{item["My Rating"]}}</span><br>
+        {% endif %}
+        {% if item["Review"] %}
+          <span style="color:black;font-size: 3vw;">{{item["Review"]}}</span><br>
+        {% endif %}  
         <span style="color:chocolate;font-size: 3vw;">({{loop.index}})</span>
         <hr>
       {% endfor %}
