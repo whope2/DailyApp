@@ -181,6 +181,11 @@ def readers(reader):
 
 	return render_template('readers.html', reader=reader, items=items, count=count, current_read_list=current_read_list, current_read_count=len(current_read_list))
 
+@app.route('/<reader>/social')
+def social(reader):
+
+	return render_template('social.html', reader=reader)
+
 @app.route('/lfl')
 @app.route('/littlefreelibrary')
 def littlefreelibrary():
