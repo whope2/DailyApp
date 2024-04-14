@@ -305,6 +305,21 @@ def get_all_book_sorted_by_finished_date() :
     items.sort(key=lambda x: datetime.strptime(x["Date Finished"],'%m/%d/%Y'), reverse=True)
     return(items, hit_count)   
 
+def get_all_owned_books():
+    index_name = "booklist"
+    results=client.search(index=index_name, body=\
+    {
+        "size":1200,
+        "query": {
+            "exists": {
+                "field": "Ownership"
+            }
+        }
+    })
+    hit_count = len(results["hits"]["hits"])
+    alldocs = results["hits"]["hits"]
+    return alldocs, hit_count
+
 def get_all_bookchat() :
     index_name = "bookchat"
     results=client.search(index=index_name, body=\

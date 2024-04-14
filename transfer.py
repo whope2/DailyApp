@@ -167,6 +167,7 @@ def readers(reader):
 		oneitem["ID"] = doc["id"]
 		oneitem["TweetID"] = doc["TweetID"]
 		oneitem["Likes"] = doc["Likes"]
+		oneitem["Ownership"] = doc["Ownership"]
 		oneitem["Date Finished"] = doc["Date Finished"]
 		oneitem["Date Started"] = doc["Date Started"]
 		#print(oneitem)
@@ -185,6 +186,29 @@ def readers(reader):
 def social(reader):
 
 	return render_template('social.html', reader=reader)
+
+@app.route('/<reader>/mybooks')
+def mybooks(reader):
+	allbooks, count = elasticsearch_access.get_all_owned_books()
+	items = [{}] * count
+	oneitem = {}
+	for num, doc in enumerate(allbooks):
+		#print(num)
+		#print(doc["_source"]["id"])
+		oneitem["Cover Image"] = doc["_source"]["Image File Name"]
+		oneitem["Book Title"] = doc["_source"]["Book Title"]
+		oneitem["Author"] = doc["_source"]["Author"]
+		oneitem["Year Published"] = doc["_source"]["Year Published"]
+		oneitem["My Rating"] = doc["_source"]["Rating"]
+		oneitem["Review"] = doc["_source"]["Review"]
+		oneitem["ID"] = doc["_source"]["id"]
+		oneitem["Ownership"] = doc["_source"]["Ownership"]
+		oneitem["Date Finished"] = doc["_source"]["Date Finished"]
+		oneitem["Date Started"] = doc["_source"]["Date Started"]
+		#print(oneitem)
+		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
+
+	return render_template('mybooks.html', reader=reader, items=items, count=count)
 
 @app.route('/lfl')
 @app.route('/littlefreelibrary')
@@ -491,6 +515,7 @@ def liveathousandlives():
 		oneitem["ID"] = doc["id"]
 		oneitem["TweetID"] = doc["TweetID"]
 		oneitem["Likes"] = doc["Likes"]
+		oneitem["Ownership"] = doc["Ownership"]
 		oneitem["Date Finished"] = doc["Date Finished"]
 		#print(oneitem)
 		items[num] = oneitem.copy()  #use copy() or deepcopy instead of assigning dict directly, which copes reference not value
