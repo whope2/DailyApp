@@ -6,6 +6,8 @@ import twitterbot
 from operator import itemgetter #for sorting
 
 client = Elasticsearch("http://localhost:9200")
+ES_QUERY_SIZE = 1500
+
 '''
 import requests
 
@@ -136,7 +138,7 @@ def get_a_random_fact() :
     return(doc["_source"]["Fact"], doc["_source"]["Image File Name"])
 
 def get_all_facts() :
-    results=client.search(index="factlist",body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index="factlist",body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("get_all_facts %d hits" % hit_count)
     allrecords = results["hits"]["hits"]
@@ -169,7 +171,7 @@ def get_a_random_photo() :
 def get_all_photos() :
     index_name = "photolist"
     photolist = []
-    results=client.search(index=index_name,body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index=index_name,body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     allphotos = results["hits"]["hits"]    
     for num, doc in enumerate(allphotos):
         photo_dict = {
@@ -182,11 +184,11 @@ def get_all_photos() :
 
 def get_a_random_book_tweet_id() :
     index_name = "booklist"
-    results=client.search(index=index_name, body={"size":1200,"query": { "exists": { "field": "TweetID"} } })
+    results=client.search(index=index_name, body={"size":ES_QUERY_SIZE,"query": { "exists": { "field": "TweetID"} } })
     ''' #No longer need to retweet external tweets
     results=client.search(index=index_name, body=\
         {
-            "size":1200,
+            "size":ES_QUERY_SIZE,
             "query": {
                 "bool": {
                     "should": [{
@@ -253,7 +255,7 @@ def get_total_book_count() :
     return(docs_count)
 
 def get_all_book() :
-    results=client.search(index="booklist",body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index="booklist",body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     #print("%d hits" % hit_count)
     allbooks = results["hits"]["hits"]
@@ -264,7 +266,7 @@ def get_all_book_sorted_by_likes() :
     index_name = "booklist"
     results=client.search(index=index_name, body=\
     {
-        "size":1200,
+        "size":ES_QUERY_SIZE,
         "query":{"match_all":{}},
         #"sort" : [ { "Likes" : "desc" } ] #ES does not allow sorting texts, only numbers
     })
@@ -286,7 +288,7 @@ def get_all_book_sorted_by_finished_date() :
     index_name = "booklist"
     results=client.search(index=index_name, body=\
     {
-        "size":1200,
+        "size":ES_QUERY_SIZE,
         "query":{"match_all":{}},
         #"sort" : [ { "Likes" : "desc" } ] #ES does not allow sorting texts, only numbers
     })
@@ -309,7 +311,7 @@ def get_all_owned_books():
     index_name = "booklist"
     results=client.search(index=index_name, body=\
     {
-        "size":1200,
+        "size":ES_QUERY_SIZE,
         "query": {
             "exists": {
                 "field": "Ownership"
@@ -324,7 +326,7 @@ def get_all_bookchat() :
     index_name = "bookchat"
     results=client.search(index=index_name, body=\
     {
-        "size":1200,
+        "size":ES_QUERY_SIZE,
         "query":{"match_all":{}}
     })    
     hit_count = len(results["hits"]["hits"])
@@ -506,7 +508,7 @@ def get_book_statistics():
 # code no longer used
 def generate_likes_in_booklist():
     index_name = "booklist"
-    results=client.search(index=index_name,body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index=index_name,body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     allbooks = results["hits"]["hits"]
     for doc in allbooks:
@@ -527,7 +529,7 @@ def get_all_twitter_books():
     index_name = "twitterbooklist"
     results=client.search(index=index_name, body=\
     {
-        "size":1200,
+        "size":ES_QUERY_SIZE,
         "query":{"match_all":{}},
         "sort" : [ { "Likes" : "desc" } ]
     })
@@ -539,7 +541,7 @@ def get_all_twitter_books_from_booklist():
     index_name = "booklist"
     results=client.search(index=index_name, body=\
     {
-        "size":1200,
+        "size":ES_QUERY_SIZE,
         "query": {
             "exists": {
                 "field": "TweetID"
@@ -570,7 +572,7 @@ def create_twitter_book_index():
     client.indices.create(index=index_name)
 
 def get_all_love_quotes() :    
-    results=client.search(index="lovequotelist",body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index="lovequotelist",body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
@@ -578,7 +580,7 @@ def get_all_love_quotes() :
     return(allrecords, hit_count)
 
 def get_all_words() :    
-    results=client.search(index="wordlist",body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index="wordlist",body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
@@ -586,7 +588,7 @@ def get_all_words() :
     return(allrecords, hit_count)
 
 def get_all_quotes() :
-    results=client.search(index="quotelist",body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index="quotelist",body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
@@ -608,7 +610,7 @@ def get_subscriber_count():
 
 def get_all_subscribers():
     index_name = "subscriptionlist"
-    results=client.search(index=index_name,body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index=index_name,body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     #print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
@@ -617,7 +619,7 @@ def get_all_subscribers():
 
 def get_all_subscribers_test():
     index_name = "subscriptionlist_test"
-    results=client.search(index=index_name,body={"size":1200,"query":{"match_all":{}}})
+    results=client.search(index=index_name,body={"size":ES_QUERY_SIZE,"query":{"match_all":{}}})
     hit_count = len(results["hits"]["hits"])
     print("%d hits" % hit_count)
     allrecords = results["hits"]["hits"]
@@ -744,7 +746,7 @@ def edit_journal(id, title, text, type) :
 def get_all_journals() :
     index_name = "journal"
     results=client.search(index=index_name,body=\
-    {   "size":1200,
+    {   "size":ES_QUERY_SIZE,
         "query":{"match_all":{}},
         "sort" : [ { "Date" : "desc" } ]
     })
